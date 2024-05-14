@@ -91,6 +91,7 @@ const CoursesAll = () => {
     }
 
     const isSubscribe = (item) => {
+        console.log(myCourses)
         const courses = myCourses.filter(elem => elem.courseName === item.courseName)
         return courses.length > 0 ? true : false
     }

@@ -21,30 +21,36 @@ function LoginForm({ onSubmit }: any) {
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [isLoading, setIsLoading] = useState(false)
-  const [typeLog, setTypeLog] = useState(true)
+  const [isLoading, setIsLoading] = useState(false);
+  const [typeLog, setTypeLog] = useState(true);
 
-  const fetchCreateUser = async (item:any) => {
-    setIsLoading(true)
+  const fetchCreateUser = async (item: any) => {
+    setIsLoading(true);
     let response = await TestingApi.createUser(item);
     if (response.data === "ok") {
-        message.success('Вы успешно зарегистрированы');
+      console.log("daskndasldkdlnakdad");
+      message.success("Вы успешно зарегистрированы");
     }
-    setIsLoading(false)
-}
+    setIsLoading(false);
+  };
 
   const handleRegIn = async () => {
     try {
       const res = await auth.createUserWithEmailAndPassword(email, password);
       const user = res.user;
-      const item = {uid: user?.uid, email: user?.email, firstName: firstName, lastName: lastName}
-      fetchCreateUser(item)
-    } catch(err) {
+      const item = {
+        uid: user?.uid,
+        email: user?.email,
+        firstName: firstName,
+        lastName: lastName,
+      };
+      fetchCreateUser(item);
+    } catch (err) {
       let errMessage = "";
       if (err instanceof Error) {
         errMessage = err.message;
       }
-      message.error("Пользователь с таким email уже существует")
+      message.error("Пользователь с таким email уже существует");
       console.log(errMessage);
     }
   };
@@ -53,7 +59,7 @@ function LoginForm({ onSubmit }: any) {
     onSubmit(email, password);
   };
   if (isLoading) {
-    return <Loader/>
+    return <Loader />;
   } else {
     if (typeLog) {
       return (
@@ -77,7 +83,7 @@ function LoginForm({ onSubmit }: any) {
                   onChange={(event) => setEmail(event.target.value)}
                 />
               </Form.Item>
-    
+
               <Form.Item
                 label="Пароль"
                 name="password"
@@ -90,19 +96,23 @@ function LoginForm({ onSubmit }: any) {
                   onChange={(event) => setPassword(event.target.value)}
                 />
               </Form.Item>
-    
+
               <Form.Item {...tailLayout}>
                 <Button type="primary" htmlType="submit">
                   Войти
                 </Button>
-                <div>Или <a onClick={() => setTypeLog(!typeLog)} >зарегистрироваться сейчас!</a></div>
+                <div>
+                  Или{" "}
+                  <a onClick={() => setTypeLog(!typeLog)}>
+                    зарегистрироваться сейчас!
+                  </a>
+                </div>
               </Form.Item>
             </Form>
           </div>
         </Content>
       );
-    }
-    else {
+    } else {
       return (
         <Content>
           <div className="loginContainer">
@@ -123,7 +133,7 @@ function LoginForm({ onSubmit }: any) {
                   onChange={(event) => setFirstName(event.target.value)}
                 />
               </Form.Item>
-    
+
               <Form.Item
                 label="Фамилия"
                 name="lastName"
@@ -147,7 +157,7 @@ function LoginForm({ onSubmit }: any) {
                   onChange={(event) => setEmail(event.target.value)}
                 />
               </Form.Item>
-    
+
               <Form.Item
                 label="Пароль"
                 name="password"
@@ -160,12 +170,15 @@ function LoginForm({ onSubmit }: any) {
                   onChange={(event) => setPassword(event.target.value)}
                 />
               </Form.Item>
-    
+
               <Form.Item {...tailLayout}>
                 <Button type="primary" htmlType="submit">
                   Зарегистрироваться
                 </Button>
-                <div>Или <a onClick={() => setTypeLog(!typeLog)} >войдите сейчас!</a></div>
+                <div>
+                  Или{" "}
+                  <a onClick={() => setTypeLog(!typeLog)}>войдите сейчас!</a>
+                </div>
               </Form.Item>
             </Form>
           </div>

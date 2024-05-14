@@ -27,6 +27,7 @@ const Courses = () => {
             if (err instanceof Error) {
                 errMessage = err.message;
             }
+            console.log(user.uid)
             console.log(errMessage);
             message.error(errMessage)
         }
