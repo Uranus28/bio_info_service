@@ -2885,7 +2885,7 @@
   <lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">admin</lastName>
   <email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">admin@gmail.com</email>
   <uid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">y7Eb3MDratQGwW0sxIuHANqZ58e2</uid>
-  <role rdf:datatype="http://www.w3.org/2001/XMLSchema#string">student</role>
+  <role rdf:datatype="http://www.w3.org/2001/XMLSchema#string">admin</role>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#курс2">
