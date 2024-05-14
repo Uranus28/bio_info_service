@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import { Form, Input, Button, message } from "antd";
 import { Layout } from "antd";
 import { auth } from "../../services/firebase";
 import "./styles.css";
 import TestingApi from "../../API/TestingApi";
 import Loader from "../../components/UI/Loader/Loader";
+import { setLocalStorage } from "../../components/utils/testing";
+import { MAIN_ROUTE, USER_STORAGE } from "../../utils/consts";
+import history from "../../services/history";
+import { FormInput } from "../../shared/LoginForm";
 
 const { Content } = Layout;
 
@@ -12,11 +16,15 @@ const layout = {
   labelCol: { span: 8 },
   wrapperCol: { span: 16 },
 };
+
 const tailLayout = {
   wrapperCol: { offset: 8, span: 16 },
 };
 
-function LoginForm({ onSubmit }: any) {
+interface LoginFormProps {
+  setUser: React.Dispatch<any>;
+}
+export const LoginForm: FC<LoginFormProps> = ({ setUser }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -35,6 +43,7 @@ function LoginForm({ onSubmit }: any) {
   };
 
   const handleRegIn = async () => {
+    console.log("aaaaaaaaaaaa");
     try {
       const res = await auth.createUserWithEmailAndPassword(email, password);
       const user = res.user;
@@ -45,6 +54,7 @@ function LoginForm({ onSubmit }: any) {
         lastName: lastName,
       };
       fetchCreateUser(item);
+      setTypeLog(true);
     } catch (err) {
       let errMessage = "";
       if (err instanceof Error) {
@@ -55,137 +65,108 @@ function LoginForm({ onSubmit }: any) {
     }
   };
 
-  const handleSubmit = () => {
-    onSubmit(email, password);
+  const fetchUser = async (uid: any) => {
+    setIsLoading(true);
+    try {
+      let response = await TestingApi.getUser(uid);
+      setUser(response.data);
+      setLocalStorage(USER_STORAGE, response.data);
+    } catch (err) {
+      let errMessage = "";
+      if (err instanceof Error) {
+        errMessage = err.message;
+      }
+      console.log(errMessage);
+      message.error(errMessage);
+    }
+    setIsLoading(false);
   };
+
+  const handleSignIn = async (email: string, password: string) => {
+    try {
+      const res = await auth.signInWithEmailAndPassword(email, password);
+      fetchUser(res.user?.uid);
+      history.push(MAIN_ROUTE);
+      // setErrorMessage("");
+    } catch (err) {
+      let errMessage = "";
+      if (err instanceof Error) {
+        errMessage = err.message;
+      }
+      console.log(errMessage);
+      message.error("Логин или пароль введены неверно");
+      // setErrorMessage(errMessage);
+    }
+  };
+
   if (isLoading) {
     return <Loader />;
   } else {
-    if (typeLog) {
-      return (
-        <Content>
-          <div className="loginContainer">
-            <Form
-              {...layout}
-              name="basic"
-              initialValues={{ remember: true }}
-              onFinish={handleSubmit}
-            >
-              <Form.Item
-                label="Email"
-                name="email"
-                rules={[{ required: true, message: "Введите почту" }]}
-              >
-                <Input
-                  required
-                  type={"email"}
-                  value={email}
-                  onChange={(event) => setEmail(event.target.value)}
-                />
-              </Form.Item>
+    return (
+      <Content>
+        <div className="loginContainer">
+          <Form
+            {...layout}
+            name="basic"
+            initialValues={{ remember: true }}
+            onFinish={() =>
+              typeLog ? handleSignIn(email, password) : handleRegIn()
+            }
+          >
+            {/* имя */}
+            {!typeLog && (
+              <FormInput
+                inputType={true}
+                label={"Имя"}
+                name={"firstName"}
+                message={"Введите имя"}
+                value={firstName}
+                onChange={(event) => setFirstName(event.target.value)}
+              />
+            )}
+            {/* фамилия */}
+            {!typeLog && (
+              <FormInput
+                inputType={true}
+                label={"Фамилия"}
+                name={"lastName"}
+                message={"Введите фамилию"}
+                value={lastName}
+                onChange={(event) => setLastName(event.target.value)}
+              />
+            )}
+            {/* почта */}
+            <FormInput
+              inputType={true}
+              label={"Email"}
+              name={"email"}
+              message={"Введите почту"}
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+            />
+            {/* пароль */}
+            <FormInput
+              inputType={false}
+              label={"Пароль"}
+              name={"password"}
+              message={"Введите пароль"}
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+            />
 
-              <Form.Item
-                label="Пароль"
-                name="password"
-                rules={[{ required: true, message: "Введите пароль" }]}
-              >
-                <Input.Password
-                  required
-                  type={"password"}
-                  value={password}
-                  onChange={(event) => setPassword(event.target.value)}
-                />
-              </Form.Item>
-
-              <Form.Item {...tailLayout}>
-                <Button type="primary" htmlType="submit">
-                  Войти
-                </Button>
-                <div>
-                  Или{" "}
-                  <a onClick={() => setTypeLog(!typeLog)}>
-                    зарегистрироваться сейчас!
-                  </a>
-                </div>
-              </Form.Item>
-            </Form>
-          </div>
-        </Content>
-      );
-    } else {
-      return (
-        <Content>
-          <div className="loginContainer">
-            <Form
-              {...layout}
-              name="basic"
-              initialValues={{ remember: true }}
-              onFinish={handleRegIn}
-            >
-              <Form.Item
-                label="Имя"
-                name="firstName"
-                rules={[{ required: true, message: "Введите имя" }]}
-              >
-                <Input
-                  required
-                  value={firstName}
-                  onChange={(event) => setFirstName(event.target.value)}
-                />
-              </Form.Item>
-
-              <Form.Item
-                label="Фамилия"
-                name="lastName"
-                rules={[{ required: true, message: "Введите фамилию" }]}
-              >
-                <Input
-                  required
-                  value={lastName}
-                  onChange={(event) => setLastName(event.target.value)}
-                />
-              </Form.Item>
-              <Form.Item
-                label="Email"
-                name="email"
-                rules={[{ required: true, message: "Введите почту" }]}
-              >
-                <Input
-                  required
-                  type={"email"}
-                  value={email}
-                  onChange={(event) => setEmail(event.target.value)}
-                />
-              </Form.Item>
-
-              <Form.Item
-                label="Пароль"
-                name="password"
-                rules={[{ required: true, message: "Введите пароль" }]}
-              >
-                <Input.Password
-                  required
-                  type={"password"}
-                  value={password}
-                  onChange={(event) => setPassword(event.target.value)}
-                />
-              </Form.Item>
-
-              <Form.Item {...tailLayout}>
-                <Button type="primary" htmlType="submit">
-                  Зарегистрироваться
-                </Button>
-                <div>
-                  Или{" "}
-                  <a onClick={() => setTypeLog(!typeLog)}>войдите сейчас!</a>
-                </div>
-              </Form.Item>
-            </Form>
-          </div>
-        </Content>
-      );
-    }
+            <Form.Item {...tailLayout}>
+              <Button type="primary" htmlType="submit">
+                {typeLog ? "Войти" : "Зарегестрироваться"}
+              </Button>
+              <div style={{ marginTop: "5px" }}>
+                <a onClick={() => setTypeLog(!typeLog)}>
+                  Или {typeLog ? "зарегистрироваться сейчас!" : "войти сейчас!"}
+                </a>
+              </div>
+            </Form.Item>
+          </Form>
+        </div>
+      </Content>
+    );
   }
-}
-
-export default LoginForm;
+};
