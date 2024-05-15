@@ -8,7 +8,7 @@ import MainPage from "../../routes/MainPage";
 import Profile from "../../routes/Profile/Profile";
 import ProtectedRoute from "../../routes/ProtectedRoute";
 import Testing from "../../routes/Testing/Testing";
-import ViewData from "../../routes/ViewData/ViewData";
+import { ViewData } from "../../routes/ViewData/ViewData";
 import { auth } from "../../services/firebase";
 import {
   LOGIN_ROUTE,
