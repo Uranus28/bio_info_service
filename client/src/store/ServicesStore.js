@@ -33,14 +33,14 @@ export default class UserStore {
         ]
 
         this._menuApp = [
-            { id: "1", name: 'Главная', link: MAIN_ROUTE },
-            { id: "2", name: 'Аллергены', link: ALLERGENS_ROUTE },
-            { id: "3", name: 'Добавление', link: ADD_ROUTE },
-            { id: "4", name: 'Мониторинг', link: VIEW_ROUTE },
-            { id: "5", name: 'Архив', link: ARCHIVE_ROUTE },
-            { id: "6", name: 'Поиск', link: SEARCH_ROUTE },
-            { id: "7", name: 'Тестирование', link: TESTING_COURSES_ROUTE },
-            { id: "8", name: 'Профиль', link: PROFILE_ROUTE },
+            { id: "1", name: 'Главная', link: MAIN_ROUTE, need_auth:false },
+            { id: "2", name: 'Аллергены', link: ALLERGENS_ROUTE,need_auth:false },
+            { id: "3", name: 'Добавление', link: ADD_ROUTE,need_auth:true },
+            { id: "4", name: 'Мониторинг', link: VIEW_ROUTE,need_auth:false },
+            { id: "5", name: 'Архив', link: ARCHIVE_ROUTE,need_auth:false },
+            { id: "6", name: 'Поиск', link: SEARCH_ROUTE,need_auth:true },
+            { id: "7", name: 'Тестирование', link: TESTING_COURSES_ROUTE,need_auth:true },
+            { id: "8", name: 'Профиль', link: PROFILE_ROUTE,need_auth:false },
         ]
 
         this._routes = {

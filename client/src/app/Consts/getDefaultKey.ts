@@ -2,6 +2,7 @@ import { MAIN_ROUTE, ALLERGENS_ROUTE, ADD_ROUTE, VIEW_ROUTE, ARCHIVE_ROUTE, SEAR
 import history from "../../services/history";
 
 export const getDefaultKey = () => {
+  
     switch (history.location.pathname) {
       case MAIN_ROUTE:
         return "1";

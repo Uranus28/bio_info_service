@@ -17,20 +17,12 @@ interface AppHeaderProps {
 
 export const AppHeader: FC<AppHeaderProps> = ({ user }) => {
   const { services } = useContext(Context);
-
+  //const [isLoadingHeader, setIsLoadingHeader] = useState(false);
   const logOut = () => {
     return auth.signOut().then(() => {
       return history.push(LOGIN_ROUTE);
     });
   };
-
-  const menuItems = services.MenuApp.map((item: any) => {
-    return (
-      <Menu.Item key={item.id}>
-        <Link to={item.link}>{item.name}</Link>
-      </Menu.Item>
-    );
-  });
 
   return (
     <Header className="mainHeader">
@@ -40,7 +32,20 @@ export const AppHeader: FC<AppHeaderProps> = ({ user }) => {
         //@ts-ignore
         defaultSelectedKeys={getDefaultKey()}
       >
-        {menuItems}
+        {services.MenuApp.map((item: any) => {
+          return (
+            <Menu.Item
+              style={
+                item.need_auth && !user
+                  ? { pointerEvents: "none", opacity: "0.4" }
+                  : {}
+              }
+              key={item.id}
+            >
+              <Link to={item.link}>{item.name}</Link>
+            </Menu.Item>
+          );
+        })}
       </Menu>
       {user && (
         <Button type="link" onClick={logOut}>

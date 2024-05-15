@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import { Form, Input, Button, message } from "antd";
+import { Form, Button, message } from "antd";
 import { Layout } from "antd";
 import { auth } from "../../services/firebase";
 import "./styles.css";
