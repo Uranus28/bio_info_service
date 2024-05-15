@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import "../../App.css";
 import { Typography } from "antd";
 import { Row, Col } from "antd";
@@ -7,7 +7,7 @@ const { Panel } = Collapse;
 
 const { Title, Paragraph } = Typography;
 
-function Allergens() {
+export const Allergens: FC = () => {
   return (
     <div className="container">
       <Title style={{ textAlign: "center" }}>
@@ -518,6 +518,4 @@ function Allergens() {
       </Row>
     </div>
   );
-}
-
-export default Allergens;
+};

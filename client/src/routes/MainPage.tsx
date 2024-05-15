@@ -1,11 +1,11 @@
-import React from "react";
+import React, { FC } from "react";
 import "../App.css";
 import { Typography } from "antd";
 import { Row, Col } from "antd";
 
 const { Title, Paragraph } = Typography;
 
-function MainPage() {
+export const MainPage: FC = () => {
   return (
     <div className="container">
       <Title style={{ textAlign: "center" }}>
@@ -37,6 +37,4 @@ function MainPage() {
       </Row>
     </div>
   );
-}
-
-export default MainPage;
+};

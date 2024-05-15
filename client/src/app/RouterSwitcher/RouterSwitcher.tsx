@@ -1,10 +1,10 @@
 import React, { FC, useEffect, useState } from "react";
 import { Switch, Route } from "react-router-dom";
 import AddData from "../../routes/AddData/AddData";
-import Allergens from "../../routes/Allergens/Allergens";
-import Archive from "../../routes/Archive/Archive";
+import { Allergens } from "../../routes/Allergens/Allergens";
+import { Archive } from "../../routes/Archive/Archive";
 import { LoginForm } from "../../routes/LoginForm/LoginForm";
-import MainPage from "../../routes/MainPage";
+import { MainPage } from "../../routes/MainPage";
 import Profile from "../../routes/Profile/Profile";
 import ProtectedRoute from "../../routes/ProtectedRoute";
 import Testing from "../../routes/Testing/Testing";
