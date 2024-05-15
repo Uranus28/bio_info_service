@@ -8,17 +8,27 @@ import { SpeciesContextProvider } from "./services/speciesContext";
 import "./App.css";
 import { RouterSwitcher } from "./app/RouterSwitcher/RouterSwitcher";
 import { AppHeader } from "./widgets/MainFormWidgets";
+import { getDefaultKey } from "./app/Consts/getDefaultKey";
 const { Footer } = Layout;
 
 export const App: FC = () => {
   const [user, setUser] = useState<any>(null);
+  const [selectedKey, setSelectedKey] = useState(getDefaultKey());
 
   return (
     <SpeciesContextProvider>
       <Router history={history}>
         <Layout style={{ minHeight: "100vh", minWidth: "150vh" }}>
-          <AppHeader user={user} />
-          <RouterSwitcher user={user} setUser={setUser} />
+          <AppHeader
+            user={user}
+            selectedKey={selectedKey}
+            setSelectedKey={setSelectedKey}
+          />
+          <RouterSwitcher
+            user={user}
+            setUser={setUser}
+            setSelectedKey={setSelectedKey}
+          />
           <Footer style={{ textAlign: "center" }}>PSU, 2020</Footer>
         </Layout>
       </Router>

@@ -23,8 +23,9 @@ const tailLayout = {
 
 interface LoginFormProps {
   setUser: React.Dispatch<any>;
+  setSelectedKey: React.Dispatch<React.SetStateAction<string>>;
 }
-export const LoginForm: FC<LoginFormProps> = ({ setUser }) => {
+export const LoginForm: FC<LoginFormProps> = ({ setUser, setSelectedKey }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -43,7 +44,6 @@ export const LoginForm: FC<LoginFormProps> = ({ setUser }) => {
   };
 
   const handleRegIn = async () => {
-    console.log("aaaaaaaaaaaa");
     try {
       const res = await auth.createUserWithEmailAndPassword(email, password);
       const user = res.user;
@@ -86,8 +86,8 @@ export const LoginForm: FC<LoginFormProps> = ({ setUser }) => {
     try {
       const res = await auth.signInWithEmailAndPassword(email, password);
       fetchUser(res.user?.uid);
+      setSelectedKey("1");
       history.push(MAIN_ROUTE);
-      // setErrorMessage("");
     } catch (err) {
       let errMessage = "";
       if (err instanceof Error) {
@@ -95,7 +95,6 @@ export const LoginForm: FC<LoginFormProps> = ({ setUser }) => {
       }
       console.log(errMessage);
       message.error("Логин или пароль введены неверно");
-      // setErrorMessage(errMessage);
     }
   };
 

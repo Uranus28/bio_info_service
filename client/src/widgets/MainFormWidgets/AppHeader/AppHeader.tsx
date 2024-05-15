@@ -13,13 +13,20 @@ const { Header } = Layout;
 
 interface AppHeaderProps {
   user: any;
+  selectedKey: string;
+  setSelectedKey: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export const AppHeader: FC<AppHeaderProps> = ({ user }) => {
+export const AppHeader: FC<AppHeaderProps> = ({
+  user,
+  selectedKey,
+  setSelectedKey,
+}) => {
   const { services } = useContext(Context);
   //const [isLoadingHeader, setIsLoadingHeader] = useState(false);
   const logOut = () => {
     return auth.signOut().then(() => {
+      setSelectedKey("8");
       return history.push(LOGIN_ROUTE);
     });
   };
@@ -29,8 +36,8 @@ export const AppHeader: FC<AppHeaderProps> = ({ user }) => {
       <Menu
         theme="dark"
         mode="horizontal"
-        //@ts-ignore
-        defaultSelectedKeys={getDefaultKey()}
+        selectedKeys={[selectedKey]}
+        onClick={(e) => setSelectedKey(getDefaultKey())}
       >
         {services.MenuApp.map((item: any) => {
           return (
@@ -48,7 +55,7 @@ export const AppHeader: FC<AppHeaderProps> = ({ user }) => {
         })}
       </Menu>
       {user && (
-        <Button type="link" onClick={logOut}>
+        <Button type="link" onClick={(e) => logOut()}>
           Выйти
         </Button>
       )}

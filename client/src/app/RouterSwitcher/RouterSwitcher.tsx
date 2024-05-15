@@ -39,11 +39,16 @@ import Layout from "antd/lib/layout";
 interface RouterSwitcherProps {
   user: any;
   setUser: React.Dispatch<any>;
+  setSelectedKey: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const { Content } = Layout;
 
-export const RouterSwitcher: FC<RouterSwitcherProps> = ({ user, setUser }) => {
+export const RouterSwitcher: FC<RouterSwitcherProps> = ({
+  user,
+  setUser,
+  setSelectedKey,
+}) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -59,7 +64,7 @@ export const RouterSwitcher: FC<RouterSwitcherProps> = ({ user, setUser }) => {
         exact
         render={() => (
           <Content>
-            <LoginForm setUser={setUser} />
+            <LoginForm setUser={setUser} setSelectedKey={setSelectedKey} />
           </Content>
         )}
       />

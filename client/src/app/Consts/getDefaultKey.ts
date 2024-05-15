@@ -1,8 +1,8 @@
-import { MAIN_ROUTE, ALLERGENS_ROUTE, ADD_ROUTE, VIEW_ROUTE, ARCHIVE_ROUTE, SEARCH_ROUTE, TESTING_ROUTE, PROFILE_ROUTE } from "../../utils/consts";
+import { MAIN_ROUTE, ALLERGENS_ROUTE, ADD_ROUTE, VIEW_ROUTE, ARCHIVE_ROUTE, SEARCH_ROUTE, TESTING_ROUTE, PROFILE_ROUTE, LOGIN_ROUTE } from "../../utils/consts";
 import history from "../../services/history";
 
 export const getDefaultKey = () => {
-  
+  console.log(history.location.pathname)
     switch (history.location.pathname) {
       case MAIN_ROUTE:
         return "1";
@@ -19,7 +19,8 @@ export const getDefaultKey = () => {
       case TESTING_ROUTE:
         return "7";
       case PROFILE_ROUTE:
-        return "8";
+      case LOGIN_ROUTE:
+        return "8";        
       default:
         return "1";
     }
