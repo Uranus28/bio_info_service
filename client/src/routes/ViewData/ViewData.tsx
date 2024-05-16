@@ -8,11 +8,10 @@ import {
   getDataBetweenTwoDates,
 } from "../../services/api";
 import { SpeciesContext } from "../../services/speciesContext";
-import { Specie } from "../../types/types";
 import isEmpty from "../../services/isEmpty";
-import getLevel from "../../services/getLevel";
 import moment from "moment";
 import { RenderTwoDatesData } from "./RenderTwoDatesData/RenderTwoDatesData";
+import { RenderSpecies } from "./RenderSpecies/RenderSpecies";
 
 const { Title } = Typography;
 
@@ -42,7 +41,7 @@ export const ViewData: FC = () => {
   const selectSecondDate = async (value: any) => {
     if (value) {
       setSecondDate(moment(value).valueOf());
-      if (secondDate && firstDate) {
+      if (firstDate) {
         const second = moment(value).valueOf();
         const result = await getDataBetweenTwoDates(firstDate, second);
         setTwoDatesData(result);
@@ -50,44 +49,12 @@ export const ViewData: FC = () => {
     }
   };
 
-  const renderItems = (items: any, type: string) => {
-    return items.map((item: Specie) => (
-      <div className="specie" key={item.id}>
-        <div key={item.id}>{item.name_ru}</div>
-        <div className={`${getLevel(type, data[item.id])} viewDataValue`}>
-          {data[item.id]}
-        </div>
-      </div>
-    ));
-  };
-
-  const renderSpecies = (species: Array<Specie>) => {
-    const trees = species.filter((item) => {
-      return item.type === "tree";
-    });
-    const herbs = species.filter((item) => {
-      return item.type === "herb";
-    });
-    return (
-      <div className="viewDataWrapper">
-        <div>
-          <h3>Деревья</h3>
-          {renderItems(trees, "tree")}
-        </div>
-        <div className="viewDataRightColumn">
-          <h3>Травы</h3>
-          {renderItems(herbs, "herb")}
-        </div>
-      </div>
-    );
-  };
-
   const renderContent = () => {
     if (data === undefined) {
       return <div className="informationText">Нет данных на эту дату</div>;
     } else {
       if (!isEmpty(data)) {
-        return renderSpecies(species);
+        return <RenderSpecies species={species} data={data} />;
       } else {
         return null;
       }

@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import { Switch, Route } from "react-router-dom";
-import AddData from "../../routes/AddData/AddData";
+import { AddData } from "../../routes/AddData/AddData";
 import { Allergens } from "../../routes/Allergens/Allergens";
 import { Archive } from "../../routes/Archive/Archive";
 import { LoginForm } from "../../routes/LoginForm/LoginForm";

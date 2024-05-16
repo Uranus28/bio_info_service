@@ -1,77 +1,29 @@
-import React, { useState, useContext } from "react";
-import { Specie } from "../../types/types";
-import { DatePicker, InputNumber, Button, message } from "antd";
+import React, { useState, useContext, FC } from "react";
+import { DatePicker, Button, message } from "antd";
 import moment from "moment";
 import { db } from "../../services/firebase";
 import "./styles.css";
 import "../../App.css";
 import { SpeciesContext } from "../../services/speciesContext";
+import { Species } from "./Species/Species";
+import { getMonitoringDataByDay } from "../../services/api";
+import { filterData } from "../../API/filtering";
 
-function AddData() {
+interface AddDataProps {
+  //setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export const AddData: FC<AddDataProps> = () => {
   const [species] = useContext(SpeciesContext);
   const [inputs, setInputs] = useState<any>({});
+  const [prevData, setPrevData] = useState<any>({});
+  // const [loadingPage, setLoadingPage] = useState(true);
   const [date, setDate] = useState({
     day: 0,
     year: 0,
     month: 0,
     dateString: "",
   });
-
-  const changeInput = (id: string, value: string | number | undefined) => {
-    setInputs((inputs: any) => {
-      return {
-        ...inputs,
-        [id]: value,
-      };
-    });
-  };
-
-  const renderList = (list: any) => {
-    return list.map((item: Specie) => (
-      <div key={item.id} className="addDataInput">
-        <label htmlFor={item.id}>{item.name_ru}</label>
-        <InputNumber
-          name={item.id}
-          min={0}
-          value={inputs[item.id] || ""}
-          onChange={(value) => changeInput(item.id, value)}
-        />
-      </div>
-    ));
-  };
-
-  const renderSpecies = (species: Array<Specie>) => {
-    const trees = species.filter((item) => {
-      return item.type === "tree";
-    });
-    const herbs = species.filter((item) => {
-      return item.type === "herb";
-    });
-
-    return (
-      <div className="addDataInputs">
-        <div>
-          <h3>Деревья</h3>
-          {renderList(trees)}
-        </div>
-        <div className="addDataRightColumn">
-          <h3>Травы</h3>
-          {renderList(herbs)}
-        </div>
-      </div>
-    );
-    // return species.map((item: Specie) => (
-    //   <div key={item.id} className="addDataInput">
-    //     <label htmlFor={item.id}>{item.name_ru}</label>
-    //     <InputNumber
-    //       name={item.id}
-    //       min={0}
-    //       value={inputs[item.id] || ""}
-    //       onChange={(value) => changeInput(item.id, value)}
-    //     />
-    //   </div>
-    // ));
-  };
 
   const selectDate = (value: any, dateString: string) => {
     const year = moment(dateString).get("year");
@@ -83,17 +35,25 @@ function AddData() {
       year,
       dateString,
     });
+
+    if (dateString != "") {
+      getMonitoringDataByDay(dateString).then((value: any) => {
+        setPrevData(value);
+      });
+    }
   };
 
   const sendData = () => {
     let dataToSend = {};
+
     species.map((item: any) => {
       dataToSend = {
         ...dataToSend,
-        [item.id]: parseInt(inputs[item.id]) || 0,
+        [item.id]:
+          parseInt(inputs[item.id]) + prevData[item.id] ||
+          0 + prevData[item.id],
       };
     });
-
     db.collection("monitoring")
       .doc(`${date.dateString}`)
       .set({
@@ -111,18 +71,42 @@ function AddData() {
         message.error("Ошибка при добавлении документа");
       });
   };
-
+  // if (loadingPage) return <div>loading...</div>;
+  // else
   return (
     <div className="container">
+      {/* {!loadingPage && ( */}
       <div>
+        {/* {!loadingPage &&  */}
         <DatePicker onChange={selectDate} />
-        <div className="speciesWrapper">{renderSpecies(species)}</div>
-        <Button type="primary" onClick={sendData}>
+        {/* } */}
+        <div className="speciesWrapper">
+          <Species
+            // setLoadingPage={setLoadingPage}
+            setInputs={setInputs}
+            inputs={inputs}
+            // trees={filterData(species, "tree")}
+            // herbs={filterData(species, "herb")}
+            // loadingPage={loadingPage}
+            trees={React.useMemo(() => filterData(species, "tree"), [species])}
+            herbs={React.useMemo(() => filterData(species, "herb"), [species])}
+          />
+        </div>
+        {/* {!loadingPage && ( */}
+        <Button
+          style={
+            date.dateString === ""
+              ? { pointerEvents: "none", opacity: "0.4" }
+              : {}
+          }
+          type="primary"
+          onClick={sendData}
+        >
           Отправить
         </Button>
+        {/* )} */}
       </div>
+      {/* )} */}
     </div>
   );
-}
-
-export default AddData;
+};
