@@ -18,7 +18,15 @@ export const App: FC = () => {
   return (
     <SpeciesContextProvider>
       <Router history={history}>
-        <Layout style={{ minHeight: "100vh", minWidth: "150vh" }}>
+        <Layout
+          style={{
+            // overflow: "auto",
+            minHeight: "100vh",
+            minWidth: "155vh",
+            height: "100%",
+            display: "flex",
+          }}
+        >
           <AppHeader
             user={user}
             selectedKey={selectedKey}

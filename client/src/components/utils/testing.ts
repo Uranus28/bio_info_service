@@ -6,23 +6,23 @@ export const isMenuCourses = () => {
         history.location.pathname === TESTING_ALL_COURSES_ROUTE
 } 
 
-export const isAdmin = (user) => {
+export const isAdmin = (user:any) => {
     return user.role === "admin"; 
 }
 
-export function deepEqual(obj1, obj2){
+export function deepEqual(obj1:any, obj2:any){
     return JSON.stringify(obj1) === JSON.stringify(obj2);
 }
 
-export const getWordAnswer = (index) => {
+export const getWordAnswer = (index:number) => {
     const listWords = ["a)", "b)", "c)", "d)", "e)", "f)", "g)", "h)", "i)", "j)", "k)", "l)"]
     return listWords[index]
 }
 
-export const setLocalStorage = (key, item) => {
+export const setLocalStorage = (key:string, item:any) => {
     localStorage.setItem(key, JSON.stringify(item))
 } 
 
-export const getLocalStorage = (key) => {
-    return JSON.parse(localStorage.getItem(key))
+export const getLocalStorage = (key:string) => {
+    return JSON.parse(localStorage.getItem(key) || "{}")
 } 

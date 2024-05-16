@@ -33,7 +33,7 @@ import {
   COURSE_TERMS_ROUTE,
   COURSE_ONTOLOGY_ROUTE,
 } from "../../utils/consts";
-import Search from "../../routes/Search/Search";
+import { Search } from "../../routes/Search/Search";
 import Layout from "antd/lib/layout";
 
 interface RouterSwitcherProps {
