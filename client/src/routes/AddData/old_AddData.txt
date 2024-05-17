@@ -9,12 +9,15 @@ import { Species } from "./Species/Species";
 import { getMonitoringDataByDay } from "../../services/api";
 import { filterData } from "../../API/filtering";
 
-interface AddDataProps {}
+interface AddDataProps {
+  //setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
 export const AddData: FC<AddDataProps> = () => {
   const [species] = useContext(SpeciesContext);
   const [inputs, setInputs] = useState<any>({});
   const [prevData, setPrevData] = useState<any>({});
+  // const [loadingPage, setLoadingPage] = useState(true);
   const [date, setDate] = useState({
     day: 0,
     year: 0,
@@ -68,18 +71,28 @@ export const AddData: FC<AddDataProps> = () => {
         message.error("Ошибка при добавлении документа");
       });
   };
+  // if (loadingPage) return <div>loading...</div>;
+  // else
   return (
     <div className="container">
+      {/* {!loadingPage && ( */}
       <div>
+        {/* {!loadingPage &&  */}
         <DatePicker onChange={selectDate} />
+        {/* } */}
         <div className="speciesWrapper">
           <Species
+            // setLoadingPage={setLoadingPage}
             setInputs={setInputs}
             inputs={inputs}
+            // trees={filterData(species, "tree")}
+            // herbs={filterData(species, "herb")}
+            // loadingPage={loadingPage}
             trees={React.useMemo(() => filterData(species, "tree"), [species])}
             herbs={React.useMemo(() => filterData(species, "herb"), [species])}
           />
         </div>
+        {/* {!loadingPage && ( */}
         <Button
           style={
             date.dateString === ""
@@ -91,7 +104,9 @@ export const AddData: FC<AddDataProps> = () => {
         >
           Отправить
         </Button>
+        {/* )} */}
       </div>
+      {/* )} */}
     </div>
   );
 };

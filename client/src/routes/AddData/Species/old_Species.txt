@@ -9,13 +9,33 @@ interface SpeciesProps {
   inputs: any;
   trees: Specie[];
   herbs: Specie[];
+  //   setLoadingPage: React.Dispatch<React.SetStateAction<boolean>>;
+  //   loadingPage: boolean;
 }
 export const Species: FC<SpeciesProps> = ({
   setInputs,
   inputs,
   trees,
+  //   setLoadingPage,
+  //   loadingPage,
   herbs,
 }) => {
+  //пытался починить подгрузку страницы, чтобы не скакала
+
+  //   const [loadingCount, setLoadingCount] = useState(0);
+
+  //   useEffect(() => {
+  //     if (loadingCount < 20) {
+  //       setLoadingCount(loadingCount + 1);
+  //       setLoadingPage(true);
+  //     }
+  //     if (loadingCount == 20) {
+  //       console.log("done");
+  //       setLoadingCount(loadingCount + 1);
+  //       setLoadingPage(false);
+  //     }
+  //   });
+
   const changeInput = (id: string, value: string | number | undefined) => {
     setInputs((inputs: any) => {
       return {
@@ -37,7 +57,7 @@ export const Species: FC<SpeciesProps> = ({
           onChange={(value) => {
             const userInput = Number(value); // immutable value
             if (Number.isInteger(userInput)) changeInput(item.id, value);
-            else value = "";
+            else value = ""; //console.log(value);
           }}
         />
       </div>
@@ -47,11 +67,15 @@ export const Species: FC<SpeciesProps> = ({
   return (
     <div className="addDataInputs">
       <div>
+        {/* {!loadingPage &&  */}
         <h3>Деревья</h3>
+        {/* } */}
         {renderList(trees)}
       </div>
       <div className="addDataRightColumn">
+        {/* {!loadingPage &&  */}
         <h3>Травы</h3>
+        {/* } */}
         {renderList(herbs)}
       </div>
     </div>
