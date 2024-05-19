@@ -6,6 +6,7 @@ import EditRole from "../ModalForms/EditRole";
 import { getLocalStorage, isAdmin } from "../../utils/testing";
 import { USER_STORAGE } from "../../../utils/consts";
 import { Loader } from "../../UI/Loader/Loader";
+import { AvatarInfo } from "../../../shared/AvatarInfo/AvatarInfo";
 interface UsersListProps {
   onUpdateUsers: () => void;
   isEdit: boolean;
@@ -55,11 +56,7 @@ export const UsersList: FC<UsersListProps> = ({
           renderItem={(item: any) => (
             <List.Item key={item.uid}>
               <List.Item.Meta
-                avatar={
-                  <Avatar style={{ backgroundColor: "coral" }}>
-                    {item.fullName.substring(0, 1)}
-                  </Avatar>
-                }
+                avatar={<AvatarInfo firstL={item.fullName.substring(0, 1)} />}
                 title={item.fullName}
                 description={item.role}
               />

@@ -9,6 +9,7 @@ import CreateCourse from '../Course/ModalForms/CreateCourse';
 import { COURSE_INFO_ROUTE, CUR_COURSE_STORAGE, MY_COURSES_STORAGE, TESTING_ALL_COURSES_ROUTE, USER_STORAGE } from '../../utils/consts';
 import TestingApi from '../../API/TestingApi';
 import {Loader} from '../UI/Loader/Loader';
+import { AvatarInfo } from "../../shared/AvatarInfo/AvatarInfo";
 
 const Courses = () => {
     const [isCreateCourseFormVisible, setIsCreateCourseFormVisible] = useState(false)
@@ -66,7 +67,7 @@ const Courses = () => {
                     onClick={() => handleCourse(item)}
                     key={index}
                 >
-                    <Avatar src="https://joeschmoe.io/api/v1/random" style={{marginRight: "20px"}}/>
+            <AvatarInfo firstL={item.courseName.substring(0, 1)} />
                     <div className="ms-2 me-auto">
                         <div className="fw-bold">{item.courseName}</div>
                         {item.courseDescription}

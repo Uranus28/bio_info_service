@@ -15,6 +15,7 @@ import TestingApi from "../../API/TestingApi";
 import { useFetching } from "../hooks/useFetching";
 import { Loader } from "../UI/Loader/Loader";
 import { ErrorMessage } from "../UI/Messages/ErrorMessage";
+import { AvatarInfo } from "../../shared/AvatarInfo/AvatarInfo";
 
 export const CoursesAll: FC = () => {
   const [isCreateCourseFormVisible, setIsCreateCourseFormVisible] =
@@ -114,10 +115,7 @@ export const CoursesAll: FC = () => {
           key={item.courseName}
         >
           <Col xs={1}>
-            <Avatar
-              src="https://joeschmoe.io/api/v1/random"
-              style={{ marginRight: "15px" }}
-            />
+            <AvatarInfo firstL={item.courseName.substring(0, 1)} />
           </Col>
           <Col
             style={{ cursor: "pointer" }}
