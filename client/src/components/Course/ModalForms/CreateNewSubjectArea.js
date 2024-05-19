@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import 'antd/dist/antd.css';
 import { Modal, Button, Form, Input, message } from 'antd';
 import TestingApi from '../../../API/TestingApi';
-import Loader from '../../UI/Loader/Loader';
+import {Loader} from '../../UI/Loader/Loader';
 
 const CreateSubjectArea = ({isVisible, setIsVisible, onUpdate}) => {
     const [isLoading, setIsLoading] = useState(false)

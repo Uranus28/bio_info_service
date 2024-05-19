@@ -5,7 +5,7 @@ import { Col, Divider, Form, message, Row, Space } from "antd";
 import { FormOutlined } from '@ant-design/icons';
 import AttemptTask from "../Task/AttemptTask";
 import TestingApi from "../../../API/TestingApi";
-import Loader from "../../UI/Loader/Loader";
+// import {Loader} from "../../UI/Loader/Loader";
 import TextArea from "antd/lib/input/TextArea";
 import { getLocalStorage } from "../../utils/testing";
 import { CUR_ATTEMPTS_STORAGE, USER_STORAGE } from "../../../utils/consts";

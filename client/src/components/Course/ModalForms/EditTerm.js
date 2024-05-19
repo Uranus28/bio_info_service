@@ -3,7 +3,7 @@ import 'antd/dist/antd.css';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { Modal, Button, Form, Input, message, Select, Checkbox, Space } from 'antd';
 import TestingApi from '../../../API/TestingApi';
-import Loader from '../../UI/Loader/Loader';
+import {Loader} from '../../UI/Loader/Loader';
 import TextArea from 'antd/lib/input/TextArea';
 import { deepEqual } from '../../utils/testing';
 

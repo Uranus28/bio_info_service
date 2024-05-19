@@ -7,7 +7,7 @@ import { FormOutlined } from '@ant-design/icons';
 import CreateModule from "../ModalForms/CreateModule";
 import CreateLectureForm from "../ModalForms/CreateLectureForm";
 import TestingApi from "../../../API/TestingApi";
-import Loader from "../../UI/Loader/Loader";
+import {Loader} from "../../UI/Loader/Loader";
 import { CUR_COURSE_STORAGE, CUR_MODULE_STORAGE, USER_STORAGE } from "../../../utils/consts";
 
 const CourseLections = () => {

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import 'antd/dist/antd.css';
 import { Button, Form, Input, message, Select  } from "antd";
 import TestingApi from "../../../../API/TestingApi";
-import Loader from "../../../UI/Loader/Loader";
+import {Loader} from "../../../UI/Loader/Loader";
 import { getLocalStorage, isAdmin } from "../../../utils/testing";
 import { UserOutlined } from '@ant-design/icons';
 import ListTerms from "./ListTerms";

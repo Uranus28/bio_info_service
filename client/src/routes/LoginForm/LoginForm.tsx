@@ -4,7 +4,7 @@ import { Layout } from "antd";
 import { auth } from "../../services/firebase";
 import "./styles.css";
 import TestingApi from "../../API/TestingApi";
-import Loader from "../../components/UI/Loader/Loader";
+import { Loader } from "../../components/UI/Loader/Loader";
 import { setLocalStorage } from "../../components/utils/testing";
 import { MAIN_ROUTE, USER_STORAGE } from "../../utils/consts";
 import history from "../../services/history";

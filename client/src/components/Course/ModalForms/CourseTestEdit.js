@@ -4,7 +4,7 @@ import { Modal, Button, Form, Input, Space, Select, message } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import EditTask from '../Task/EditTask';
 import TestingApi from '../../../API/TestingApi';
-import Loader from '../../UI/Loader/Loader';
+import {Loader} from '../../UI/Loader/Loader';
 import { deepEqual, getLocalStorage } from '../../utils/testing';
 import TextArea from 'antd/lib/input/TextArea';
 import { CUR_MODULE_STORAGE, CUR_TEST_STORAGE, MULTIPLE_TASK_TYPE, TEXT_TASK_TYPE } from '../../../utils/consts';

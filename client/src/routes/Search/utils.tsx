@@ -188,9 +188,10 @@ export const getTitlePage = (
 };
 
 export const listResources = (
-  resources: UserStore["Resources"] | UserStore["Themes"] | UserStore["Years"]
+  // resources: UserStore["Resources"] | UserStore["Themes"] | UserStore["Years"]
+  resources: any
 ) =>
-  resources.map((item) => {
+  resources.map((item: any) => {
     return (
       <option value={item.id} key={item.id}>
         {item.name}

@@ -4,11 +4,11 @@ import { Divider, Avatar, message } from "antd";
 import {Row, Col, ListGroup, Button, Badge} from "react-bootstrap"
 import { BookOutlined } from '@ant-design/icons';
 import TestingApi from "../../../API/TestingApi";
-import Loader from "../../UI/Loader/Loader";
+import {Loader} from "../../UI/Loader/Loader";
 import { getLocalStorage, isAdmin, setLocalStorage } from "../../utils/testing";
 import { CUR_COURSE_STORAGE, MY_COURSES_STORAGE, TESTING_ALL_COURSES_ROUTE, USER_STORAGE } from "../../../utils/consts";
 import history from "../../../services/history";
-import UsersList from "../Users/UsersList";
+import {UsersList} from "../Users/UsersList";
 import EditCourse from "../ModalForms/CourseEdit";
 
 const CourseInfo = () => {

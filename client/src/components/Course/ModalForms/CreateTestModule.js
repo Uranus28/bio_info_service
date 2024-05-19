@@ -6,7 +6,7 @@ import EditTask from '../Task/EditTask';
 import TestingApi from '../../../API/TestingApi';
 import { CUR_COURSE_STORAGE, CUR_MODULE_STORAGE, MULTIPLE_TASK_TYPE, TEXT_TASK_TYPE } from '../../../utils/consts';
 import TextArea from 'antd/lib/input/TextArea';
-import Loader from '../../UI/Loader/Loader';
+import {Loader} from '../../UI/Loader/Loader';
 import { getLocalStorage, setLocalStorage } from '../../utils/testing';
 
 const { Option } = Select;

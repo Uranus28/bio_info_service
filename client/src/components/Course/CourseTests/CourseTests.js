@@ -9,7 +9,7 @@ import { FormOutlined } from '@ant-design/icons';
 import CreateTestForm from "../ModalForms/CreateTestModule";
 import CreateModule from "../ModalForms/CreateModule";
 import TestingApi from "../../../API/TestingApi";
-import Loader from "../../UI/Loader/Loader";
+import {Loader} from "../../UI/Loader/Loader";
 import ModuleEdit from "../ModalForms/EditModule";
 
 const CourseTests = () => {

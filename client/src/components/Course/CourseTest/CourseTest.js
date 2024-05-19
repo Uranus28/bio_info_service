@@ -8,7 +8,7 @@ import TextTask from "../../Tasks/Text/TextTask";
 import { CUR_ATTEMPTS_STORAGE, CUR_TEST_STORAGE, LOGICAL_TASK_TYPE, MULTIPLE_TASK_TYPE, SINGLE_TASK_TYPE, USER_STORAGE } from "../../../utils/consts";
 import Task from "../../Tasks/Task/Task";
 import TestingApi from "../../../API/TestingApi";
-import Loader from "../../UI/Loader/Loader";
+import {Loader} from "../../UI/Loader/Loader";
 import AttemptsDetails from "../AttemptsDetails/AttemptsDetails";
 import { getLocalStorage, setLocalStorage } from "../../utils/testing";
 

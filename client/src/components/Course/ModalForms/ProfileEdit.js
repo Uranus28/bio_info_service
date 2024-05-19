@@ -3,7 +3,7 @@ import 'antd/dist/antd.css';
 import { Modal, Button, Form, Input, message } from 'antd';
 import { deepEqual, getLocalStorage } from '../../utils/testing';
 import TestingApi from '../../../API/TestingApi';
-import Loader from '../../UI/Loader/Loader';
+import {Loader} from '../../UI/Loader/Loader';
 import { USER_STORAGE } from '../../../utils/consts';
 
 const ProfileEdit = ({isVisible, setIsVisible}) => {

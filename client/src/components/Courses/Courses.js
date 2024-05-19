@@ -8,7 +8,7 @@ import { getLocalStorage, isAdmin, setLocalStorage } from '../utils/testing';
 import CreateCourse from '../Course/ModalForms/CreateCourse';
 import { COURSE_INFO_ROUTE, CUR_COURSE_STORAGE, MY_COURSES_STORAGE, TESTING_ALL_COURSES_ROUTE, USER_STORAGE } from '../../utils/consts';
 import TestingApi from '../../API/TestingApi';
-import Loader from '../UI/Loader/Loader';
+import {Loader} from '../UI/Loader/Loader';
 
 const Courses = () => {
     const [isCreateCourseFormVisible, setIsCreateCourseFormVisible] = useState(false)

@@ -4,8 +4,7 @@ import { Collapse, Divider, List, message  } from "antd";
 import {Row, Col, Button } from "react-bootstrap"
 import { FormOutlined } from '@ant-design/icons';
 import TestingApi from "../../../API/TestingApi";
-import Loader from "../../UI/Loader/Loader";
-import ErrorMessage from "../../UI/Messages/ErrorMessage";
+import {Loader} from "../../UI/Loader/Loader";
 import { getLocalStorage } from "../../utils/testing";
 import { USER_STORAGE } from "../../../utils/consts";
 const { Panel } = Collapse;

@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
+import { Loader } from "../components/UI/Loader/Loader";
 
 const ProtectedRoute = ({
   component: Component,
@@ -12,7 +13,7 @@ const ProtectedRoute = ({
       {...rest}
       render={(props) => {
         if (loading) {
-          return <div>loading</div>;
+          return <Loader />;
         } else {
           if (user) {
             return <Component {...rest} {...props} />;

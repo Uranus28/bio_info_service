@@ -3,7 +3,7 @@ import 'antd/dist/antd.css';
 import { Modal, Button, Form, Input, message, Select } from 'antd';
 import { useFetching } from '../../hooks/useFetching';
 import TestingApi from '../../../API/TestingApi';
-import Loader from '../../UI/Loader/Loader';
+import {Loader} from '../../UI/Loader/Loader';
 import { CUR_COURSE_STORAGE } from '../../../utils/consts';
 import { getLocalStorage, setLocalStorage } from '../../utils/testing';
 const { Option } = Select;

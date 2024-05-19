@@ -1,9 +1,9 @@
 import React, { useState, useContext, useEffect, FC } from "react";
 import { InputGroup } from "react-bootstrap";
 import { Context } from "../../index";
-import Pagination from "../../components/UI/Pagination/Pagination";
+import { Pagination } from "../../components/UI/Pagination/Pagination";
 import "./Search.css";
-import Loader from "../../components/UI/Loader/Loader";
+import { Loader } from "../../components/UI/Loader/Loader";
 import { useFetching } from "../../components/hooks/useFetching";
 import {
   getNumberSearchPage,
@@ -65,7 +65,7 @@ export const Search: FC = () => {
     const idChange = e.target.id;
     setSearchPages([]);
     services.setItems([]);
-    let typeSrch;
+    let typeSrch: number;
     if (idChange === "name") {
       typeSrch = getTypeSearchChangeName(resource);
     } else if (idChange === "theme") {
@@ -206,9 +206,7 @@ export const Search: FC = () => {
             </h2>
           )}
           {isDataLoading ? (
-            <div style={{ display: "flex", justifyContent: "center" }}>
-              <Loader></Loader>
-            </div>
+            <Loader />
           ) : data ? (
             cardsItems(data, typeSearch)
           ) : (

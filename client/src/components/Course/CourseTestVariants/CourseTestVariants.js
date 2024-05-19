@@ -5,7 +5,7 @@ import history from "../../../services/history";
 import { COURSE_TESTS_ROUTE, CUR_ATTEMPTS_STORAGE, CUR_COURSE_STORAGE, CUR_TEST_STORAGE, TESTS_TEST_ATTEMPTS_DETAILS_ROUTE, TESTS_TEST_ATTEMPT_ROUTE, TESTS_TEST_CHECK_WORKS_ROUTE, TESTS_TEST_ROUTE, USER_STORAGE } from "../../../utils/consts";
 import { getLocalStorage, isAdmin, setLocalStorage } from "../../utils/testing";
 import TestEdit from "../ModalForms/CourseTestEdit";
-import Loader from "../../UI/Loader/Loader";
+import {Loader} from "../../UI/Loader/Loader";
 import TestingApi from "../../../API/TestingApi";
 import { Divider, message, Row } from "antd";
 

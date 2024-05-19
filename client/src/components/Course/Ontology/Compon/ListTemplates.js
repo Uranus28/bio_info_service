@@ -3,7 +3,7 @@ import "antd/dist/antd.css";
 import { Avatar, Button, Divider, List, message } from "antd";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { getLocalStorage, isAdmin } from "../../../utils/testing";
-import Loader from "../../../UI/Loader/Loader";
+import {Loader} from "../../../UI/Loader/Loader";
 import TestingApi from "../../../../API/TestingApi";
 import { USER_STORAGE } from "../../../../utils/consts";
 
