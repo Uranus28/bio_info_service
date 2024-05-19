@@ -5,7 +5,7 @@ import TestingApi from '../../../API/TestingApi';
 
 const { Option } = Select;
 
-const RoleEdit = ({onUpdateUsers, user, isVisible, setIsVisible}) => {
+const EditRole = ({onUpdateUsers, user, isVisible, setIsVisible}) => {
     const [form] = Form.useForm();
     const [isLoading, setIsLoading] = useState(false)
 
@@ -84,6 +84,7 @@ const RoleEdit = ({onUpdateUsers, user, isVisible, setIsVisible}) => {
                     >
                         <Option value="student">student</Option>
                         <Option value="admin">admin</Option>
+                        <Option value="teacher">teacher</Option>
                     </Select>
                 </Form.Item>
                 <Form.Item name="email" label="Email">
@@ -100,4 +101,4 @@ const RoleEdit = ({onUpdateUsers, user, isVisible, setIsVisible}) => {
     );
 }
 
-export default RoleEdit;
+export default EditRole;

@@ -3,7 +3,7 @@ import 'antd/dist/antd.css';
 import { Button, Form, Input, message, Select  } from "antd";
 import TestingApi from "../../../../API/TestingApi";
 import {Loader} from "../../../UI/Loader/Loader";
-import { getLocalStorage, isAdmin } from "../../../utils/testing";
+import { getLocalStorage, isTeacher } from "../../../utils/testing";
 import { UserOutlined } from '@ant-design/icons';
 import ListTerms from "./ListTerms";
 import { Context } from "../../../..";
@@ -83,7 +83,7 @@ const Templates = ({updatePage}) => {
                         onChange={onChangeTemplate}
                     />
                     <ListTemplates onUpdate={onUpdate} templates={filterTemplates}></ListTemplates>
-                    { isAdmin(user)
+                    { isTeacher(user)
                         ?   <Button 
                             style={{verticalAlign: "bottom", marginTop: "20px"}} 
                             variant="outline-success"

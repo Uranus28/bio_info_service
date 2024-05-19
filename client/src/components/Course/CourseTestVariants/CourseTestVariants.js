@@ -3,7 +3,7 @@ import 'antd/dist/antd.css';
 import {Button} from "react-bootstrap"
 import history from "../../../services/history";
 import { COURSE_TESTS_ROUTE, CUR_ATTEMPTS_STORAGE, CUR_COURSE_STORAGE, CUR_TEST_STORAGE, TESTS_TEST_ATTEMPTS_DETAILS_ROUTE, TESTS_TEST_ATTEMPT_ROUTE, TESTS_TEST_CHECK_WORKS_ROUTE, TESTS_TEST_ROUTE, USER_STORAGE } from "../../../utils/consts";
-import { getLocalStorage, isAdmin, setLocalStorage } from "../../utils/testing";
+import { getLocalStorage, isTeacher, setLocalStorage } from "../../utils/testing";
 import TestEdit from "../ModalForms/CourseTestEdit";
 import {Loader} from "../../UI/Loader/Loader";
 import TestingApi from "../../../API/TestingApi";
@@ -104,7 +104,7 @@ const CourseTestVariants = () => {
             <>
                 <Divider orientation="left">{curTest.testName}</Divider>
                 <Row>
-                    { isAdmin(user)
+                    { isTeacher(user)
                         ?<Button 
                             style={{lineHeight: "0.8", margin: "30px 30px"}} 
                             variant="outline-success"
@@ -138,11 +138,11 @@ const CourseTestVariants = () => {
                     }
                 </Row>
                 <Row>
-                    { isAdmin(user)
+                    { isTeacher(user)
                         ? <Button onClick={onEditTest} style={{lineHeight: "0.8", marginLeft: "30px"}} variant="outline-secondary">Редактировать тест</Button>
                         : null
                     }
-                    { isAdmin(user)
+                    { isTeacher(user)
                         ? <Button onClick={onDeleteTest} style={{lineHeight: "0.8", marginLeft: "15px"}} variant="outline-danger">Удалить тест</Button>
                         : null
                     }

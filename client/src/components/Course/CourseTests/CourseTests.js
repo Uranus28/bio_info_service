@@ -4,7 +4,7 @@ import { Divider, message } from "antd";
 import {Row, Col, ListGroup, Button} from "react-bootstrap"
 import history from "../../../services/history";
 import { COURSE_TESTS_TEST_VARIANTS_ROUTE, CUR_COURSE_STORAGE, CUR_MODULE_STORAGE, CUR_TEST_STORAGE, USER_STORAGE } from "../../../utils/consts";
-import { getLocalStorage, isAdmin, setLocalStorage } from "../../utils/testing";
+import { getLocalStorage, isTeacher, setLocalStorage } from "../../utils/testing";
 import { FormOutlined } from '@ant-design/icons';
 import CreateTestForm from "../ModalForms/CreateTestModule";
 import CreateModule from "../ModalForms/CreateModule";
@@ -108,7 +108,7 @@ const CourseTests = () => {
                         <Divider style={{color: 'rgb(24 144 255)', fontSize: '20px'}} orientation="left">{item.nameModule}</Divider>
                         {listTests(item)}
                     </div>
-                    { isAdmin(user)
+                    { isTeacher(user)
                         ?   <Button 
                             style={{verticalAlign: "bottom"}} 
                             variant="outline-success"
@@ -118,7 +118,7 @@ const CourseTests = () => {
                             </Button>
                         : null
                     }
-                    { isAdmin(user)
+                    { isTeacher(user)
                         ?   <Button 
                             style={{verticalAlign: "bottom", marginLeft: '10px'}} 
                             variant="outline-secondary"
@@ -128,7 +128,7 @@ const CourseTests = () => {
                             </Button>
                         : null
                     }
-                    { isAdmin(user)
+                    { isTeacher(user)
                         ?   <Button 
                             style={{verticalAlign: "bottom", marginLeft: '10px'}} 
                             variant="outline-danger"
@@ -159,7 +159,7 @@ const CourseTests = () => {
                             }
                         </Divider>
                         {listModules}
-                        { isAdmin(user)
+                        { isTeacher(user)
                             ?   <Button 
                                 style={{verticalAlign: "bottom", marginTop: "20px"}} 
                                 variant="outline-success"

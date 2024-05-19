@@ -3,7 +3,7 @@ import 'antd/dist/antd.css';
 import { Divider, Row, Col } from "antd";
 import { Context } from "../../..";
 import { Button} from "react-bootstrap"
-import { isAdmin } from "../../utils/testing";
+import { isTeacher } from "../../utils/testing";
 import { FileOutlined } from '@ant-design/icons';
 import CourseLectureEditForm from "../ModalForms/CourseLectureEditForm";
 
@@ -46,7 +46,7 @@ const CourseLecture = () => {
                     >
                         <FileOutlined /> {material.name} {material.uid}
                     </Col>
-                    { isAdmin(user)
+                    { isTeacher(user)
                         ? <Col xs={8}><Button onClick={() => handleDeleteMaterial(material)} style={{lineHeight: "0.5", marginLeft: "5px"}} variant="outline-danger">Удалить материал</Button></Col>
                         : null
                     }
@@ -66,7 +66,7 @@ const CourseLecture = () => {
                             orientation="left"
                         >
                             {curLecture.title} Материалы:
-                            { isAdmin(user)
+                            { isTeacher(user)
                                 ? <Button 
                                     onClick={() => handleCreateLecture()}
                                     style={{marginLeft: "150px"}} 

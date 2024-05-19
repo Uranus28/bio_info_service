@@ -5,7 +5,7 @@ import {Row, Col, ListGroup, Button, Badge} from "react-bootstrap"
 import { BookOutlined } from '@ant-design/icons';
 import TestingApi from "../../../API/TestingApi";
 import {Loader} from "../../UI/Loader/Loader";
-import { getLocalStorage, isAdmin, setLocalStorage } from "../../utils/testing";
+import { getLocalStorage, isTeacher, setLocalStorage } from "../../utils/testing";
 import { CUR_COURSE_STORAGE, MY_COURSES_STORAGE, TESTING_ALL_COURSES_ROUTE, USER_STORAGE } from "../../../utils/consts";
 import history from "../../../services/history";
 import {UsersList} from "../Users/UsersList";
@@ -186,11 +186,11 @@ const CourseInfo = () => {
                 </Row>
                 <Row>
                     <Col>
-                        { isAdmin(user)
+                        { isTeacher(user)
                             ? <Button onClick={handleDeleteCourse} style={{lineHeight: "0.8", margin: "20px 0 0 20px"}} variant="outline-danger">Удалить курс</Button>
                             : null
                         }
-                        { isAdmin(user)
+                        { isTeacher(user)
                             ? <Button onClick={handleEditCourse} style={{lineHeight: "0.8", margin: "20px 0 0 20px"}} variant="outline-secondary">Редактировать курс</Button>
                             : null
                         }

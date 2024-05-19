@@ -2,7 +2,7 @@ import React, { FC, useState } from "react";
 import "antd/dist/antd.css";
 import { Avatar, Button, Divider, List } from "antd";
 import InfiniteScroll from "react-infinite-scroll-component";
-import RoleEdit from "../ModalForms/EditRole";
+import EditRole from "../ModalForms/EditRole";
 import { getLocalStorage, isAdmin } from "../../utils/testing";
 import { USER_STORAGE } from "../../../utils/consts";
 import { Loader } from "../../UI/Loader/Loader";
@@ -85,12 +85,12 @@ export const UsersList: FC<UsersListProps> = ({
           )}
         />
       </InfiniteScroll>
-      <RoleEdit
+      <EditRole
         onUpdateUsers={onUpdateUsers}
         user={userEdit}
         isVisible={isEditRoleFormVisible}
         setIsVisible={setIsEditRoleFormVisible}
-      ></RoleEdit>
+      ></EditRole>
     </div>
   );
 };

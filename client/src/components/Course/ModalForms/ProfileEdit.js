@@ -87,15 +87,10 @@ const ProfileEdit = ({isVisible, setIsVisible}) => {
             </>
         );
     }
-
-    const spinner = isLoading ? <Loader/> : null;
-    //const errorMessage = editError ? <ErrorMessage message={editError} /> : null;
-    const content = !(isLoading) ? <View/> : null;
-
     return (
         <>
-            {spinner}
-            {content}
+            {isLoading ? <Loader/> : null}
+            {!(isLoading) ? <View/> : null}
         </>
     )
 };

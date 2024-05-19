@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import 'antd/dist/antd.css';
 import { Divider, message } from "antd";
 import {Row, Col, ListGroup, Button} from "react-bootstrap"
-import { getLocalStorage, isAdmin, setLocalStorage } from "../../utils/testing";
+import { getLocalStorage, isTeacher, setLocalStorage } from "../../utils/testing";
 import { FormOutlined } from '@ant-design/icons';
 import CreateModule from "../ModalForms/CreateModule";
 import CreateLectureForm from "../ModalForms/CreateLectureForm";
@@ -139,7 +139,7 @@ const CourseLections = () => {
                         >
                             Скачать файл
                         </Button>
-                        { isAdmin(user)
+                        { isTeacher(user)
                         ?   <Button 
                             style={{verticalAlign: "bottom", lineHeight: "0.7", marginLeft: '15px'}} 
                             variant="outline-danger"
@@ -168,7 +168,7 @@ const CourseLections = () => {
                             {listLectures(item)}
                         </ListGroup>
                     </div>
-                    { isAdmin(user)
+                    { isTeacher(user)
                         ?   <Button 
                             style={{verticalAlign: "bottom"}} 
                             variant="outline-success"
@@ -178,7 +178,7 @@ const CourseLections = () => {
                             </Button>
                         : null
                     }
-                    { isAdmin(user)
+                    { isTeacher(user)
                         ?   <Button 
                             style={{verticalAlign: "bottom", marginLeft: '10px'}} 
                             variant="outline-danger"
@@ -210,7 +210,7 @@ const CourseLections = () => {
                         <ListGroup>
                             {listModules}
                         </ListGroup>
-                        { isAdmin(user)
+                        { isTeacher(user)
                             ?   <Button 
                                 style={{verticalAlign: "bottom", marginTop: "20px"}} 
                                 variant="outline-success"

@@ -4,7 +4,7 @@ import { Button, Form, Input, message, Select } from "antd";
 import TestingApi from "../../../../API/TestingApi";
 import { Loader } from "../../../UI/Loader/Loader";
 import CreateSubjectArea from "../../ModalForms/CreateNewSubjectArea";
-import { getLocalStorage, isAdmin } from "../../../utils/testing";
+import { getLocalStorage, isTeacher } from "../../../utils/testing";
 import { UserOutlined } from "@ant-design/icons";
 import CreateTerm from "../../ModalForms/CreateNewTerm";
 import ListTerms from "./ListTerms";
@@ -116,7 +116,7 @@ export const Concepts = ({ updatePage }) => {
             defaultValue={curSubjectArea}
             onChange={(e) => onChangeSubjArea(e, subAreas)}
           ></Select>
-          {isAdmin(user) ? (
+          {isTeacher(user) ? (
             <Button
               style={{ verticalAlign: "bottom", marginLeft: "20px" }}
             //   variant="outline-success"
@@ -144,7 +144,7 @@ export const Concepts = ({ updatePage }) => {
               subjectArea={curSubjectArea}
               terms={filterTerms}
             ></ListTerms>
-            {isAdmin(user) ? (
+            {isTeacher(user) ? (
               <Button
                 style={{ verticalAlign: "bottom", marginTop: "20px" }}
                 // variant="outline-success"

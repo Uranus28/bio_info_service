@@ -3,7 +3,7 @@ import "antd/dist/antd.css";
 import { ListGroup, Row, Col, Button } from "react-bootstrap";
 import { Divider, Avatar, message } from "antd";
 import history from "../../services/history";
-import { getLocalStorage, isAdmin, setLocalStorage } from "../utils/testing";
+import { getLocalStorage, isTeacher, setLocalStorage } from "../utils/testing";
 import CreateCourse from "../Course/ModalForms/CreateCourse";
 import {
   COURSE_INFO_ROUTE,
@@ -156,7 +156,7 @@ export const CoursesAll: FC = () => {
           <Col xs={7}>
             <Divider orientation="left">Мои курсы:</Divider>
           </Col>
-          {isAdmin(user) ? (
+          {isTeacher(user) ? (
             <Col>
               <Button
                 onClick={handleCreateCourse}

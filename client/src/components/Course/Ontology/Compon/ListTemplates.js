@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "antd/dist/antd.css";
 import { Avatar, Button, Divider, List, message } from "antd";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { getLocalStorage, isAdmin } from "../../../utils/testing";
+import { getLocalStorage, isTeacher } from "../../../utils/testing";
 import {Loader} from "../../../UI/Loader/Loader";
 import TestingApi from "../../../../API/TestingApi";
 import { USER_STORAGE } from "../../../../utils/consts";
@@ -64,7 +64,7 @@ const ListTemplates = ({templates, onUpdate}) => {
                         title={item.tempName}
                         description={item.tempTitle}
                     />
-                    { isAdmin(user)
+                    { isTeacher(user)
                         ? <Button onClick={() => handleDeleteTemplate(item)} style={{marginLeft: "5px"}} variant="outline-success">Удалить шаблон</Button>
                         : null
                     }

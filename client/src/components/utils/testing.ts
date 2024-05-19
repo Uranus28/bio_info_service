@@ -10,6 +10,10 @@ export const isAdmin = (user:any) => {
     return user.role === "admin"; 
 }
 
+export const isTeacher = (user:any) => {
+    return user.role === "admin" || user.role === "teacher"; 
+}
+
 export function deepEqual(obj1:any, obj2:any){
     return JSON.stringify(obj1) === JSON.stringify(obj2);
 }

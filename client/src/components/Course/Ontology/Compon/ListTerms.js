@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "antd/dist/antd.css";
 import { Avatar, Button, Divider, List, message } from "antd";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { getLocalStorage, isAdmin } from "../../../utils/testing";
+import { getLocalStorage, isTeacher } from "../../../utils/testing";
 import {Loader} from "../../../UI/Loader/Loader";
 import TestingApi from "../../../../API/TestingApi";
 import EditTerm from "../../ModalForms/EditTerm";
@@ -71,11 +71,11 @@ const ListTerms = ({terms, onUpdate, subjectArea}) => {
                     <List.Item.Meta
                         title={item.termStr}
                     />
-                     { isAdmin(user)
+                     { isTeacher(user)
                         ? <Button onClick={() => handleInfoTerm(item)} style={{marginLeft: "5px"}} variant="outline-success">Подробнее</Button>
                         : null
                     }
-                    { isAdmin(user)
+                    { isTeacher(user)
                         ? <Button onClick={() => handleDeleteTerm(item)} style={{marginLeft: "5px"}} variant="outline-success">Удалить концепт</Button>
                         : null
                     }

@@ -4,7 +4,7 @@ import { ListGroup, Row, Col, Button } from 'react-bootstrap';
 import { Context } from '../../index';
 import { Divider, Avatar, message } from "antd";
 import history from "../../services/history";
-import { getLocalStorage, isAdmin, setLocalStorage } from '../utils/testing';
+import { getLocalStorage, isTeacher, setLocalStorage } from '../utils/testing';
 import CreateCourse from '../Course/ModalForms/CreateCourse';
 import { COURSE_INFO_ROUTE, CUR_COURSE_STORAGE, MY_COURSES_STORAGE, TESTING_ALL_COURSES_ROUTE, USER_STORAGE } from '../../utils/consts';
 import TestingApi from '../../API/TestingApi';
@@ -86,7 +86,7 @@ const Courses = () => {
                     <Col>
                         <Button onClick={handleAddCourse} variant="outline-success">Добавить</Button>{' '}
                     </Col>
-                    { isAdmin(user)
+                    { isTeacher(user)
                         ? <Col><Button onClick={handleCreateCourse} style={{marginLeft: "5px"}} variant="outline-success">Создать курс</Button></Col>
                         : null
                     }
