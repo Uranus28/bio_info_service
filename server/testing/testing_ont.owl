@@ -2896,5 +2896,15 @@
   <termNormalize rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ямчатый</termNormalize>
 </owl:NamedIndividual>
 
+<owl:NamedIndividual rdf:about="#пользователь7">
+  <rdf:type rdf:resource="#Пользователь"/>
+  <enrolled_course rdf:resource="#курс2"/>
+  <firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">new</firstName>
+  <lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">new</lastName>
+  <email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">student@gmail.com</email>
+  <uid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">B9P5tR3QcSUZPc7yW0cSZnFMl6w2</uid>
+  <role rdf:datatype="http://www.w3.org/2001/XMLSchema#string">student</role>
+</owl:NamedIndividual>
+
 
 </rdf:RDF>
