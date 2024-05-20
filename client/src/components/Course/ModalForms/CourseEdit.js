@@ -3,8 +3,7 @@ import 'antd/dist/antd.css';
 import { Modal, Button, Form, Input, message } from 'antd';
 import TestingApi from '../../../API/TestingApi';
 import {Loader} from '../../UI/Loader/Loader';
-import { getLocalStorage } from '../../utils/testing';
-import { CUR_COURSE_STORAGE } from '../../../utils/consts';
+import { getCurCourse } from '../../../entities/LocalStore/curCourse';
 
 const layout = {
     labelCol: {
@@ -25,7 +24,7 @@ const EditCourse = ({isVisible, setIsVisible, onUpdate}) => {
     const [form] = Form.useForm();
     const [isLoading, setIsLoading] = useState(false)
     
-    const curCourse = getLocalStorage(CUR_COURSE_STORAGE);
+    const curCourse = getCurCourse();
 
     const fetchEditCourse = async (course) => {
         setIsLoading(true)

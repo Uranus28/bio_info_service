@@ -6,9 +6,8 @@ import { FormOutlined } from '@ant-design/icons';
 import AttemptTask from "../Task/AttemptTask";
 import TestingApi from "../../../API/TestingApi";
 // import {Loader} from "../../UI/Loader/Loader";
-import TextArea from "antd/lib/input/TextArea";
-import { getLocalStorage } from "../../utils/testing";
-import { CUR_ATTEMPTS_STORAGE, USER_STORAGE } from "../../../utils/consts";
+import { getCurAttemps } from "../../../entities/LocalStore/curAttemps";
+import { getUserStore } from "../../../entities/LocalStore/userStore";
 
 const AttemptsDetails = ({onUpdate, isCheck}) => {
     const [form] = Form.useForm();
@@ -16,8 +15,8 @@ const AttemptsDetails = ({onUpdate, isCheck}) => {
     const [curAttempt, setCurAttempt] = useState({})
     const [isLoading, setIsLoading] = useState(false)
 
-    const curAttempts = getLocalStorage(CUR_ATTEMPTS_STORAGE)
-    const user = getLocalStorage(USER_STORAGE);
+    const curAttempts = getCurAttemps()
+    const user = getUserStore();
 
     const widthForm = window.innerWidth * 0.35
     let listAttempts = []
@@ -111,7 +110,7 @@ const AttemptsDetails = ({onUpdate, isCheck}) => {
             }}
             >
                 <Form.Item>
-                    <Button style={{margin: '10px 0 0 30px'}} onClick={() => setViewDetails(false)}>Вернуться к списку попыток</Button>
+                    <Button style={{margin: '10px 0 0 30px'}} onClick={() => {setViewDetails(false); setCurAttempt({})}}>Вернуться к списку попыток</Button>
                 </Form.Item>
                 <Form.Item name="testName">
                     <Divider 
@@ -142,11 +141,9 @@ const AttemptsDetails = ({onUpdate, isCheck}) => {
                                 <>
                                     <Form.Item 
                                     name={[field.name, 'question']} 
-                                    label={`Вопрос ${index + 1}`}
+                                    label={`Вопрос ${index + 1} . ${curAttempt.tasks[field.key].question}`}
                                     style={{fontWeight: 'bolder'}}
-                                    >
-                                        <TextArea rows={3} style={{border: '2px solid #000000', minWidth: widthForm + 'px'}}></TextArea>
-                                    </Form.Item>
+                                    />
                                     <AttemptTask isCheck={isCheck} tasks={curAttempt.tasks} form={form} widthForm={widthForm} field={field}></AttemptTask>
                                 </>
                             )}

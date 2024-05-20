@@ -4,11 +4,11 @@ import { Button, Form, Input, message, Select } from "antd";
 import TestingApi from "../../../../API/TestingApi";
 import { Loader } from "../../../UI/Loader/Loader";
 import CreateSubjectArea from "../../ModalForms/CreateNewSubjectArea";
-import { getLocalStorage, isTeacher } from "../../../utils/testing";
+import { isTeacher } from "../../../utils/testing";
 import { UserOutlined } from "@ant-design/icons";
 import CreateTerm from "../../ModalForms/CreateNewTerm";
 import ListTerms from "./ListTerms";
-import { CUR_COURSE_STORAGE, USER_STORAGE } from "../../../../utils/consts";
+import { getUserStore } from "../../../../entities/LocalStore/userStore";
 // interface ConceptsProps {
 //   updatePage: boolean;
 // }
@@ -25,7 +25,7 @@ export const Concepts = ({ updatePage }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterTerms, setFilterTerms] = useState([]);
 
-  const user = getLocalStorage(USER_STORAGE);
+  const user = getUserStore;
 
   const fetchSubjectAreas = async () => {
     setIsLoading(true);

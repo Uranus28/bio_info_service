@@ -5,12 +5,14 @@ import { Col, Divider, Form, message, Row } from "antd";
 import SingleTask from "../../Tasks/Single/SingleTask";
 import MultipleTask from "../../Tasks/Multiple/MultipleTask";
 import TextTask from "../../Tasks/Text/TextTask";
-import { CUR_ATTEMPTS_STORAGE, CUR_TEST_STORAGE, LOGICAL_TASK_TYPE, MULTIPLE_TASK_TYPE, SINGLE_TASK_TYPE, USER_STORAGE } from "../../../utils/consts";
+import {  LOGICAL_TASK_TYPE, MULTIPLE_TASK_TYPE, SINGLE_TASK_TYPE } from "../../../utils/consts";
 import Task from "../../Tasks/Task/Task";
 import TestingApi from "../../../API/TestingApi";
 import {Loader} from "../../UI/Loader/Loader";
 import AttemptsDetails from "../AttemptsDetails/AttemptsDetails";
-import { getLocalStorage, setLocalStorage } from "../../utils/testing";
+import { getUserStore } from "../../../entities/LocalStore/userStore";
+import { getCurTest } from "../../../entities/LocalStore/curTest";
+import { setCurAttemps } from "../../../entities/LocalStore/curAttemps";
 
 const CourseTest = () => {
     const [form] = Form.useForm();
@@ -20,8 +22,8 @@ const CourseTest = () => {
     const [isAttemptCompleted, setIsAttemptCompleted] = useState(false)
     let listTasks = []
     
-    const user = getLocalStorage(USER_STORAGE);
-    const curTest = getLocalStorage(CUR_TEST_STORAGE)
+    const user = getUserStore();
+    const curTest = getCurTest()
 
     const fetchAttempt = async (attempt) => {
         setIsLoading(true)
@@ -45,7 +47,7 @@ const CourseTest = () => {
         setIsLoading(true)
         try {
             let response = await TestingApi.getAttempts(user.uid, curTest.testName)
-            setLocalStorage(CUR_ATTEMPTS_STORAGE, response.data)
+            setCurAttemps(response.data)
         } catch (err) {
             let errMessage = "";
             if (err instanceof Error) {

@@ -5,11 +5,14 @@ import {Row, Col, ListGroup, Button, Badge} from "react-bootstrap"
 import { BookOutlined } from '@ant-design/icons';
 import TestingApi from "../../../API/TestingApi";
 import {Loader} from "../../UI/Loader/Loader";
-import { getLocalStorage, isTeacher, setLocalStorage } from "../../utils/testing";
-import { CUR_COURSE_STORAGE, MY_COURSES_STORAGE, TESTING_ALL_COURSES_ROUTE, USER_STORAGE } from "../../../utils/consts";
+import { isTeacher } from "../../utils/testing";
+import {  TESTING_ALL_COURSES_ROUTE } from "../../../utils/consts";
 import history from "../../../services/history";
 import {UsersList} from "../Users/UsersList";
 import EditCourse from "../ModalForms/CourseEdit";
+import { getUserStore } from "../../../entities/LocalStore/userStore";
+import { getCurCourse, setCurCourse } from "../../../entities/LocalStore/curCourse";
+import { getMyCourses, setMyCourses } from "../../../entities/LocalStore/myCourses";
 
 const CourseInfo = () => {
     const [students, setStudents] = useState([])
@@ -18,9 +21,9 @@ const CourseInfo = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [isVisibleCourseEditForm, setIsVisibleCourseEditForm] = useState(false)
     
-    const user = getLocalStorage(USER_STORAGE);
-    const curCourse = getLocalStorage(CUR_COURSE_STORAGE);
-    const myCourses = getLocalStorage(MY_COURSES_STORAGE)
+    const user = getUserStore();
+    const curCourse = getCurCourse();
+    const myCourses = getMyCourses()
 
     let listStudents = []
     let listModules = []
@@ -29,7 +32,7 @@ const CourseInfo = () => {
         setIsLoading(true)
         try {
             let response = await TestingApi.getCourseInfo(curCourse.courseObj);
-            setLocalStorage(CUR_COURSE_STORAGE, response.data)
+            setCurCourse(response.data)
             setStudents(response.data.students)
             setModules(response.data.modules)
         } catch (err) {
@@ -52,7 +55,7 @@ const CourseInfo = () => {
                 message.success('Вы подписались на курс успешно');
             }
             let response2 = await TestingApi.getUserCourses(user.uid);
-            setLocalStorage(MY_COURSES_STORAGE, response2.data)
+            setMyCourses(response2.data)
             onUpdate()
         } catch (err) {
             let errMessage = "";
@@ -74,7 +77,7 @@ const CourseInfo = () => {
                 message.success('Вы отписались от курса успешно');
             }
             let response2 = await TestingApi.getUserCourses(user.uid);
-            setLocalStorage(MY_COURSES_STORAGE, response2.data)
+            setMyCourses(response2.data)
             onUpdate()
         } catch (err) {
             let errMessage = "";

@@ -3,8 +3,7 @@ import 'antd/dist/antd.css';
 import { Modal, Button, Form, Select, message } from 'antd';
 import axios from "axios";
 import TestingApi from '../../../API/TestingApi';
-import { getLocalStorage } from '../../utils/testing';
-import { CUR_MODULE_STORAGE } from '../../../utils/consts';
+import { getCurModule } from '../../../entities/LocalStore/curModule';
 
 const { Option } = Select;
 
@@ -15,7 +14,7 @@ const CreateLectureForm = ({isVisible, setIsVisible, onUpdate}) => {
     const [files, setFiles] = useState(null)
     const [form] = Form.useForm();
 
-    const curModule = getLocalStorage(CUR_MODULE_STORAGE)
+    const curModule = getCurModule()
 
     const fetchTerms = async () => {
         setIsLoading(true)

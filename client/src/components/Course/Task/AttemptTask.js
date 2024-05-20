@@ -33,7 +33,7 @@ const AttemptTask = ({field, tasks, widthForm, isCheck}) => {
                         name={[fld.name, 'answer']}
                         label={getWordAnswer(index)} 
                         >
-                        <TextArea rows={2} style={getStyleInput(tasks[field.key].answers[index])}></TextArea>
+                        <TextArea disabled={true} rows={2} style={getStyleInput(tasks[field.key].answers[index])}></TextArea>
                         </Form.Item>
                         { questionType === TEXT_TASK_TYPE
                             ?   <Form.Item label="Балл за ответ">

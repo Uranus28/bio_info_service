@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import 'antd/dist/antd.css';
-import { Col, Divider, Form, Input, message, Row } from "antd";
+import { Col, Divider, Input, message, Row } from "antd";
 import TestingApi from "../../../API/TestingApi";
 import {UsersList} from "../Users/UsersList";
 import {Loader} from "../../UI/Loader/Loader";
 import { UserOutlined } from '@ant-design/icons';
 import AttemptsDetails from "../AttemptsDetails/AttemptsDetails";
-import { getLocalStorage, setLocalStorage } from "../../utils/testing";
-import { CUR_ATTEMPTS_STORAGE, CUR_TEST_STORAGE } from "../../../utils/consts";
+import { getCurTest } from "../../../entities/LocalStore/curTest";
+import { setCurAttemps } from "../../../entities/LocalStore/curAttemps";
 
 const CheckWorks = () => {
     const [usersAttempts, setUsersAttempts] = useState([])
@@ -16,7 +16,7 @@ const CheckWorks = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [update, setUpdate] = useState(false)
 
-    const curTest = getLocalStorage(CUR_TEST_STORAGE)
+    const curTest = getCurTest()
 
     const fetchUsersWhoPassedTheTest = async () => {
         setIsLoading(true)
@@ -45,7 +45,7 @@ const CheckWorks = () => {
     }
 
     const handleCheckAttempts = (user) => {
-        setLocalStorage(CUR_ATTEMPTS_STORAGE, user.attempts)
+        setCurAttemps(user.attempts)
     }
 
     const onChange = (e) => {

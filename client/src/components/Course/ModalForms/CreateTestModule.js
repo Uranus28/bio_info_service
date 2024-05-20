@@ -4,10 +4,11 @@ import { Modal, Button, Form, Input, Space, Select, message } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import EditTask from '../Task/EditTask';
 import TestingApi from '../../../API/TestingApi';
-import { CUR_COURSE_STORAGE, CUR_MODULE_STORAGE, MULTIPLE_TASK_TYPE, TEXT_TASK_TYPE } from '../../../utils/consts';
+import {  MULTIPLE_TASK_TYPE, TEXT_TASK_TYPE } from '../../../utils/consts';
 import TextArea from 'antd/lib/input/TextArea';
 import {Loader} from '../../UI/Loader/Loader';
-import { getLocalStorage, setLocalStorage } from '../../utils/testing';
+import { getCurModule } from '../../../entities/LocalStore/curModule';
+import { getCurCourse, setCurCourse } from '../../../entities/LocalStore/curCourse';
 
 const { Option } = Select;
 
@@ -29,8 +30,8 @@ const CreateTestForm = ({isVisible, setIsVisible, onUpdate}) => {
 
     const [form] = Form.useForm();
 
-    const curModule = getLocalStorage(CUR_MODULE_STORAGE);
-    const curCourse = getLocalStorage(CUR_COURSE_STORAGE)
+    const curModule = getCurModule();
+    const curCourse = getCurCourse()
 
     const handleOk = () => {
         setIsVisible(false);
@@ -70,7 +71,7 @@ const CreateTestForm = ({isVisible, setIsVisible, onUpdate}) => {
                 message.success('Тест создан успешно');
             }
             let response1 = await TestingApi.getCourseInfo(curCourse.courseObj);
-            setLocalStorage(CUR_COURSE_STORAGE, response1.data)
+            setCurCourse(response1.data)
             setIsVisible(false)
             onUpdate()
         } catch (err) {

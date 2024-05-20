@@ -2,20 +2,24 @@ import React, { useEffect, useState } from "react";
 import 'antd/dist/antd.css';
 import {Button} from "react-bootstrap"
 import history from "../../../services/history";
-import { COURSE_TESTS_ROUTE, CUR_ATTEMPTS_STORAGE, CUR_COURSE_STORAGE, CUR_TEST_STORAGE, TESTS_TEST_ATTEMPTS_DETAILS_ROUTE, TESTS_TEST_ATTEMPT_ROUTE, TESTS_TEST_CHECK_WORKS_ROUTE, TESTS_TEST_ROUTE, USER_STORAGE } from "../../../utils/consts";
-import { getLocalStorage, isTeacher, setLocalStorage } from "../../utils/testing";
+import { COURSE_TESTS_ROUTE,  TESTS_TEST_ATTEMPTS_DETAILS_ROUTE, TESTS_TEST_ATTEMPT_ROUTE, TESTS_TEST_CHECK_WORKS_ROUTE } from "../../../utils/consts";
+import {  isTeacher } from "../../utils/testing";
 import TestEdit from "../ModalForms/CourseTestEdit";
 import {Loader} from "../../UI/Loader/Loader";
 import TestingApi from "../../../API/TestingApi";
 import { Divider, message, Row } from "antd";
+import { getCurTest, setCurTest } from "../../../entities/LocalStore/curTest";
+import { getCurCourse, setCurCourse } from "../../../entities/LocalStore/curCourse";
+import { getUserStore } from "../../../entities/LocalStore/userStore";
+import { setCurAttemps } from "../../../entities/LocalStore/curAttemps";
 
 const CourseTestVariants = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [attempts, setAttempts] = useState([])
     
-    const curTest = getLocalStorage(CUR_TEST_STORAGE)
-    const curCourse = getLocalStorage(CUR_COURSE_STORAGE)
-    const user = getLocalStorage(USER_STORAGE)
+    const curTest = getCurTest()
+    const curCourse = getCurCourse()
+    const user = getUserStore()
 
     const [isEsitTestFormVisible, setIsEditTestFormVisible] = useState(false)
 
@@ -24,7 +28,7 @@ const CourseTestVariants = () => {
         try {
             let response = await TestingApi.getAttempts(user.uid, curTest.testName)
             setAttempts(response.data)
-            setLocalStorage(CUR_ATTEMPTS_STORAGE, response.data)
+            setCurAttemps(response.data)
         } catch (err) {
             let errMessage = "";
             if (err instanceof Error) {
@@ -40,7 +44,7 @@ const CourseTestVariants = () => {
         setIsLoading(true)
         try {
             let response = await TestingApi.getTest(curTest.testName)
-            setLocalStorage(CUR_TEST_STORAGE, response.data)
+            setCurTest(response.data)
         } catch (err) {
             let errMessage = "";
             if (err instanceof Error) {
@@ -62,8 +66,8 @@ const CourseTestVariants = () => {
         try {
             let response = await TestingApi.deleteTest(curTest);
             let response1 = await TestingApi.getCourseInfo(curCourse.courseObj);
-            setLocalStorage(CUR_COURSE_STORAGE, response1.data)
-            setLocalStorage(CUR_TEST_STORAGE, {})
+            setCurCourse(response1.data)
+            setCurTest(null)
             if (response.data === "ok") {
                 message.success("Тест успешно удален")
             }

@@ -2,27 +2,31 @@ import React, { useContext, useEffect, useState } from 'react';
 import 'antd/dist/antd.css';
 import { ListGroup, Row, Col, Button } from 'react-bootstrap';
 import { Context } from '../../index';
-import { Divider, Avatar, message } from "antd";
+import { Divider, message } from "antd";
 import history from "../../services/history";
-import { getLocalStorage, isTeacher, setLocalStorage } from '../utils/testing';
+import { isTeacher } from '../utils/testing';
 import CreateCourse from '../Course/ModalForms/CreateCourse';
-import { COURSE_INFO_ROUTE, CUR_COURSE_STORAGE, MY_COURSES_STORAGE, TESTING_ALL_COURSES_ROUTE, USER_STORAGE } from '../../utils/consts';
+import { COURSE_INFO_ROUTE, TESTING_ALL_COURSES_ROUTE } from '../../utils/consts';
 import TestingApi from '../../API/TestingApi';
 import {Loader} from '../UI/Loader/Loader';
 import { AvatarInfo } from "../../shared/AvatarInfo/AvatarInfo";
+import { getUserStore } from '../../entities/LocalStore/userStore';
+import { setCurCourse } from '../../entities/LocalStore/curCourse';
+import { setMyCourses } from '../../entities/LocalStore/myCourses';
 
 const Courses = () => {
     const [isCreateCourseFormVisible, setIsCreateCourseFormVisible] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
-    const [myCourses, setMyCourses] = useState([])
-    const user = getLocalStorage(USER_STORAGE)
+    const [Courses, setCourses] = useState([])
+
+    const user = getUserStore()
 
     const fetchCourses = async () => {
         setIsLoading(true)
         try {
             let response = await TestingApi.getUserCourses(user.uid);
-            setMyCourses(response.data)
-            setLocalStorage(MY_COURSES_STORAGE, response.data)
+            setCourses(response.data)
+            setMyCourses(response.data)        
         } catch (err) {
             let errMessage = "";
             if (err instanceof Error) {
@@ -40,7 +44,7 @@ const Courses = () => {
     }, [])
 
     const handleCourse = (item) => {
-        setLocalStorage(CUR_COURSE_STORAGE, item)
+        setCurCourse(item)
         history.push(COURSE_INFO_ROUTE);
     }
 
@@ -58,8 +62,8 @@ const Courses = () => {
 
     let listItems = []
 
-    if (myCourses) {
-        listItems = myCourses.map((item, index) => {
+    if (Courses) {
+        listItems = Courses.map((item, index) => {
             return (
                 <ListGroup.Item 
                     className="d-flex justify-content-between align-items-start"

@@ -1,15 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import 'antd/dist/antd.css';
-import { Button, Form, Input, message, Select  } from "antd";
+import { Button, Form, Input, message  } from "antd";
 import TestingApi from "../../../../API/TestingApi";
 import {Loader} from "../../../UI/Loader/Loader";
-import { getLocalStorage, isTeacher } from "../../../utils/testing";
+import { isTeacher } from "../../../utils/testing";
 import { UserOutlined } from '@ant-design/icons';
 import ListTerms from "./ListTerms";
 import { Context } from "../../../..";
 import CreateTemplate from "../../ModalForms/CreateNewTemplate";
 import ListTemplates from "./ListTemplates";
-import { USER_STORAGE } from "../../../../utils/consts";
+import { getUserStore } from "../../../../entities/LocalStore/userStore";
 
 const Templates = ({updatePage}) => {
     const [form] = Form.useForm();
@@ -20,7 +20,7 @@ const Templates = ({updatePage}) => {
     const [isLoading, setIsLoading] = useState(false)
     const [filterTemplates, setFilterTemplates] = useState([])
 
-    const user = getLocalStorage(USER_STORAGE);
+    const user = getUserStore();
 
     const fetchTemplates = async () => {
         setIsLoading(true)

@@ -1,12 +1,12 @@
 import React, { FC, useState } from "react";
 import "antd/dist/antd.css";
-import { Avatar, Button, Divider, List } from "antd";
+import { Button, Divider, List } from "antd";
 import InfiniteScroll from "react-infinite-scroll-component";
 import EditRole from "../ModalForms/EditRole";
-import { getLocalStorage, isAdmin } from "../../utils/testing";
-import { USER_STORAGE } from "../../../utils/consts";
+import { isAdmin } from "../../utils/testing";
 import { Loader } from "../../UI/Loader/Loader";
 import { AvatarInfo } from "../../../shared/AvatarInfo/AvatarInfo";
+import { getUserStore } from "../../../entities/LocalStore/userStore";
 interface UsersListProps {
   onUpdateUsers: () => void;
   isEdit: boolean;
@@ -26,7 +26,7 @@ export const UsersList: FC<UsersListProps> = ({
   const [isEditRoleFormVisible, setIsEditRoleFormVisible] = useState(false);
   const [userEdit, setUserEdit] = useState({});
 
-  const user = getLocalStorage(USER_STORAGE);
+  const user = getUserStore();
 
   const handleEditRole = (userItem: any) => {
     setUserEdit(userItem);

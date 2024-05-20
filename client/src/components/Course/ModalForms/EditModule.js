@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import 'antd/dist/antd.css';
 import { Modal, Button, Form, Input, message, Select } from 'antd';
-import { deepEqual, getLocalStorage, setLocalStorage } from '../../utils/testing';
+import { deepEqual } from '../../utils/testing';
 import { useFetching } from '../../hooks/useFetching';
 import TestingApi from '../../../API/TestingApi';
-import { CUR_COURSE_STORAGE, CUR_MODULE_STORAGE } from '../../../utils/consts';
+import { getCurCourse, setCurCourse } from '../../../entities/LocalStore/curCourse';
+import { getCurModule } from '../../../entities/LocalStore/curModule';
 const { Option } = Select;
 
 const ModuleEdit = ({isVisible, setIsVisible, onUpdate}) => {
@@ -13,8 +14,8 @@ const ModuleEdit = ({isVisible, setIsVisible, onUpdate}) => {
     
     const [form] = Form.useForm();
 
-    const curCourse = getLocalStorage(CUR_COURSE_STORAGE)
-    const curModule = getLocalStorage(CUR_MODULE_STORAGE)
+    const curCourse = getCurCourse()
+    const curModule = getCurModule()
 
     const [fetchSubjectAreas, isDataLoading, dataError] = useFetching(async () => {
         let response = await TestingApi.getSubjectAreas();
@@ -28,7 +29,7 @@ const ModuleEdit = ({isVisible, setIsVisible, onUpdate}) => {
             if (response.data === "ok") {
                 message.success('Модуль изменен успешно');
                 let response1 = await TestingApi.getCourseInfo(curCourse.courseObj);
-                setLocalStorage(CUR_COURSE_STORAGE, response1.data)
+                setCurCourse(response1.data)
                 setIsVisible(false)
                 onUpdate()
             } 

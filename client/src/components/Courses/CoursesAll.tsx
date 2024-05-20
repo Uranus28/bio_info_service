@@ -1,22 +1,22 @@
 import React, { FC, useEffect, useState } from "react";
 import "antd/dist/antd.css";
 import { ListGroup, Row, Col, Button } from "react-bootstrap";
-import { Divider, Avatar, message } from "antd";
+import { Divider, message } from "antd";
 import history from "../../services/history";
-import { getLocalStorage, isTeacher, setLocalStorage } from "../utils/testing";
+import { isTeacher } from "../utils/testing";
 import CreateCourse from "../Course/ModalForms/CreateCourse";
-import {
-  COURSE_INFO_ROUTE,
-  CUR_COURSE_STORAGE,
-  MY_COURSES_STORAGE,
-  USER_STORAGE,
-} from "../../utils/consts";
+import { COURSE_INFO_ROUTE } from "../../utils/consts";
 import TestingApi from "../../API/TestingApi";
 import { useFetching } from "../hooks/useFetching";
 import { Loader } from "../UI/Loader/Loader";
 import { ErrorMessage } from "../UI/Messages/ErrorMessage";
 import { AvatarInfo } from "../../shared/AvatarInfo/AvatarInfo";
-
+import { getUserStore } from "../../entities/LocalStore/userStore";
+import {
+  getMyCourses,
+  setMyCourses,
+} from "../../entities/LocalStore/myCourses";
+import { setCurCourse } from "../../entities/LocalStore/curCourse";
 export const CoursesAll: FC = () => {
   const [isCreateCourseFormVisible, setIsCreateCourseFormVisible] =
     useState(false);
@@ -24,8 +24,8 @@ export const CoursesAll: FC = () => {
   const [update, setUpdate] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
-  const user = getLocalStorage(USER_STORAGE);
-  const myCourses = getLocalStorage(MY_COURSES_STORAGE);
+  const user = getUserStore();
+  const myCourses = getMyCourses();
 
   const [fetchCourses, isDataLoading, dataError] = useFetching(async () => {
     let response = await TestingApi.getAllCourses();
@@ -41,7 +41,7 @@ export const CoursesAll: FC = () => {
         message.success("Вы подписались на курс успешно");
       }
       let response2 = await TestingApi.getUserCourses(user.uid);
-      setLocalStorage(MY_COURSES_STORAGE, response2.data);
+      setMyCourses(response2.data);
       setUpdate(!update);
     } catch (err) {
       let errMessage = "";
@@ -63,7 +63,7 @@ export const CoursesAll: FC = () => {
         message.success("Вы отписались от курса успешно");
       }
       let response2 = await TestingApi.getUserCourses(user.uid);
-      setLocalStorage(MY_COURSES_STORAGE, response2.data);
+      setMyCourses(response2.data);
       setUpdate(!update);
     } catch (err) {
       let errMessage = "";
@@ -81,7 +81,7 @@ export const CoursesAll: FC = () => {
   }, [update]);
 
   const handleCourse = (item: any) => {
-    setLocalStorage(CUR_COURSE_STORAGE, item);
+    setCurCourse(item);
     history.push(COURSE_INFO_ROUTE);
   };
 
@@ -152,7 +152,7 @@ export const CoursesAll: FC = () => {
       <>
         <Row>
           <Col xs={7}>
-            <Divider orientation="left">Мои курсы:</Divider>
+            <Divider orientation="left">Все курсы:</Divider>
           </Col>
           {isTeacher(user) ? (
             <Col>

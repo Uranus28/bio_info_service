@@ -2,21 +2,23 @@ import React, { useEffect, useState } from "react";
 import 'antd/dist/antd.css';
 import { Divider, message } from "antd";
 import {Row, Col, ListGroup, Button} from "react-bootstrap"
-import { getLocalStorage, isTeacher, setLocalStorage } from "../../utils/testing";
+import { isTeacher } from "../../utils/testing";
 import { FormOutlined } from '@ant-design/icons';
 import CreateModule from "../ModalForms/CreateModule";
 import CreateLectureForm from "../ModalForms/CreateLectureForm";
 import TestingApi from "../../../API/TestingApi";
 import {Loader} from "../../UI/Loader/Loader";
-import { CUR_COURSE_STORAGE, CUR_MODULE_STORAGE, USER_STORAGE } from "../../../utils/consts";
+import { getUserStore } from "../../../entities/LocalStore/userStore";
+import { getCurCourse, setCurCourse } from "../../../entities/LocalStore/curCourse";
+import { setCurModule } from "../../../entities/LocalStore/curModule";
 
 const CourseLections = () => {
     const [dataFile, setDataFile] = useState("")
     const [isLoading, setIsLoading] = useState(false)
     const [update, setUpdate] = useState(true)
     
-    const user = getLocalStorage(USER_STORAGE);
-    const curCourse = getLocalStorage(CUR_COURSE_STORAGE)
+    const user = getUserStore();
+    const curCourse = getCurCourse()
 
     const [isCreateLectureFormVisible, setIsCreateLectureFormVisible] = useState(false)
     const [isCreateModuleFormVisible, setIsCreateModuleFormVisible] = useState(false)
@@ -28,7 +30,7 @@ const CourseLections = () => {
         setIsLoading(true)
         try {
             let response = await TestingApi.getCourseInfo(curCourse.courseObj);
-            setLocalStorage(CUR_COURSE_STORAGE, response.data)
+            setCurCourse(response.data)
         } catch (err) {
             let errMessage = "";
             if (err instanceof Error) {
@@ -69,7 +71,7 @@ const CourseLections = () => {
                 message.success('Модуль удален успешно');
             }
             let response1 = await TestingApi.getCourseInfo(curCourse.courseObj);
-            setLocalStorage(CUR_COURSE_STORAGE, response1.data)
+            setCurCourse( response1.data)
             onUpdate()
         } catch (err) {
             let errMessage = "";
@@ -110,7 +112,7 @@ const CourseLections = () => {
     }
 
     const handleCreateLecture = (module) => {
-        setLocalStorage(CUR_MODULE_STORAGE, module)
+        setCurModule( module)
         setIsCreateLectureFormVisible(true)
     }
 

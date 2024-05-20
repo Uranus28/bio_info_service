@@ -1,5 +1,5 @@
 import {makeAutoObservable} from 'mobx';
-import { ADD_ROUTE, ALLERGENS_ROUTE, COURSE_TESTS_TEST_ROUTE, COURSE_TESTS_TEST_VARIANTS_ROUTE, ARCHIVE_ROUTE, COURSE_INFO_ROUTE, COURSE_LECTIONS_ROUTE, COURSE_LITERATURE_ROUTE, COURSE_TESTS_ROUTE, MAIN_ROUTE, PROFILE_ROUTE, SEARCH_ROUTE, TESTING_ALL_COURSES_ROUTE, TESTING_COURSES_ROUTE, TESTING_ROUTE, VIEW_ROUTE, COURSE_LECTURE_ROUTE, TESTS_TEST_ATTEMPT_ROUTE, TESTS_TEST_ATTEMPTS_DETAILS_ROUTE, TESTS_TEST_CHECK_WORKS_ROUTE, COURSE_TERMS_ROUTE, COURSE_ONTOLOGY_ROUTE } from '../utils/consts';
+import { ADD_ROUTE, ALLERGENS_ROUTE, BACK_TO_TESTING_COURSES_ROUTE,COURSE_TESTS_TEST_ROUTE, COURSE_TESTS_TEST_VARIANTS_ROUTE, ARCHIVE_ROUTE, COURSE_INFO_ROUTE, COURSE_LECTIONS_ROUTE, COURSE_LITERATURE_ROUTE, COURSE_TESTS_ROUTE, MAIN_ROUTE, PROFILE_ROUTE, SEARCH_ROUTE, TESTING_ALL_COURSES_ROUTE, TESTING_COURSES_ROUTE, TESTING_ROUTE, VIEW_ROUTE, COURSE_LECTURE_ROUTE, TESTS_TEST_ATTEMPT_ROUTE, TESTS_TEST_ATTEMPTS_DETAILS_ROUTE, TESTS_TEST_CHECK_WORKS_ROUTE, COURSE_TERMS_ROUTE, COURSE_ONTOLOGY_ROUTE } from '../utils/consts';
 
 export default class UserStore {
     constructor() {
@@ -22,14 +22,15 @@ export default class UserStore {
             { id: "2", name: 'Все курсы', link: TESTING_ALL_COURSES_ROUTE },
         ]
 
+
         this._menuCourse = [
             { id: "1", name: 'Информация', link: COURSE_INFO_ROUTE },
             { id: "2", name: 'Материалы', link: COURSE_LECTIONS_ROUTE },
             { id: "3", name: 'Тесты', link: COURSE_TESTS_ROUTE },
             { id: "5", name: 'Концепты', link: COURSE_TERMS_ROUTE },
-            { id: "6", name: 'Онтология', link: COURSE_ONTOLOGY_ROUTE },
-            { id: "7", name: 'Мои курсы', link: TESTING_COURSES_ROUTE },
-            { id: "8", name: 'Все курсы', link: TESTING_ALL_COURSES_ROUTE },
+            { id: "6", name: 'Онтология', link: COURSE_ONTOLOGY_ROUTE, },
+            { id: "7", name: 'Назад', link: BACK_TO_TESTING_COURSES_ROUTE },
+            
         ]
 
         this._menuApp = [
@@ -44,6 +45,9 @@ export default class UserStore {
         ]
 
         this._routes = {
+            "/testing/all_courses": [
+                {path: TESTING_ALL_COURSES_ROUTE, title: "Все курсы", active: true}
+            ],
             "/testing/courses": [
                 {path: TESTING_COURSES_ROUTE, title: "Мои курсы", active: true}
             ],

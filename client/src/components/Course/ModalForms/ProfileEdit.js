@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import 'antd/dist/antd.css';
 import { Modal, Button, Form, Input, message } from 'antd';
-import { deepEqual, getLocalStorage } from '../../utils/testing';
+import { deepEqual } from '../../utils/testing';
 import TestingApi from '../../../API/TestingApi';
 import {Loader} from '../../UI/Loader/Loader';
-import { USER_STORAGE } from '../../../utils/consts';
+import { getUserStore } from '../../../entities/LocalStore/userStore';
 
 const ProfileEdit = ({isVisible, setIsVisible}) => {
     const [isLoading, setIsLoading] = useState(false)
 
-    const user = getLocalStorage(USER_STORAGE);
+    const user = getUserStore();
 
     const fetchEditProfile = async (newUser) => {
         setIsLoading(true)

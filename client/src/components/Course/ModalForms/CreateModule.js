@@ -4,8 +4,7 @@ import { Modal, Button, Form, Input, message, Select } from 'antd';
 import { useFetching } from '../../hooks/useFetching';
 import TestingApi from '../../../API/TestingApi';
 import {Loader} from '../../UI/Loader/Loader';
-import { CUR_COURSE_STORAGE } from '../../../utils/consts';
-import { getLocalStorage, setLocalStorage } from '../../utils/testing';
+import { getCurCourse, setCurCourse } from '../../../entities/LocalStore/curCourse';
 const { Option } = Select;
 
 const CreateModule = ({isVisible, setIsVisible, onUpdate}) => {
@@ -16,7 +15,7 @@ const CreateModule = ({isVisible, setIsVisible, onUpdate}) => {
 
     const [form] = Form.useForm();
 
-    const curCourse = getLocalStorage(CUR_COURSE_STORAGE)
+    const curCourse = getCurCourse()
 
     const [fetchSubjectAreas, isDataLoading, dataError] = useFetching(async () => {
         let response = await TestingApi.getSubjectAreas();
@@ -32,7 +31,7 @@ const CreateModule = ({isVisible, setIsVisible, onUpdate}) => {
                 message.success('Модуль создан успешно');
             }
             let response1 = await TestingApi.getCourseInfo(curCourse.courseObj);
-            setLocalStorage(CUR_COURSE_STORAGE,response1.data)
+            setCurCourse(response1.data)
             setIsVisible(false);
             onUpdate()
         } catch (err) {

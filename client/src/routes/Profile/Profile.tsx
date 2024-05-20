@@ -7,8 +7,8 @@ import { Loader } from "../../components/UI/Loader/Loader";
 import { useFetching } from "../../components/hooks/useFetching";
 import { UsersList } from "../../components/Course/Users/UsersList";
 import { UserOutlined } from "@ant-design/icons";
-import { getLocalStorage, isAdmin } from "../../components/utils/testing";
-import { USER_STORAGE } from "../../utils/consts";
+import { isAdmin } from "../../components/utils/testing";
+import { getUserStore } from "../../entities/LocalStore/userStore";
 
 export const Profile: FC = () => {
   const [isProfileEditFormVisible, setIsProfileEditFormVisible] =
@@ -18,7 +18,7 @@ export const Profile: FC = () => {
   const [searchUser, setSearchUser] = useState("");
   const [update, setUpdate] = useState(false);
 
-  const user = getLocalStorage(USER_STORAGE);
+  const user = getUserStore();
 
   const [fetchUsers, isDataLoading, dataError] = useFetching(async () => {
     let response = await TestingApi.getUsers();

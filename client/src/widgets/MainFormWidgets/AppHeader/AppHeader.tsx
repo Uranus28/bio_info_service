@@ -26,6 +26,7 @@ export const AppHeader: FC<AppHeaderProps> = ({
   //const [isLoadingHeader, setIsLoadingHeader] = useState(false);
   const logOut = () => {
     return auth.signOut().then(() => {
+      localStorage.clear();
       setSelectedKey("8");
       return history.push(LOGIN_ROUTE);
     });

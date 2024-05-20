@@ -5,10 +5,10 @@ import { auth } from "../../services/firebase";
 import "./styles.css";
 import TestingApi from "../../API/TestingApi";
 import { Loader } from "../../components/UI/Loader/Loader";
-import { setLocalStorage } from "../../components/utils/testing";
-import { MAIN_ROUTE, USER_STORAGE } from "../../utils/consts";
+import { MAIN_ROUTE } from "../../utils/consts";
 import history from "../../services/history";
 import { FormInput } from "../../shared/LoginForm";
+import { setUserStore } from "../../entities/LocalStore/userStore";
 
 const { Content } = Layout;
 
@@ -70,7 +70,7 @@ export const LoginForm: FC<LoginFormProps> = ({ setUser, setSelectedKey }) => {
     try {
       let response = await TestingApi.getUser(uid);
       setUser(response.data);
-      setLocalStorage(USER_STORAGE, response.data);
+      setUserStore(response.data);
     } catch (err) {
       let errMessage = "";
       if (err instanceof Error) {

@@ -3,20 +3,24 @@ import 'antd/dist/antd.css';
 import { Divider, message } from "antd";
 import {Row, Col, ListGroup, Button} from "react-bootstrap"
 import history from "../../../services/history";
-import { COURSE_TESTS_TEST_VARIANTS_ROUTE, CUR_COURSE_STORAGE, CUR_MODULE_STORAGE, CUR_TEST_STORAGE, USER_STORAGE } from "../../../utils/consts";
-import { getLocalStorage, isTeacher, setLocalStorage } from "../../utils/testing";
+import { COURSE_TESTS_TEST_VARIANTS_ROUTE } from "../../../utils/consts";
+import { isTeacher } from "../../utils/testing";
 import { FormOutlined } from '@ant-design/icons';
 import CreateTestForm from "../ModalForms/CreateTestModule";
 import CreateModule from "../ModalForms/CreateModule";
 import TestingApi from "../../../API/TestingApi";
 import {Loader} from "../../UI/Loader/Loader";
 import ModuleEdit from "../ModalForms/EditModule";
-
+import { getCurCourse } from "../../../entities/LocalStore/curCourse";
+import { getUserStore } from "../../../entities/LocalStore/userStore";
+import { setCurModule } from "../../../entities/LocalStore/curModule";
+import { setCurTest } from "../../../entities/LocalStore/curTest";
 const CourseTests = () => {
-    const [curCourse, setCurCourse] = useState(getLocalStorage(CUR_COURSE_STORAGE));
+    const [curCourse, setCurCourse] = useState(getCurCourse());
     const [isLoading, setIsLoading] = useState(false)
     
-    const user = getLocalStorage(USER_STORAGE)
+    const user = getUserStore()
+
 
     const [isCreateTestFormVisible, setIsCreateTestFormVisible] = useState(false)
     const [isCreateModuleFormVisible, setIsCreateModuleFormVisible] = useState(false)
@@ -34,7 +38,6 @@ const CourseTests = () => {
                 message.success('Модуль удален успешно');
             }
             let response1 = await TestingApi.getCourseInfo(curCourse.courseObj);
-            setLocalStorage(CUR_COURSE_STORAGE, response1.data)
             setCurCourse(response1.data)
             onUpdate()
         } catch (err) {
@@ -49,7 +52,7 @@ const CourseTests = () => {
     }
 
     const onUpdate = () => {
-        setCurCourse(getLocalStorage(CUR_COURSE_STORAGE))
+        setCurCourse(getCurCourse())
     }
 
     useEffect(() => {
@@ -58,13 +61,13 @@ const CourseTests = () => {
     }, [curCourse])
 
     const handleTest = (module, test) => {
-        setLocalStorage(CUR_MODULE_STORAGE, module)
-        setLocalStorage(CUR_TEST_STORAGE, test)
+        setCurModule(module)
+        setCurTest(test)
         history.push(COURSE_TESTS_TEST_VARIANTS_ROUTE);
     }
 
     const handleCreateTest = (module) => {
-        setLocalStorage(CUR_MODULE_STORAGE, module)
+        setCurModule(module)
         setIsCreateTestFormVisible(true)
     }
 
@@ -77,7 +80,7 @@ const CourseTests = () => {
     }
 
     const handleEditModule = (module) => {
-        setLocalStorage(CUR_MODULE_STORAGE, module)
+        setCurModule(module)
         setIsEditModuleFormVisible(true)
     }
 

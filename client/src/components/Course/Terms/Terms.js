@@ -5,8 +5,7 @@ import {Row, Col, Button } from "react-bootstrap"
 import { FormOutlined } from '@ant-design/icons';
 import TestingApi from "../../../API/TestingApi";
 import {Loader} from "../../UI/Loader/Loader";
-import { getLocalStorage } from "../../utils/testing";
-import { USER_STORAGE } from "../../../utils/consts";
+import { getUserStore } from "../../../entities/LocalStore/userStore";
 const { Panel } = Collapse;
 
 const TermsPage = () => {
@@ -14,7 +13,7 @@ const TermsPage = () => {
     const [terms, setTerms] = useState({})
     const [isLoading, setIsLoading] = useState(false)
     
-    const user = getLocalStorage(USER_STORAGE);
+    const user = getUserStore();
 
     const fetchTermsByUser = async () => {
         setIsLoading(true)

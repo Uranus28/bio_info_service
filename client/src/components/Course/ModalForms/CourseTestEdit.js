@@ -5,9 +5,11 @@ import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import EditTask from '../Task/EditTask';
 import TestingApi from '../../../API/TestingApi';
 import {Loader} from '../../UI/Loader/Loader';
-import { deepEqual, getLocalStorage } from '../../utils/testing';
+import { deepEqual } from '../../utils/testing';
 import TextArea from 'antd/lib/input/TextArea';
-import { CUR_MODULE_STORAGE, CUR_TEST_STORAGE, MULTIPLE_TASK_TYPE, TEXT_TASK_TYPE } from '../../../utils/consts';
+import {  MULTIPLE_TASK_TYPE, TEXT_TASK_TYPE } from '../../../utils/consts';
+import { getCurTest } from '../../../entities/LocalStore/curTest';
+import { getCurModule } from '../../../entities/LocalStore/curModule';
 
 const { Option } = Select;
 
@@ -20,14 +22,14 @@ const types = [
 
 const TestEdit = ({isVisible, setIsVisible}) => {
     const [form] = Form.useForm();
-    const [curTest, setCurTest] = useState(getLocalStorage(CUR_TEST_STORAGE))
+    const [curTest, setCurTest] = useState(getCurTest())
     const [valueQuestion, setValueQuestion] = useState("")
     const [answers, setAnswers] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const [templates, setTemplates] = useState([])
     const [terms, setTerms] = useState([])
 
-    const curModule = getLocalStorage(CUR_MODULE_STORAGE);
+    const curModule = getCurModule();
 
     const fetchTest = async () => {
         setIsLoading(true)

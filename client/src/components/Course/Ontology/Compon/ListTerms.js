@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import "antd/dist/antd.css";
-import { Avatar, Button, Divider, List, message } from "antd";
+import {  Button, Divider, List, message } from "antd";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { getLocalStorage, isTeacher } from "../../../utils/testing";
+import {  isTeacher } from "../../../utils/testing";
 import {Loader} from "../../../UI/Loader/Loader";
 import TestingApi from "../../../../API/TestingApi";
 import EditTerm from "../../ModalForms/EditTerm";
-import { USER_STORAGE } from "../../../../utils/consts";
+import { getUserStore } from "../../../../entities/LocalStore/userStore";
 
 const ListTerms = ({terms, onUpdate, subjectArea}) => {
     const [isVisibleEditTermForm, setIsVisibleEditTermForm] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [curTerm, setCurTerm] = useState("")
     
-    const user = getLocalStorage(USER_STORAGE);
+    const user = getUserStore();
 
     const fetchDeleteTerm = async (nameTerm) => {
         setIsLoading(true)
