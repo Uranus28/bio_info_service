@@ -9,7 +9,7 @@ import { UserOutlined } from '@ant-design/icons';
 import history from '../../services/history';
 import { Context } from '../..';
 import { COURSE_INFO_ROUTE, COURSE_LECTIONS_ROUTE, COURSE_ONTOLOGY_ROUTE, COURSE_TERMS_ROUTE, COURSE_TESTS_ROUTE, COURSE_TESTS_TEST_EDIT_ROUTE, COURSE_TESTS_TEST_VARIANTS_ROUTE, TESTING_ALL_COURSES_ROUTE, TESTING_COURSES_ROUTE, TESTING_ROUTE, TESTS_TEST_ATTEMPTS_DETAILS_ROUTE, TESTS_TEST_ATTEMPT_ROUTE, TESTS_TEST_CHECK_WORKS_ROUTE } from '../../utils/consts';
-import { cleanLocalStore, isMenuCourses } from '../../components/utils/testing';
+import { cleanLocalStore, cleanLocalStore2, isMenuCourses } from '../../components/utils/testing';
 import CourseInfo from '../../components/Course/CourseInfo/CourseInfo';
 import CourseTests from '../../components/Course/CourseTests/CourseTests';
 import CourseTest from '../../components/Course/CourseTest/CourseTest';
@@ -42,7 +42,18 @@ const Testing = () => {
     const menuItemsList = menuItems.map((item) => {
         return (
             <Menu.Item key={item.link} icon={<CourseTestingIcon type={item.link} is_back={item.name==="Назад" ? true:false} />}>
-                <Link to={item.link} onClick={item.name==="Назад" ? ()=>{clearCurCourse();clearCurAttemps();clearCurLecture();clearCurModule();clearCurTest();clearCurUser()}:()=>{}}>{item.name}</Link>
+                <Link to={item.link} onClick={()=>{cleanLocalStore(item.link)}}>{item.name}</Link>
+                {/* <Link to={item.link} onClick={item.name==="Назад" ? ()=>{ clearCurCourse();
+            clearCurAttemps();
+            clearCurLecture();
+            clearCurModule();
+            clearCurTest();
+            clearCurUser()}:item.link===COURSE_TESTS_ROUTE ?  ()=>{ ;
+                clearCurAttemps();
+                clearCurLecture();
+                clearCurModule();
+                clearCurTest();
+                clearCurUser()}:null}>{item.name}</Link> */}
             </Menu.Item>
         )
     })
@@ -52,7 +63,7 @@ const Testing = () => {
     if (routes) {
         listRoutes = routes.map((item) => {
                 return (
-                    <Breadcrumb.Item OnClick={
+                    <Breadcrumb.Item onClick={
                         item.active?()=>{}
                         :
                         ()=>{
@@ -121,7 +132,7 @@ const Testing = () => {
                                     <CourseTest/>
                                 </Route>
                                 <Route exact path={TESTS_TEST_ATTEMPTS_DETAILS_ROUTE}>
-                                    <AttemptsDetails/>
+                                    <AttemptsDetails hasAttemp={true}/>
                                 </Route>
                                 <Route exact path={COURSE_TESTS_TEST_EDIT_ROUTE}>
                                     <TestEdit/>

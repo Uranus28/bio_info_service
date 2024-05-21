@@ -29,7 +29,7 @@ const EditTask = ({field, form, tasks}) => {
                             <Form.Item
                             {...fld.restField}
                             name={[fld.name, 'answer']}
-                            label={getWordAnswer(index)} 
+                            label={getWordAnswer(index,questionType === TEXT_TASK_TYPE)} 
                             rules={[{ required: true, message: 'Не заполнен ответ' }]}
                             shouldUpdate={(prevValues, curValues) =>
                                 prevValues.answer !== curValues.answer

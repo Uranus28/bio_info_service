@@ -28,7 +28,7 @@ const CourseTestVariants = () => {
         try {
             let response = await TestingApi.getAttempts(user.uid, curTest.testName)
             setAttempts(response.data)
-            setCurAttemps(response.data)
+            // setCurAttemps(response.data)
         } catch (err) {
             let errMessage = "";
             if (err instanceof Error) {

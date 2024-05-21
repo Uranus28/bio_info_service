@@ -8,6 +8,7 @@ import { UserOutlined } from '@ant-design/icons';
 import AttemptsDetails from "../AttemptsDetails/AttemptsDetails";
 import { getCurTest } from "../../../entities/LocalStore/curTest";
 import { setCurAttemps } from "../../../entities/LocalStore/curAttemps";
+import { setCurHasAttempt } from "../../../entities/LocalStore/curHasAttempt";
 
 const CheckWorks = () => {
     const [usersAttempts, setUsersAttempts] = useState([])
@@ -15,7 +16,7 @@ const CheckWorks = () => {
     const [searchUser, setSearchUser] = useState("")
     const [isLoading, setIsLoading] = useState(false)
     const [update, setUpdate] = useState(false)
-
+    const [curcurAttempts,setCurCurAttempts]=useState()
     const curTest = getCurTest()
 
     const fetchUsersWhoPassedTheTest = async () => {
@@ -44,8 +45,36 @@ const CheckWorks = () => {
         setUpdate(!update)
     }
 
-    const handleCheckAttempts = (user) => {
+    // const fetchAttempts = async () => {
+        
+    //     setIsLoading(true)
+    //     try {
+    //         let response = await TestingApi.getAttempts(user.uid, curTest.testName)
+            
+    //         setCurAttemps(response.data)
+    //         setCurAttempts(response.data)
+    //     } catch (err) {
+    //         let errMessage = "";
+    //         if (err instanceof Error) {
+    //             errMessage = err.message;
+    //         }
+    //         console.log(errMessage);
+    //         message.error(errMessage)
+    //     }
+    //     setIsLoading(false)
+    // }
+
+
+
+
+    const handleCheckAttempts = async (user) => {
+
+        setIsLoading(true)
         setCurAttemps(user.attempts)
+        setCurCurAttempts(user.attempts)
+        setCurHasAttempt("true")
+
+        setIsLoading(false)
     }
 
     const onChange = (e) => {
@@ -71,7 +100,7 @@ const CheckWorks = () => {
                     <UsersList isCheck={true} handleCheckAttempts={handleCheckAttempts} users={filterUsers}></UsersList>
                 </Col>
                 <Col xs={13}>
-                    <AttemptsDetails onUpdate={onUpdate} isCheck={true}></AttemptsDetails>
+                    <AttemptsDetails onUpdate={onUpdate} isCheck={true} curcurAttempts={curcurAttempts} ></AttemptsDetails>
                 </Col>
             </Row>
         )

@@ -1,8 +1,12 @@
 import { clearCurAttemps } from "../../entities/LocalStore/curAttemps"
+import { clearCurCourse } from "../../entities/LocalStore/curCourse"
+import { clearCurHasAttempt } from "../../entities/LocalStore/curHasAttempt"
+import { clearCurLecture } from "../../entities/LocalStore/curLecture"
 import { clearCurModule } from "../../entities/LocalStore/curModule"
 import { clearCurTest } from "../../entities/LocalStore/curTest"
+import { clearCurUser } from "../../entities/LocalStore/curUser"
 import history from "../../services/history"
-import { COURSE_TESTS_ROUTE, TESTING_ALL_COURSES_ROUTE, TESTING_COURSES_ROUTE, TESTING_ROUTE } from "../../utils/consts"
+import { ADD_ROUTE, ALLERGENS_ROUTE, ARCHIVE_ROUTE, COURSE_INFO_ROUTE, COURSE_LECTIONS_ROUTE, COURSE_ONTOLOGY_ROUTE, COURSE_TERMS_ROUTE, COURSE_TESTS_ROUTE, COURSE_TESTS_TEST_EDIT_ROUTE, COURSE_TESTS_TEST_VARIANTS_ROUTE, LOGIN_ROUTE, MAIN_ROUTE, PROFILE_ROUTE, SEARCH_ROUTE, TESTING_ALL_COURSES_ROUTE, TESTING_COURSES_ROUTE, TESTING_ROUTE, TESTS_TEST_CHECK_WORKS_ROUTE, VIEW_ROUTE } from "../../utils/consts"
 
 export const isMenuCourses = () => {
     return  history.location.pathname === TESTING_ROUTE || history.location.pathname === TESTING_COURSES_ROUTE ||
@@ -21,34 +25,52 @@ export function deepEqual(obj1:any, obj2:any){
     return JSON.stringify(obj1) === JSON.stringify(obj2);
 }
 
-export const getWordAnswer = (index:number) => {
+export const getWordAnswer = (index:number,isTEXT:boolean) => {
     const listWords = ["a)", "b)", "c)", "d)", "e)", "f)", "g)", "h)", "i)", "j)", "k)", "l)"]
-    return listWords[index]
+    return isTEXT ? null: listWords[index]
 }
-
 export const cleanLocalStore=(type:string)=>{
     console.log(type)
     switch (type) {
-        // case COURSE_INFO_ROUTE:
-        //   return <EllipsisOutlined />;
-        // case COURSE_LECTIONS_ROUTE:
-        //   return <BookOutlined />;
-        case COURSE_TESTS_ROUTE:
-            
-            clearCurModule();
+        // case "Назад":
+        case COURSE_TESTS_TEST_VARIANTS_ROUTE:
+        case TESTS_TEST_CHECK_WORKS_ROUTE:
+            clearCurHasAttempt();
             clearCurAttemps();
+            return;
+        case MAIN_ROUTE:
+        case TESTING_COURSES_ROUTE:
+        case ALLERGENS_ROUTE:
+        case ADD_ROUTE:
+        case VIEW_ROUTE:
+        case ARCHIVE_ROUTE:
+        case SEARCH_ROUTE:
+        case PROFILE_ROUTE:
+        case LOGIN_ROUTE:
+            clearCurCourse();
+            clearCurAttemps();
+            clearCurLecture();
+            clearCurModule();
             clearCurTest();
-          break;
-        // case COURSE_TERMS_ROUTE:
-        //   return <FontSizeOutlined />;
-        // case COURSE_ONTOLOGY_ROUTE:
-        //   return <BranchesOutlined />;
-        // case TESTING_ALL_COURSES_ROUTE:
-        //   return <AppstoreOutlined />;
+            clearCurUser()
+            clearCurHasAttempt();
+            return;
+        case COURSE_INFO_ROUTE:
+        case COURSE_LECTIONS_ROUTE:
+        case COURSE_ONTOLOGY_ROUTE:
+        case COURSE_TERMS_ROUTE:
+        case COURSE_TESTS_ROUTE:
+            clearCurAttemps();
+                clearCurLecture();
+                clearCurModule();
+                clearCurTest();
+                clearCurUser()
+                clearCurHasAttempt();
+
+            return;
         default:
-          break;
-    
-}
+            return null;
+    }
 }
 
 // export const setLocalStorage = (key:string, item:any) => {

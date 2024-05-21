@@ -1,25 +1,88 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import 'antd/dist/antd.css';
 import { Button} from "react-bootstrap"
 import { Col, Divider, Form, message, Row, Space } from "antd";
-import { FormOutlined } from '@ant-design/icons';
 import AttemptTask from "../Task/AttemptTask";
 import TestingApi from "../../../API/TestingApi";
 // import {Loader} from "../../UI/Loader/Loader";
-import { getCurAttemps } from "../../../entities/LocalStore/curAttemps";
+import { getCurAttemps, setCurAttemps } from "../../../entities/LocalStore/curAttemps";
 import { getUserStore } from "../../../entities/LocalStore/userStore";
+import { getCurTest } from "../../../entities/LocalStore/curTest";
+import { Loader } from "../../UI/Loader/Loader";
+import { clearCurHasAttempt, getCurHasAttempt, setCurHasAttempt } from "../../../entities/LocalStore/curHasAttempt";
+import { MapAttempts } from "./MapAttempts";
 
-const AttemptsDetails = ({onUpdate, isCheck}) => {
-    const [form] = Form.useForm();
+const AttemptsDetails = ({onUpdate, isCheck,curcurAttemps}) => {
     const [viewDetails, setViewDetails] = useState(false)
     const [curAttempt, setCurAttempt] = useState({})
     const [isLoading, setIsLoading] = useState(false)
-
-    const curAttempts = getCurAttemps()
+    const [curAttempts,setCurAttempts]=useState(curcurAttemps)
+    const [attemptsLoaded,setAttemptsLoaded]=useState(getCurHasAttempt()==="trueL" ? true:false)
     const user = getUserStore();
+    const curTest = getCurTest()
 
     const widthForm = window.innerWidth * 0.35
     let listAttempts = []
+    const [myTime, setMyTime] = useState(new Date());
+
+    function tick() {
+        setMyTime(new Date());
+        if(getCurHasAttempt()==="true" && !attemptsLoaded){
+            setCurAttempts(getCurAttemps())
+            setAttemptsLoaded(true)
+            setCurHasAttempt("trueL")//типо загрузил уже
+        }
+        
+      }
+
+    useEffect(() => {
+        var timerID = setInterval(() => tick(), 300);
+
+        
+        if(!isCheck)
+        fetchAttempts()
+        else if(getCurHasAttempt()==="true"){
+            setCurAttempts(getCurAttemps())
+        }
+        else if(getCurHasAttempt()==="trueL"){
+            setCurHasAttempt("true")//типо загрузил уже
+
+        }
+        else{
+            const lisener=()=>{
+                // When storage changes refetch
+                if(getCurHasAttempt()==="true")
+                setCurAttempts(getCurAttemps())
+              }
+            window.addEventListener("storage", lisener());
+              return () => {
+                clearInterval(timerID)
+                // When the component unmounts remove the event listener
+                if(getCurHasAttempt()!=="true")
+                window.removeEventListener("storage",lisener());
+              };
+        }
+        return () => clearInterval(timerID);
+    }, [])
+
+    const fetchAttempts = async () => {
+        
+        setIsLoading(true)
+        try {
+            let response = await TestingApi.getAttempts(user.uid, curTest.testName)
+            
+            setCurAttemps(response.data)
+            setCurAttempts(response.data)
+        } catch (err) {
+            let errMessage = "";
+            if (err instanceof Error) {
+                errMessage = err.message;
+            }
+            console.log(errMessage);
+            message.error(errMessage)
+        }
+        setIsLoading(false)
+    }
 
     const fetchEditAttempt = async (attempt) => {
         setIsLoading(true)
@@ -29,6 +92,9 @@ const AttemptsDetails = ({onUpdate, isCheck}) => {
                 message.success('Попытка проверена успешно');
             }
             onUpdate()
+            clearCurHasAttempt();
+            fetchAttempts()
+            
         } catch (err) {
             let errMessage = "";
             if (err instanceof Error) {
@@ -53,22 +119,16 @@ const AttemptsDetails = ({onUpdate, isCheck}) => {
         fetchEditAttempt(values)
         console.log('Received values of form:', values);
     };
+    if(curcurAttemps){
+        listAttempts = curcurAttemps.map((attempt, ind) => {
+           return <MapAttempts ind={ind} handleAttempt={handleAttempt} attempt={attempt}/>
 
-    if (curAttempts) {
+        })
+    }
+    else if (curAttempts) {
         listAttempts = curAttempts.map((attempt, ind) => {
-            return (
-                <div  
-                    key={ind} 
-                    style={{cursor: 'pointer', verticalAlign: 'baseline', marginTop: '20px'}} 
-                    onClick={() => handleAttempt(attempt)}
-                > 
-                    <FormOutlined/> Попытка {ind+1}
-                    { attempt.checked === "True"
-                        ? <span> -  Проверено</span> 
-                        : <span> -  Не проверено</span>
-                    }
-                </div>
-            )
+           return <MapAttempts ind={ind} handleAttempt={handleAttempt} attempt={attempt}/>
+           
         })
     }
 
@@ -85,10 +145,11 @@ const AttemptsDetails = ({onUpdate, isCheck}) => {
         }
         return styleInput
     }
-
+    if(isLoading)return <Loader/>
+    else
     if (!viewDetails) {
         return (
-            <Row>
+            <Row key>
                 <Col style={{border: '1px solid #cbcccd'}} xs={10}>
                     {listAttempts}                           
                 </Col>
@@ -97,8 +158,7 @@ const AttemptsDetails = ({onUpdate, isCheck}) => {
     } else {
         return (
             <Form 
-            form={form} 
-            name="dynamic_form_nest_item"
+            name={"dynamic_form_nest_item_"+curAttempt.nameTest}
             style={{border: '1px solid #cbcccd'}}
             onFinish={onFinish} 
             autoComplete="off"
@@ -106,13 +166,13 @@ const AttemptsDetails = ({onUpdate, isCheck}) => {
             initialValues={{
                 ["testName"]: curAttempt.nameTest,
                 ["tasks"]: curAttempt.tasks,
-                ["answers"]: curAttempt.tasks,
+                // ["answers"]: curAttempt.tasks,
             }}
             >
                 <Form.Item>
-                    <Button style={{margin: '10px 0 0 30px'}} onClick={() => {setViewDetails(false); setCurAttempt({})}}>Вернуться к списку попыток</Button>
+                    <Button style={{margin: '10px 0 0 30px'}} onClick={() => {setViewDetails(false); setCurAttempt({});  }}>Вернуться к списку попыток</Button>
                 </Form.Item>
-                <Form.Item name="testName">
+                <Form.Item name={"testName"}>
                     <Divider 
                         style={{color: 'rgb(76 86 96)', fontSize: '22px'}}
                         orientation="center"
@@ -126,7 +186,7 @@ const AttemptsDetails = ({onUpdate, isCheck}) => {
                         Результат теста: {curAttempt.percentComplete * 100}%
                     </Divider>
                 </Form.Item>
-                <Form.List name="tasks">
+                <Form.List name={"tasks"}>
                     {(fields) => (
                     <>
                         {fields.map((field, index) => (
@@ -141,10 +201,10 @@ const AttemptsDetails = ({onUpdate, isCheck}) => {
                                 <>
                                     <Form.Item 
                                     name={[field.name, 'question']} 
-                                    label={`Вопрос ${index + 1} . ${curAttempt.tasks[field.key].question}`}
+                                    label={`Вопрос ${index + 1} . ${curAttempt.tasks[field.key].question}.${field.name}  . ${curAttempt.tasks[field.key].answers[0].answer}`}
                                     style={{fontWeight: 'bolder'}}
-                                    />
-                                    <AttemptTask isCheck={isCheck} tasks={curAttempt.tasks} form={form} widthForm={widthForm} field={field}></AttemptTask>
+                                    ></Form.Item >
+                                    <AttemptTask isCheck={isCheck} tasks={curAttempt.tasks} curAttempt={curAttempt}  widthForm={widthForm} field={field}></AttemptTask>
                                 </>
                             )}
                             </Form.Item>
@@ -155,7 +215,7 @@ const AttemptsDetails = ({onUpdate, isCheck}) => {
                 </Form.List>
                 { isCheck
                     ?   <Form.Item>
-                            <Button style={{margin: '0 0 10px 30px'}} type="primary" htmltype="submit">
+                            <Button style={{margin: '0 0 10px 30px'}} type="primary" htmltype="submit" onClick={()=>{}}>
                                 Завершить проверку
                             </Button>
                         </Form.Item> 

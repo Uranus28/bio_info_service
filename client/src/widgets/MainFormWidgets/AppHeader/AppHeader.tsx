@@ -8,6 +8,7 @@ import { Context } from "../../..";
 import { getDefaultKey } from "../../../app/Consts/getDefaultKey";
 
 import "./AppHeader.css";
+import { cleanLocalStore } from "../../../components/utils/testing";
 
 const { Header } = Layout;
 
@@ -50,7 +51,14 @@ export const AppHeader: FC<AppHeaderProps> = ({
               }
               key={item.id}
             >
-              <Link to={item.link}>{item.name}</Link>
+              <Link
+                onClick={() => {
+                  cleanLocalStore(item.link);
+                }}
+                to={item.link}
+              >
+                {item.name}
+              </Link>
             </Menu.Item>
           );
         })}
