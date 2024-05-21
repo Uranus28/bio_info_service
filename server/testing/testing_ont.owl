@@ -1743,6 +1743,7 @@
 <owl:NamedIndividual rdf:about="#курс2">
   <rdf:type rdf:resource="#Курс"/>
   <has_module rdf:resource="#модуль3"/>
+  <has_module rdf:resource="#модуль4"/>
   <descriptionCourse rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Описание Курса1</descriptionCourse>
   <infoCourse rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Информация о Курсе1</infoCourse>
   <nameCourse rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Курс1</nameCourse>
@@ -3537,6 +3538,21 @@
   <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
   <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">fasddsafssd</textAnswer>
   <score rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0</score>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#модуль4">
+  <rdf:type rdf:resource="#Модуль"/>
+  <has_subject_area rdf:resource="#палинология"/>
+  <is_module_of rdf:resource="#курс2"/>
+  <nameModule rdf:datatype="http://www.w3.org/2001/XMLSchema#string">module2</nameModule>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#вопрос22">
+  <rdf:type rdf:resource="#Вопрос"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="##">
+  <rdf:type rdf:resource="#Термин"/>
 </owl:NamedIndividual>
 
 

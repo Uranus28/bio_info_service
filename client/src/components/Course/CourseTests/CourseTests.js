@@ -67,6 +67,7 @@ const CourseTests = () => {
     }
 
     const handleCreateTest = (module) => {
+        console.log(module)
         setCurModule(module)
         setIsCreateTestFormVisible(true)
     }
@@ -101,6 +102,7 @@ const CourseTests = () => {
 
         listModules = curCourse.modules.map((item, index) => {
             return (
+                <>
                 <ListGroup.Item 
                     as="li"
                     className="d-flex justify-content-between align-items-start"
@@ -141,8 +143,9 @@ const CourseTests = () => {
                             </Button>
                         : null
                     }
-                    <CreateTestForm isVisible={isCreateTestFormVisible} setIsVisible={setIsCreateTestFormVisible} onUpdate={onUpdate}></CreateTestForm>                
                 </ListGroup.Item>
+                </>               
+
             )
         })
     }
@@ -162,6 +165,7 @@ const CourseTests = () => {
                             }
                         </Divider>
                         {listModules}
+                        <CreateTestForm isVisible={isCreateTestFormVisible} setIsVisible={setIsCreateTestFormVisible} onUpdate={onUpdate}></CreateTestForm>                
                         { isTeacher(user)
                             ?   <Button 
                                 style={{verticalAlign: "bottom", marginTop: "20px"}} 
