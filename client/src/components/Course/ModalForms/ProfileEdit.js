@@ -4,21 +4,43 @@ import { Modal, Button, Form, Input, message } from 'antd';
 import { deepEqual } from '../../utils/testing';
 import TestingApi from '../../../API/TestingApi';
 import {Loader} from '../../UI/Loader/Loader';
-import { getUserStore } from '../../../entities/LocalStore/userStore';
+import { getUserStore, setUserStore } from '../../../entities/LocalStore/userStore';
 
-const ProfileEdit = ({isVisible, setIsVisible}) => {
+const ProfileEdit = ({isVisible, setIsVisible,changeUser,onUpdate,setIsLoadingUpper}) => {
     const [isLoading, setIsLoading] = useState(false)
 
     const user = getUserStore();
+
+
+    const fetchUser = async (uid) => {
+        setIsLoadingUpper(true);
+        try {
+          let response = await TestingApi.getUser(uid);
+          changeUser(user["firstName"],user["lastName"])
+          onUpdate()
+          setUserStore(response.data);
+        } catch (err) {
+          let errMessage = "";
+          if (err instanceof Error) {
+            errMessage = err.message;
+          }
+          console.log(errMessage);
+          message.error(errMessage);
+        }
+        setIsLoadingUpper(false);
+      };
 
     const fetchEditProfile = async (newUser) => {
         setIsLoading(true)
         try {
             let response = await TestingApi.editProfile(newUser);
             if (response.data === "ok") {
+                fetchUser(user["uid"]);                
+                
                 message.success('Профиль изменен успешно');
                 setIsVisible(false)
             }
+            
         } catch (err) {
             let errMessage = "";
             if (err instanceof Error) {

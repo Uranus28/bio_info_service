@@ -17,8 +17,19 @@ export const Profile: FC = () => {
   const [filterUsers, setFilterUsers] = useState([]);
   const [searchUser, setSearchUser] = useState("");
   const [update, setUpdate] = useState(false);
+  const [user, setUser] = useState(getUserStore());
 
-  const user = getUserStore();
+  const changeUser = (name: string, surname: string) => {
+    let userI = user;
+    userI["firstName"] = name;
+    userI["lastName"] = surname;
+    userI["fullName"] = name + " " + surname;
+    console.log(user);
+    console.log("_______________-");
+    console.log(userI);
+    setUser(userI);
+  };
+  const [isLoading, setIsLoading] = useState(false);
 
   const [fetchUsers, isDataLoading, dataError] = useFetching(async () => {
     let response = await TestingApi.getUsers();
@@ -35,7 +46,12 @@ export const Profile: FC = () => {
   };
 
   useEffect(() => {
-    fetchUsers();
+    setIsLoading(true);
+    setUser(getUserStore());
+
+    if (isAdmin(user)) fetchUsers();
+
+    setIsLoading(false);
   }, [update]);
 
   const onChange = (e: any) => {
@@ -49,7 +65,7 @@ export const Profile: FC = () => {
     );
   };
 
-  if (isDataLoading) {
+  if (isDataLoading || isLoading) {
     return <Loader />;
   } else {
     return (
@@ -117,6 +133,9 @@ export const Profile: FC = () => {
           )}
         </Row>
         <ProfileEdit
+          setIsLoadingUpper={setIsLoading}
+          onUpdate={onUpdate}
+          changeUser={changeUser}
           isVisible={isProfileEditFormVisible}
           setIsVisible={setIsProfileEditFormVisible}
         />
