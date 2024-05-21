@@ -24,9 +24,6 @@ export const Profile: FC = () => {
     userI["firstName"] = name;
     userI["lastName"] = surname;
     userI["fullName"] = name + " " + surname;
-    console.log(user);
-    console.log("_______________-");
-    console.log(userI);
     setUser(userI);
   };
   const [isLoading, setIsLoading] = useState(false);
@@ -46,12 +43,9 @@ export const Profile: FC = () => {
   };
 
   useEffect(() => {
-    setIsLoading(true);
     setUser(getUserStore());
 
     if (isAdmin(user)) fetchUsers();
-
-    setIsLoading(false);
   }, [update]);
 
   const onChange = (e: any) => {
