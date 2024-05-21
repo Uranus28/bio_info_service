@@ -1,0 +1,18 @@
+import { Divider } from "antd";
+import React, { FC } from "react";
+import { getCurCourse } from "../../entities/LocalStore/curCourse";
+
+interface hasCurCourseProps {
+  element: any;
+}
+export const hasCurCourse: FC<hasCurCourseProps> = ({ element }) => {
+  return (
+    <>
+      {getCurCourse().modules ? (
+        { element }
+      ) : (
+        <Divider orientation="center">Выберите курс</Divider>
+      )}
+    </>
+  );
+};

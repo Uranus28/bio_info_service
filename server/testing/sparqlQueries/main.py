@@ -1,6 +1,7 @@
 #from asyncio.windows_events import NULL
+# type: ignore
 from re import I
-from itsdangerous import json
+from itsdangerous import json 
 from owlready2 import *
 from enum import Enum
 from datetime import datetime

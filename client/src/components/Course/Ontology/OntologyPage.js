@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import 'antd/dist/antd.css';
-import { Tabs  } from "antd";
+import { Tabs,Divider  } from "antd";
 import Concepts from "./Compon/Concepts";
 import Templates from "./Compon/Templates";
-
+import { getCurCourse } from "../../../entities/LocalStore/curCourse";
 const { TabPane } = Tabs;
 
 const OntologyPage = () => {
@@ -17,7 +17,6 @@ const OntologyPage = () => {
           setUpdateTemplates(!updateTemplates)
         }
     };
-
     return (
         <Tabs defaultActiveKey="1" onChange={onChange}>
         <TabPane tab="Концепты" key="1">
@@ -31,6 +30,7 @@ const OntologyPage = () => {
         </TabPane>
       </Tabs>
     )
+   
 }
 
 export default OntologyPage;

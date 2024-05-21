@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import 'antd/dist/antd.css';
 import './index.css';
-import { Layout, Menu } from 'antd';
+import { Layout, Menu,Divider } from 'antd';
 import { Breadcrumb } from 'react-bootstrap'
 import { Router, Switch, Route, Link } from "react-router-dom";
 import Courses from '../../components/Courses/Courses';
@@ -9,7 +9,7 @@ import { UserOutlined } from '@ant-design/icons';
 import history from '../../services/history';
 import { Context } from '../..';
 import { COURSE_INFO_ROUTE, COURSE_LECTIONS_ROUTE, COURSE_ONTOLOGY_ROUTE, COURSE_TERMS_ROUTE, COURSE_TESTS_ROUTE, COURSE_TESTS_TEST_EDIT_ROUTE, COURSE_TESTS_TEST_VARIANTS_ROUTE, TESTING_ALL_COURSES_ROUTE, TESTING_COURSES_ROUTE, TESTING_ROUTE, TESTS_TEST_ATTEMPTS_DETAILS_ROUTE, TESTS_TEST_ATTEMPT_ROUTE, TESTS_TEST_CHECK_WORKS_ROUTE } from '../../utils/consts';
-import { cleanLocalStore, cleanLocalStore2, isMenuCourses } from '../../components/utils/testing';
+import { cleanLocalStore, isMenuCourses } from '../../components/utils/testing';
 import CourseInfo from '../../components/Course/CourseInfo/CourseInfo';
 import CourseTests from '../../components/Course/CourseTests/CourseTests';
 import CourseTest from '../../components/Course/CourseTest/CourseTest';
@@ -117,13 +117,19 @@ const Testing = () => {
                         <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
                             <Switch>
                                 <Route exact path={COURSE_INFO_ROUTE}>
-                                    <CourseInfo/>
+                                {curCourse["courseObj"]? <CourseInfo/>
+                                    :<Divider orientation="center">Выберите курс</Divider>
+                                    } 
                                 </Route>
                                 <Route exact path={COURSE_TESTS_ROUTE}>
-                                    <CourseTests/>
+                                {curCourse["courseObj"] ? <CourseTests/>
+                                    :<Divider orientation="center">Выберите курс</Divider>
+                                    } 
                                 </Route>
                                 <Route exact path={COURSE_LECTIONS_ROUTE}>
-                                    <CourseLections/>
+                                {curCourse["courseObj"] ? <CourseLections/>
+                                    :<Divider orientation="center">Выберите курс</Divider>
+                                    } 
                                 </Route>
                                 <Route exact path={TESTING_COURSES_ROUTE}>
                                     <Courses/>
@@ -132,25 +138,42 @@ const Testing = () => {
                                     <CoursesAll/>
                                 </Route>
                                 <Route exact path={TESTS_TEST_ATTEMPT_ROUTE}>
-                                    <CourseTest viewDetails={viewDetails} setViewDetails={setViewDetails}/>
+                                {curCourse["courseObj"] ?                                   
+                                     <CourseTest viewDetails={viewDetails} setViewDetails={setViewDetails}/>
+                                    :<Divider orientation="center">Выберите курс</Divider>
+                                    } 
                                 </Route>
                                 <Route exact path={TESTS_TEST_ATTEMPTS_DETAILS_ROUTE}>
-                                    <AttemptsDetails viewDetails={viewDetails} setViewDetails={setViewDetails} isCheck={false}/>
+                                {curCourse["courseObj"] ? <AttemptsDetails viewDetails={viewDetails} setViewDetails={setViewDetails} isCheck={false}/>
+                                    :<Divider orientation="center">Выберите курс</Divider>
+                                    } 
+                                    
                                 </Route>
                                 <Route exact path={COURSE_TESTS_TEST_EDIT_ROUTE}>
-                                    <TestEdit/>
+                                {curCourse["courseObj"] ? <TestEdit/>
+                                    :<Divider orientation="center">Выберите курс</Divider>
+                                    } 
                                 </Route>
                                 <Route exact path={COURSE_TESTS_TEST_VARIANTS_ROUTE}>
-                                    <CourseTestVariants/>
+                                {curCourse["courseObj"] ? <CourseTestVariants/>
+                                    :<Divider orientation="center">Выберите курс</Divider>
+                                    } 
                                 </Route>
                                 <Route exact path={TESTS_TEST_CHECK_WORKS_ROUTE}>
-                                    <CheckWorks/>
+                                {curCourse["courseObj"] ? <CheckWorks/>
+                                    :<Divider orientation="center">Выберите курс</Divider>
+                                    } 
                                 </Route>
                                 <Route exact path={COURSE_TERMS_ROUTE}>
-                                    <TermsPage/>
+                                {curCourse["courseObj"] ? <TermsPage/>
+                                    :<Divider orientation="center">Выберите курс</Divider>
+                                    } 
+
                                 </Route>
                                 <Route exact path={COURSE_ONTOLOGY_ROUTE}>
-                                    <OntologyPage/>
+                                    {curCourse["courseObj"] ? <OntologyPage/>
+                                    :<Divider orientation="center">Выберите курс</Divider>
+                                    }        
                                 </Route>
                                 <Route exact path={TESTING_ROUTE}>
                                     <Courses/>

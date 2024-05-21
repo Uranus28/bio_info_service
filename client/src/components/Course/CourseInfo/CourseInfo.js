@@ -179,6 +179,7 @@ const CourseInfo = () => {
     }
 
     const View = () => {
+        if(curCourse.modules)
         return (
             <>
                 <Row>
@@ -217,6 +218,11 @@ const CourseInfo = () => {
                     </Col>
                 </Row>
             </>
+        )
+    
+    else
+        return (
+            <Divider orientation="center">Выберите курс</Divider>
         )
     }
 
