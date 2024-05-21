@@ -91,6 +91,8 @@ const AttemptsDetails = ({onUpdate,viewDetails,setViewDetails, isCheck,curcurAtt
                 message.success('Попытка проверена успешно');
             }
             onUpdate()
+            setViewDetails(false)
+
             clearCurHasAttempt();
             fetchAttempts()
             
@@ -148,13 +150,11 @@ const AttemptsDetails = ({onUpdate,viewDetails,setViewDetails, isCheck,curcurAtt
     else
     if (!viewDetails) {
         return (
-            <Row key>
                 <Col 
                 // style={{border: '1px solid #cbcccd'}} 
                 xs={10}>
                     {listAttempts}                           
                 </Col>
-            </Row>
         )
     } else {
         return (

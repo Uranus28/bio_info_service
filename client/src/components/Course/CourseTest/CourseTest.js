@@ -14,11 +14,10 @@ import { getUserStore } from "../../../entities/LocalStore/userStore";
 import { getCurTest } from "../../../entities/LocalStore/curTest";
 import { setCurAttemps } from "../../../entities/LocalStore/curAttemps";
 
-const CourseTest = () => {
+const CourseTest = ({viewDetails,setViewDetails}) => {
     const [form] = Form.useForm();
     const [result, setResult] = useState({})
     const [isLoading, setIsLoading] = useState(false)
-
     const [isAttemptCompleted, setIsAttemptCompleted] = useState(false)
     let listTasks = []
     
@@ -135,7 +134,7 @@ const CourseTest = () => {
                             </Divider>
                         </Col>
                     </Row>
-                    <AttemptsDetails></AttemptsDetails>
+                    <AttemptsDetails viewDetails={viewDetails} setViewDetails={setViewDetails} isCheck={false}></AttemptsDetails>
                 </>
             )
         }

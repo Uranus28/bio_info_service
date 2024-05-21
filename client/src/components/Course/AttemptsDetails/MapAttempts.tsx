@@ -15,7 +15,8 @@ export const MapAttempts: FC<MapAttemptsProps> = ({
     <div
       key={ind}
       style={{
-        height: "40px",
+        minWidth: "150px",
+        minHeight: "40px",
         border: "1px solid #cbcccd",
         cursor: "pointer",
         verticalAlign: "baseline",

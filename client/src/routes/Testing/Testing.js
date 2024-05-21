@@ -37,6 +37,9 @@ const Testing = () => {
     const curCourse = getCurCourse();
     const routes = services.Routes[history.location.pathname];
 
+
+    const [viewDetails,setViewDetails]=useState(false)
+
     const menuItems = isMenuCourses() ? services.MenuTesting : services.MenuCourse;
 
     const menuItemsList = menuItems.map((item) => {
@@ -129,10 +132,10 @@ const Testing = () => {
                                     <CoursesAll/>
                                 </Route>
                                 <Route exact path={TESTS_TEST_ATTEMPT_ROUTE}>
-                                    <CourseTest/>
+                                    <CourseTest viewDetails={viewDetails} setViewDetails={setViewDetails}/>
                                 </Route>
                                 <Route exact path={TESTS_TEST_ATTEMPTS_DETAILS_ROUTE}>
-                                    <AttemptsDetails hasAttemp={true}/>
+                                    <AttemptsDetails viewDetails={viewDetails} setViewDetails={setViewDetails} isCheck={false}/>
                                 </Route>
                                 <Route exact path={COURSE_TESTS_TEST_EDIT_ROUTE}>
                                     <TestEdit/>
