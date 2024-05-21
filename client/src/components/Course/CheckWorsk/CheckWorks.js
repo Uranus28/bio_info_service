@@ -19,8 +19,11 @@ const CheckWorks = () => {
     const [curcurAttempts,setCurCurAttempts]=useState()
     const curTest = getCurTest()
 
+    const [viewDetails, setViewDetails] = useState(false)
+
     const fetchUsersWhoPassedTheTest = async () => {
         setIsLoading(true)
+
         try {
             let response = await TestingApi.getUsersWhoPassedTheTest(curTest);
             setUsersAttempts(response.data)
@@ -73,6 +76,7 @@ const CheckWorks = () => {
         setCurAttemps(user.attempts)
         setCurCurAttempts(user.attempts)
         setCurHasAttempt("true")
+        setViewDetails(false)
 
         setIsLoading(false)
     }
@@ -100,7 +104,7 @@ const CheckWorks = () => {
                     <UsersList isCheck={true} handleCheckAttempts={handleCheckAttempts} users={filterUsers}></UsersList>
                 </Col>
                 <Col xs={13}>
-                    <AttemptsDetails onUpdate={onUpdate} isCheck={true} curcurAttempts={curcurAttempts} ></AttemptsDetails>
+                    <AttemptsDetails viewDetails={viewDetails} setViewDetails={setViewDetails} onUpdate={onUpdate} isCheck={true} curcurAttempts={curcurAttempts} ></AttemptsDetails>
                 </Col>
             </Row>
         )

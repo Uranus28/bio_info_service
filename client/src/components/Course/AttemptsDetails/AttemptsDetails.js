@@ -12,8 +12,7 @@ import { Loader } from "../../UI/Loader/Loader";
 import { clearCurHasAttempt, getCurHasAttempt, setCurHasAttempt } from "../../../entities/LocalStore/curHasAttempt";
 import { MapAttempts } from "./MapAttempts";
 
-const AttemptsDetails = ({onUpdate, isCheck,curcurAttemps}) => {
-    const [viewDetails, setViewDetails] = useState(false)
+const AttemptsDetails = ({onUpdate,viewDetails,setViewDetails, isCheck,curcurAttemps}) => {
     const [curAttempt, setCurAttempt] = useState({})
     const [isLoading, setIsLoading] = useState(false)
     const [curAttempts,setCurAttempts]=useState(curcurAttemps)
@@ -150,7 +149,9 @@ const AttemptsDetails = ({onUpdate, isCheck,curcurAttemps}) => {
     if (!viewDetails) {
         return (
             <Row key>
-                <Col style={{border: '1px solid #cbcccd'}} xs={10}>
+                <Col 
+                // style={{border: '1px solid #cbcccd'}} 
+                xs={10}>
                     {listAttempts}                           
                 </Col>
             </Row>
@@ -159,7 +160,7 @@ const AttemptsDetails = ({onUpdate, isCheck,curcurAttemps}) => {
         return (
             <Form 
             name={"dynamic_form_nest_item_"+curAttempt.nameTest}
-            style={{border: '1px solid #cbcccd'}}
+            style={{border: '1px solid #cbcccd', padding:"15px"}}
             onFinish={onFinish} 
             autoComplete="off"
             layout="vertical"
@@ -201,7 +202,7 @@ const AttemptsDetails = ({onUpdate, isCheck,curcurAttemps}) => {
                                 <>
                                     <Form.Item 
                                     name={[field.name, 'question']} 
-                                    label={`Вопрос ${index + 1} . ${curAttempt.tasks[field.key].question}.${field.name}  . ${curAttempt.tasks[field.key].answers[0].answer}`}
+                                    label={`Вопрос ${index + 1} . ${curAttempt.tasks[field.key].question} `}
                                     style={{fontWeight: 'bolder'}}
                                     ></Form.Item >
                                     <AttemptTask isCheck={isCheck} tasks={curAttempt.tasks} curAttempt={curAttempt}  widthForm={widthForm} field={field}></AttemptTask>
