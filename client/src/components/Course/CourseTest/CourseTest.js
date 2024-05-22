@@ -5,14 +5,15 @@ import { Col, Divider, Form, message, Row } from "antd";
 import SingleTask from "../../Tasks/Single/SingleTask";
 import MultipleTask from "../../Tasks/Multiple/MultipleTask";
 import TextTask from "../../Tasks/Text/TextTask";
-import {  LOGICAL_TASK_TYPE, MULTIPLE_TASK_TYPE, SINGLE_TASK_TYPE } from "../../../utils/consts";
+import {  LOGICAL_TASK_TYPE, MULTIPLE_TASK_TYPE, SINGLE_TASK_TYPE ,COURSE_TESTS_TEST_VARIANTS_ROUTE} from "../../../utils/consts";
 import Task from "../../Tasks/Task/Task";
 import TestingApi from "../../../API/TestingApi";
 import {Loader} from "../../UI/Loader/Loader";
-import AttemptsDetails from "../AttemptsDetails/AttemptsDetails";
+// import AttemptsDetails from "../AttemptsDetails/AttemptsDetails";
 import { getUserStore } from "../../../entities/LocalStore/userStore";
 import { getCurTest } from "../../../entities/LocalStore/curTest";
 import { setCurAttemps } from "../../../entities/LocalStore/curAttemps";
+import history from "../../../services/history";
 
 const CourseTest = ({viewDetails,setViewDetails}) => {
     const [form] = Form.useForm();
@@ -29,7 +30,7 @@ const CourseTest = ({viewDetails,setViewDetails}) => {
         try {
             let response = await TestingApi.getResultAttempt(attempt, user);
             setResult(response.data)
-            fetchAttempts()
+            // fetchAttempts()
             setIsAttemptCompleted(true)
         } catch (err) {
             let errMessage = "";
@@ -42,21 +43,21 @@ const CourseTest = ({viewDetails,setViewDetails}) => {
         setIsLoading(false)
     }
 
-    const fetchAttempts = async () => {
-        setIsLoading(true)
-        try {
-            let response = await TestingApi.getAttempts(user.uid, curTest.testName)
-            setCurAttemps(response.data)
-        } catch (err) {
-            let errMessage = "";
-            if (err instanceof Error) {
-                errMessage = err.message;
-            }
-            console.log(errMessage);
-            message.error(errMessage)
-        }
-        setIsLoading(false)
-    }
+    // const fetchAttempts = async () => {
+    //     setIsLoading(true)
+    //     try {
+    //         let response = await TestingApi.getAttempts(user.uid, curTest.testName)
+    //         setCurAttemps(response.data)
+    //     } catch (err) {
+    //         let errMessage = "";
+    //         if (err instanceof Error) {
+    //             errMessage = err.message;
+    //         }
+    //         console.log(errMessage);
+    //         message.error(errMessage)
+    //     }
+    //     setIsLoading(false)
+    // }
 
     if (curTest.tasks) {
         listTasks = curTest.tasks.map((item, ind) => {
@@ -134,7 +135,7 @@ const CourseTest = ({viewDetails,setViewDetails}) => {
                             </Divider>
                         </Col>
                     </Row>
-                    <AttemptsDetails viewDetails={viewDetails} setViewDetails={setViewDetails} isCheck={false}></AttemptsDetails>
+                    <Button type="primary" onClick={()=>{history.push(COURSE_TESTS_TEST_VARIANTS_ROUTE);}}>Вернуться к тесту</Button>
                 </>
             )
         }

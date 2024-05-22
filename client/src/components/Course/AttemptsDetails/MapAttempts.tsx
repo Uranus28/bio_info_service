@@ -24,11 +24,25 @@ export const MapAttempts: FC<MapAttemptsProps> = ({
       }}
       onClick={() => handleAttempt(attempt)}
     >
-      <FormOutlined /> Попытка {ind + 1}
+      <FormOutlined
+        style={{
+          color:
+            attempt.checked === "True" ? "rgb(24 144 255)" : "rgb(134 136 138)",
+        }}
+      />{" "}
+      {"Попытка"} {ind + 1}
       {attempt.checked === "True" ? (
-        <span> - Проверено</span>
+        <span>
+          {" - "}
+          <br />
+          {" Проверено"}
+        </span>
       ) : (
-        <span> - Не проверено</span>
+        <span>
+          {" - "}
+          <br />
+          {" Не проверено"}
+        </span>
       )}
     </div>
   );

@@ -151,8 +151,9 @@ const AttemptsDetails = ({onUpdate,viewDetails,setViewDetails, isCheck,curcurAtt
     if (!viewDetails) {
         return (
                 <Col 
-                // style={{border: '1px solid #cbcccd'}} 
-                xs={10}>
+                style={{width: '150px'}} 
+                
+                >
                     {listAttempts}                           
                 </Col>
         )
