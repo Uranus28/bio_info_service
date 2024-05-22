@@ -25,7 +25,7 @@ export const Concepts = ({ updatePage }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterTerms, setFilterTerms] = useState([]);
 
-  const user = getUserStore;
+  const user = getUserStore();
 
   const fetchSubjectAreas = async () => {
     setIsLoading(true);
@@ -116,7 +116,7 @@ export const Concepts = ({ updatePage }) => {
             defaultValue={curSubjectArea}
             onChange={(e) => onChangeSubjArea(e, subAreas)}
           ></Select>
-          {isTeacher(user) ? (
+          {/* {isTeacher(user) ? (
             <Button
               style={{ verticalAlign: "bottom", marginLeft: "20px" }}
             //   variant="outline-success"
@@ -124,7 +124,7 @@ export const Concepts = ({ updatePage }) => {
             >
               Добавить предметную область
             </Button>
-          ) : null}
+          ) : null} */}
         </Form.Item>
         {curSubjectArea !== "" ? (
           <Form.Item

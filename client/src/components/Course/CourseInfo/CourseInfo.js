@@ -179,7 +179,6 @@ const CourseInfo = () => {
     }
 
     const View = () => {
-        if(curCourse.modules)
         return (
             <>
                 <Row>
@@ -219,12 +218,8 @@ const CourseInfo = () => {
                 </Row>
             </>
         )
-    
-    else
-        return (
-            <Divider orientation="center">Выберите курс</Divider>
-        )
     }
+    
 
     const spinner = isLoading ? <Loader/> : null;
     //const errorMessage = dataError || subscribeError || unsubscribeError ? <ErrorMessage message={dataError} /> : null;

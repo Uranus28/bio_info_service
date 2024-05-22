@@ -151,7 +151,6 @@ const CourseTests = () => {
     }
 
     const View = () => {
-        if (curCourse.modules) {
             return (
                 <Row>
                     <Col xs={10}>
@@ -181,12 +180,8 @@ const CourseTests = () => {
                     <ModuleEdit isVisible={isEditModuleFormVisible} setIsVisible={setIsEditModuleFormVisible} onUpdate={onUpdate}></ModuleEdit>
                 </Row>
             )
-        } 
-        else {
-            return (
-                <Divider orientation="center">Выберите курс</Divider>
-            )
-        }
+        
+        
     }
 
     const spinner = isLoading ? <Loader/> : null;

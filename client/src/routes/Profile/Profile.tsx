@@ -44,8 +44,9 @@ export const Profile: FC = () => {
 
   useEffect(() => {
     setUser(getUserStore());
-
-    if (isAdmin(user)) fetchUsers();
+    if ((isAdmin(user) && users.length == 0) || update)
+      if (isAdmin(user)) fetchUsers();
+    return () => onUpdate();
   }, [update]);
 
   const onChange = (e: any) => {

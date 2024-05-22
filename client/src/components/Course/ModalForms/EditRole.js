@@ -30,12 +30,15 @@ const EditRole = ({onUpdateUsers, user, isVisible, setIsVisible}) => {
     }
 
     useEffect(() => {
+        let isMounted=true
+        if(isMounted)
         form.setFieldsValue({
             firstName: user.firstName,
             lastName: user.lastName,
             role: user.role,
             email: user.email,
         })
+        return ()=>isMounted=false
     })
 
     const handleOk = () => {

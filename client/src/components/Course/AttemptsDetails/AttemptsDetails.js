@@ -160,7 +160,7 @@ const AttemptsDetails = ({onUpdate,viewDetails,setViewDetails, isCheck,curcurAtt
         return (
             <Form 
             name={"dynamic_form_nest_item_"+curAttempt.nameTest}
-            style={{border: '1px solid #cbcccd', padding:"15px"}}
+            style={{border: '1px solid #cbcccd', padding:"15px",minWidth:"550px"}}
             onFinish={onFinish} 
             autoComplete="off"
             layout="vertical"

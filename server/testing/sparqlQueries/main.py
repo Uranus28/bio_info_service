@@ -1138,7 +1138,7 @@ class TestingService:
                     answerObj = ОтветыСтудента(answer["answerObj"])
                     prevAnswerScore = answerObj.score
                     print("prevAnswerScore: ", prevAnswerScore)
-                    answerObj.score = answer["score"]
+                    answerObj.score = int(answer["score"])
                     if prevAnswerScore != answer["score"]:
                         attempt.sumScore -= float(prevAnswerScore)
                         attempt.sumScore += float(answer["score"])
@@ -1151,6 +1151,7 @@ class TestingService:
                         if termObj != "":
                             termsScores[termObj]["sumScore"] += float(answer["score"])
                         break
+            
             elif taskItem["type"] == typeTask.Multiple.value:
                 sum = 0
                 maxSum = 0
@@ -1162,6 +1163,9 @@ class TestingService:
                         maxSum += 1
                 if termObj != "" and maxSum != 0:
                     termsScores[termObj]["sumScore"] += (sum / maxSum)
+        # for task in attempt.tasks:
+        #     for answer in task:
+        #         answer.score=float(answer.score)
 
         print("TERMSCORES: ", termsScores)
         for termObj, term in termsScores.items():
