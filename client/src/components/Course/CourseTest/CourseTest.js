@@ -12,15 +12,12 @@ import {Loader} from "../../UI/Loader/Loader";
 // import AttemptsDetails from "../AttemptsDetails/AttemptsDetails";
 import { getUserStore } from "../../../entities/LocalStore/userStore";
 import { getCurTest } from "../../../entities/LocalStore/curTest";
-import { setCurAttemps } from "../../../entities/LocalStore/curAttemps";
 import history from "../../../services/history";
-
 const CourseTest = ({viewDetails,setViewDetails}) => {
     const [form] = Form.useForm();
     const [result, setResult] = useState({})
     const [isLoading, setIsLoading] = useState(false)
     const [isAttemptCompleted, setIsAttemptCompleted] = useState(false)
-    let listTasks = []
     
     const user = getUserStore();
     const curTest = getCurTest()
@@ -43,21 +40,6 @@ const CourseTest = ({viewDetails,setViewDetails}) => {
         setIsLoading(false)
     }
 
-    // const fetchAttempts = async () => {
-    //     setIsLoading(true)
-    //     try {
-    //         let response = await TestingApi.getAttempts(user.uid, curTest.testName)
-    //         setCurAttemps(response.data)
-    //     } catch (err) {
-    //         let errMessage = "";
-    //         if (err instanceof Error) {
-    //             errMessage = err.message;
-    //         }
-    //         console.log(errMessage);
-    //         message.error(errMessage)
-    //     }
-    //     setIsLoading(false)
-    // }
 
     if (curTest.tasks) {
         listTasks = curTest.tasks.map((item, ind) => {

@@ -9,40 +9,114 @@
 <owl:Ontology rdf:about="http://www.semanticweb.org/nike0/ontologies/2022/4/untitled-ontology-16"/>
 
 <owl:ObjectProperty rdf:about="#answ_has_template">
+  <rdfs:subPropertyOf rdf:resource="#answerTemplateProps"/>
+  <owl:inverseOf rdf:resource="#is_template_of_answ"/>
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
   <rdfs:domain rdf:resource="#ОтветНаШаблонВопроса"/>
   <rdfs:range rdf:resource="#ШаблонВопроса"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ответ на вопрос шаблона имеет Шаблон вопроса</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#answerTemplateProps">
+  <rdfs:subPropertyOf rdf:resource="#templateProps"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#is_template_of_answ">
+  <rdfs:subPropertyOf rdf:resource="#answerTemplateProps"/>
+  <rdfs:domain rdf:resource="#ШаблонВопроса"/>
+  <rdfs:range rdf:resource="#ОтветНаШаблонВопроса"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Является Шаблономвопроса для Ответа на шаблон вопроса</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#templateProps">
+  <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
 </owl:ObjectProperty>
 
 <owl:ObjectProperty rdf:about="#answ_has_term">
+  <rdfs:subPropertyOf rdf:resource="#answerTermTemplateProps"/>
+  <owl:inverseOf rdf:resource="#is_term_of_answer"/>
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
   <rdfs:domain rdf:resource="#ОтветНаШаблонВопроса"/>
   <rdfs:range rdf:resource="#Термин"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ответ на шаблон вопроса имеет Термин</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#answerTermTemplateProps">
+  <rdfs:subPropertyOf rdf:resource="#answerProps"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#is_term_of_answer">
+  <rdfs:subPropertyOf rdf:resource="#answerTermTemplateProps"/>
+  <rdfs:domain rdf:resource="#Термин"/>
+  <rdfs:range rdf:resource="#ОтветНаШаблонВопроса"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Является термином Ответа на шаблон вопроса</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#answerProps">
+  <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#answerTestElemProps">
+  <rdfs:subPropertyOf rdf:resource="#testElemProps"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#testElemProps">
+  <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#basedOnAttempProps">
+  <rdfs:subPropertyOf rdf:resource="#rateProps"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#rateProps">
+  <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
 </owl:ObjectProperty>
 
 <owl:ObjectProperty rdf:about="#based_on_attempt">
+  <rdfs:subPropertyOf rdf:resource="#basedOnAttempProps"/>
   <rdfs:domain rdf:resource="#Оценка_выполнения_теста"/>
   <rdfs:range rdf:resource="#Попытка_прохождения_теста"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">оценка прохождения теста</rdfs:comment>
 </owl:ObjectProperty>
 
 <owl:ObjectProperty rdf:about="#based_on_attempt_rate">
+  <rdfs:subPropertyOf rdf:resource="#basedOnAttempProps"/>
   <rdfs:domain rdf:resource="#Средняя_оценка_выполнения_тестов"/>
   <rdfs:range rdf:resource="#Оценка_выполнения_теста"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">средняя оценка основанная на прохождении теста</rdfs:comment>
 </owl:ObjectProperty>
 
 <owl:ObjectProperty rdf:about="#calculated_for_student">
+  <rdfs:subPropertyOf rdf:resource="#rateProps"/>
   <rdfs:domain rdf:resource="#Рейтинг"/>
   <rdfs:range rdf:resource="#Пользователь"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Является рейтингом пользователя</rdfs:comment>
 </owl:ObjectProperty>
 
 <owl:ObjectProperty rdf:about="#calculated_for_test">
+  <rdfs:subPropertyOf rdf:resource="#rateProps"/>
   <rdfs:domain rdf:resource="#Оценка_выполнения_теста"/>
   <rdfs:range rdf:resource="#Тест"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Является оценкой для теста</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#courseProps">
+  <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
 </owl:ObjectProperty>
 
 <owl:ObjectProperty rdf:about="#enrolled_course">
+  <rdfs:subPropertyOf rdf:resource="#courseProps"/>
+  <owl:inverseOf rdf:resource="#is_enrolled_course_of"/>
   <rdfs:domain rdf:resource="#Пользователь"/>
   <rdfs:range rdf:resource="#Курс"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Имеет подписанного пользователя</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#is_enrolled_course_of">
+  <rdfs:subPropertyOf rdf:resource="#courseProps"/>
+  <rdfs:domain rdf:resource="#Курс"/>
+  <rdfs:range rdf:resource="#Пользователь"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Является подписанным курсом пользователя</rdfs:comment>
 </owl:ObjectProperty>
 
 <owl:ObjectProperty rdf:about="#hasPrevTerm">
@@ -61,76 +135,287 @@
   <rdfs:range rdf:resource="#Термин"/>
 </owl:ObjectProperty>
 
+<owl:ObjectProperty rdf:about="#hasTermProps">
+  <rdfs:subPropertyOf rdf:resource="#termProps"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#termProps">
+  <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+</owl:ObjectProperty>
+
 <owl:ObjectProperty rdf:about="#has_answer">
+  <rdfs:subPropertyOf rdf:resource="#answerTestElemProps"/>
   <rdfs:domain rdf:resource="#Вопрос"/>
   <rdfs:domain rdf:resource="#Элемент_теста"/>
   <rdfs:range rdf:resource="#Ответ"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Элемент теста имеет ответ</rdfs:comment>
 </owl:ObjectProperty>
 
 <owl:ObjectProperty rdf:about="#has_attempt_to_pass_test">
+  <rdfs:subPropertyOf rdf:resource="#passingTestAttempProps"/>
+  <owl:inverseOf rdf:resource="#is_attempt_to_pass_test_of"/>
   <rdfs:domain rdf:resource="#Пользователь"/>
   <rdfs:range rdf:resource="#Попытка_прохождения_теста"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">имеется попытка прохождения теста</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#passingTestAttempProps">
+  <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#is_attempt_to_pass_test_of">
+  <rdfs:subPropertyOf rdf:resource="#passingTestAttempProps"/>
+  <rdfs:domain rdf:resource="#Попытка_прохождения_теста"/>
+  <rdfs:range rdf:resource="#Пользователь"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">является поппыткой прохождения теста</rdfs:comment>
 </owl:ObjectProperty>
 
 <owl:ObjectProperty rdf:about="#has_correct_answer">
+  <rdfs:subPropertyOf rdf:resource="#answerProps"/>
+  <owl:inverseOf rdf:resource="#is_correct_answer_of"/>
   <rdfs:domain rdf:resource="#Вопрос"/>
   <rdfs:range rdf:resource="#Ответ"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Имеет правильный ответ</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#is_correct_answer_of">
+  <rdfs:subPropertyOf rdf:resource="#answerProps"/>
+  <rdfs:domain rdf:resource="#Ответ"/>
+  <rdfs:range rdf:resource="#Вопрос"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Является правильным ответом на вопрос</rdfs:comment>
 </owl:ObjectProperty>
 
 <owl:ObjectProperty rdf:about="#has_group_of_task">
+  <rdfs:subPropertyOf rdf:resource="#taskGroupProps"/>
+  <owl:inverseOf rdf:resource="#is_group_of_task"/>
   <rdfs:domain rdf:resource="#Тест"/>
   <rdfs:range rdf:resource="#Группа_заданий"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Имеет группу заданий</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#taskGroupProps">
+  <rdfs:subPropertyOf rdf:resource="#testProps"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#is_group_of_task">
+  <rdfs:subPropertyOf rdf:resource="#taskGroupProps"/>
+  <rdfs:domain rdf:resource="#Группа_заданий"/>
+  <rdfs:range rdf:resource="#Тест"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Является группой заданий</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#testProps">
+  <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
 </owl:ObjectProperty>
 
 <owl:ObjectProperty rdf:about="#has_lecture">
+  <rdfs:subPropertyOf rdf:resource="#lectureProps"/>
+  <owl:inverseOf rdf:resource="#is_lecture_of"/>
   <rdfs:domain rdf:resource="#Модуль"/>
   <rdfs:range rdf:resource="#Лекция"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">(На будущее, необходимо изменить чтобы лекия была в уроке)</rdfs:comment>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Имеет Лекцию в модуле</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#lectureProps">
+  <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#is_lecture_of">
+  <rdfs:subPropertyOf rdf:resource="#lectureProps"/>
+  <rdfs:domain rdf:resource="#Лекция"/>
+  <rdfs:range rdf:resource="#Модуль"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">(На будущее, необходимо изменить чтобы лекия была в уроке)</rdfs:comment>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Является Лекцией Модуля</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#has_lesson">
+  <rdfs:subPropertyOf rdf:resource="#lessonProps"/>
+  <owl:inverseOf rdf:resource="#is_lesson_of"/>
+  <rdfs:domain rdf:resource="#Модуль"/>
+  <rdfs:range rdf:resource="#Урок"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Имеет урок в модуле курса</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#lessonProps">
+  <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#is_lesson_of">
+  <rdfs:subPropertyOf rdf:resource="#lessonProps"/>
+  <rdfs:domain rdf:resource="#Урок"/>
+  <rdfs:range rdf:resource="#Модуль"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">является уроком в модуле курса</rdfs:comment>
 </owl:ObjectProperty>
 
 <owl:ObjectProperty rdf:about="#has_module">
+  <rdfs:subPropertyOf rdf:resource="#moduleProps"/>
+  <owl:inverseOf rdf:resource="#is_module_of"/>
   <rdfs:domain rdf:resource="#Курс"/>
   <rdfs:range rdf:resource="#Модуль"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Имеет модуль курса</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#moduleProps">
+  <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#is_module_of">
+  <rdfs:subPropertyOf rdf:resource="#moduleProps"/>
+  <rdfs:domain rdf:resource="#Модуль"/>
+  <rdfs:range rdf:resource="#Курс"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">является модулем курса</rdfs:comment>
 </owl:ObjectProperty>
 
 <owl:ObjectProperty rdf:about="#has_personal_rate">
+  <rdfs:subPropertyOf rdf:resource="#rateProps"/>
   <rdfs:domain rdf:resource="#Пользователь"/>
   <rdfs:range rdf:resource="#Рейтинг"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">имеется пользовательский рейтинг</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#has_practice">
+  <rdfs:subPropertyOf rdf:resource="#practiceProps"/>
+  <owl:inverseOf rdf:resource="#is_practice_of"/>
+  <rdfs:domain rdf:resource="#Урок"/>
+  <rdfs:range rdf:resource="#Практика"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Имеется практика урока</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#practiceProps">
+  <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#is_practice_of">
+  <rdfs:subPropertyOf rdf:resource="#practiceProps"/>
+  <rdfs:domain rdf:resource="#Практика"/>
+  <rdfs:range rdf:resource="#Урок"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Является практикой урока</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#has_practice_task">
+  <rdfs:subPropertyOf rdf:resource="#practiceTaskProps"/>
+  <owl:inverseOf rdf:resource="#is_practice_task_of"/>
+  <rdfs:domain rdf:resource="#Практика"/>
+  <rdfs:range rdf:resource="#Задание_практики"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Имеет практичекское задание</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#practiceTaskProps">
+  <rdfs:subPropertyOf rdf:resource="#practiceProps"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#is_practice_task_of">
+  <rdfs:subPropertyOf rdf:resource="#practiceTaskProps"/>
+  <rdfs:domain rdf:resource="#Задание_практики"/>
+  <rdfs:range rdf:resource="#Практика"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">является практическим заданием</rdfs:comment>
 </owl:ObjectProperty>
 
 <owl:ObjectProperty rdf:about="#has_subject_area">
+  <rdfs:subPropertyOf rdf:resource="#subjectAreaProps"/>
+  <owl:inverseOf rdf:resource="#is_subject_area_of"/>
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
   <rdfs:domain rdf:resource="#Модуль"/>
   <rdfs:range rdf:resource="#Область"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Имеет предметную область</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#subjectAreaProps">
+  <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#is_subject_area_of">
+  <rdfs:subPropertyOf rdf:resource="#subjectAreaProps"/>
+  <rdfs:domain rdf:resource="#Область"/>
+  <rdfs:range rdf:resource="#Модуль"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Является предметной областью модуля</rdfs:comment>
 </owl:ObjectProperty>
 
 <owl:ObjectProperty rdf:about="#has_task">
-  <rdfs:domain rdf:resource="#Элемент_теста"/>
+  <rdfs:subPropertyOf rdf:resource="#taskProps"/>
+  <owl:inverseOf rdf:resource="#is_task_of"/>
+  <rdfs:domain rdf:resource="#Группа_заданий"/>
   <rdfs:range rdf:resource="#Задание"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Имеет задание</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#taskProps">
+  <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#is_task_of">
+  <rdfs:subPropertyOf rdf:resource="#taskProps"/>
+  <rdfs:domain rdf:resource="#Задание"/>
+  <rdfs:range rdf:resource="#Группа_заданий"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Является заданием</rdfs:comment>
 </owl:ObjectProperty>
 
 <owl:ObjectProperty rdf:about="#has_teacher">
+  <rdfs:subPropertyOf rdf:resource="#courseProps"/>
+  <owl:inverseOf rdf:resource="#is_teacher_of"/>
   <rdfs:domain rdf:resource="#Курс"/>
   <rdfs:range rdf:resource="#Пользователь"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Имеет учителя Курса</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#is_teacher_of">
+  <rdfs:subPropertyOf rdf:resource="#courseProps"/>
+  <rdfs:domain rdf:resource="#Пользователь"/>
+  <rdfs:range rdf:resource="#Курс"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Является преподавателем курса</rdfs:comment>
 </owl:ObjectProperty>
 
 <owl:ObjectProperty rdf:about="#has_term">
+  <rdfs:subPropertyOf rdf:resource="#termProps"/>
+  <owl:inverseOf rdf:resource="#is_term_of"/>
   <rdfs:domain rdf:resource="#Лекция"/>
   <rdfs:range rdf:resource="#Термин"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Лекция имеет Термин</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#is_term_of">
+  <rdfs:subPropertyOf rdf:resource="#termProps"/>
+  <rdfs:domain rdf:resource="#Термин"/>
+  <rdfs:range rdf:resource="#Лекция"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Является термином лекции</rdfs:comment>
 </owl:ObjectProperty>
 
 <owl:ObjectProperty rdf:about="#has_test">
+  <rdfs:subPropertyOf rdf:resource="#testProps"/>
+  <owl:inverseOf rdf:resource="#is_test_of"/>
   <rdfs:domain rdf:resource="#Модуль"/>
   <rdfs:range rdf:resource="#Тест"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">имеет тест</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#is_test_of">
+  <rdfs:subPropertyOf rdf:resource="#testProps"/>
+  <rdfs:domain rdf:resource="#Тест"/>
+  <rdfs:range rdf:resource="#Модуль"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Является тестом</rdfs:comment>
 </owl:ObjectProperty>
 
 <owl:ObjectProperty rdf:about="#has_test_element">
+  <rdfs:subPropertyOf rdf:resource="#testElemProps"/>
+  <owl:inverseOf rdf:resource="#is_test_element_of"/>
   <rdfs:domain rdf:resource="#Попытка_прохождения_теста"/>
   <rdfs:range rdf:resource="#Элемент_теста"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">имеет элемент теста</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#is_test_element_of">
+  <rdfs:subPropertyOf rdf:resource="#testElemProps"/>
+  <rdfs:domain rdf:resource="#Элемент_теста"/>
+  <rdfs:range rdf:resource="#Попытка_прохождения_теста"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">является элементом теста</rdfs:comment>
 </owl:ObjectProperty>
 
 <owl:ObjectProperty rdf:about="#has_wrong_answer">
+  <rdfs:subPropertyOf rdf:resource="#answerProps"/>
   <rdfs:domain rdf:resource="#Вопрос"/>
   <rdfs:range rdf:resource="#Ответ"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Имеет неверный ответ на вопрос</rdfs:comment>
 </owl:ObjectProperty>
 
 <owl:ObjectProperty rdf:about="#isTermOf">
@@ -140,59 +425,129 @@
   <rdfs:range rdf:resource="#Область"/>
 </owl:ObjectProperty>
 
-<owl:ObjectProperty rdf:about="#is_answer_of">
+<owl:ObjectProperty rdf:about="#isTermOfProps">
+  <rdfs:subPropertyOf rdf:resource="#termProps"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#is_answer_of_task">
+  <rdfs:subPropertyOf rdf:resource="#answerProps"/>
+  <owl:inverseOf rdf:resource="#task_has_answer"/>
   <rdfs:domain rdf:resource="#Ответ"/>
-  <rdfs:range rdf:resource="#Вопрос"/>
+  <rdfs:range rdf:resource="#Задание"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Является ответом на задание</rdfs:comment>
 </owl:ObjectProperty>
 
-<owl:ObjectProperty rdf:about="#is_attempt_to_pass_test_of">
-  <rdfs:domain rdf:resource="#Попытка_прохождения_теста"/>
-  <rdfs:range rdf:resource="#Пользователь"/>
-</owl:ObjectProperty>
-
-<owl:ObjectProperty rdf:about="#is_correct_answer_of">
-  <rdfs:domain rdf:resource="#Ответ"/>
-  <rdfs:range rdf:resource="#Вопрос"/>
-</owl:ObjectProperty>
-
-<owl:ObjectProperty rdf:about="#is_group_of_task">
-  <rdfs:domain rdf:resource="#Группа_заданий"/>
-  <rdfs:range rdf:resource="#Тест"/>
-</owl:ObjectProperty>
-
-<owl:ObjectProperty rdf:about="#is_lecture_of">
-  <rdfs:domain rdf:resource="#Лекция"/>
-  <rdfs:range rdf:resource="#Модуль"/>
-</owl:ObjectProperty>
-
-<owl:ObjectProperty rdf:about="#is_module_of">
-  <rdfs:domain rdf:resource="#Модуль"/>
-  <rdfs:range rdf:resource="#Курс"/>
-</owl:ObjectProperty>
-
-<owl:ObjectProperty rdf:about="#is_task_of">
+<owl:ObjectProperty rdf:about="#task_has_answer">
+  <rdfs:subPropertyOf rdf:resource="#answerProps"/>
   <rdfs:domain rdf:resource="#Задание"/>
-  <rdfs:range rdf:resource="#Группа_заданий"/>
+  <rdfs:range rdf:resource="#Ответ"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Задание имеет Вариант ответа</rdfs:comment>
 </owl:ObjectProperty>
 
-<owl:ObjectProperty rdf:about="#is_term_of">
+<owl:ObjectProperty rdf:about="#is_known_term_of">
+  <rdfs:subPropertyOf rdf:resource="#isTermOfProps"/>
+  <owl:inverseOf rdf:resource="#known_term"/>
   <rdfs:domain rdf:resource="#Термин"/>
-  <rdfs:range rdf:resource="#Лекция"/>
+  <rdfs:range rdf:resource="#Пользователь"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Является Известным для пользователя термином</rdfs:comment>
 </owl:ObjectProperty>
 
-<owl:ObjectProperty rdf:about="#is_test_element_of">
-  <rdfs:domain rdf:resource="#Элемент_теста"/>
-  <rdfs:range rdf:resource="#Попытка_прохождения_теста"/>
+<owl:ObjectProperty rdf:about="#known_term">
+  <rdfs:subPropertyOf rdf:resource="#hasTermProps"/>
+  <rdfs:domain rdf:resource="#Пользователь"/>
+  <rdfs:range rdf:resource="#Термин"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Пользователь имеет известный термин</rdfs:comment>
 </owl:ObjectProperty>
 
-<owl:ObjectProperty rdf:about="#is_test_of">
-  <rdfs:domain rdf:resource="#Тест"/>
-  <rdfs:range rdf:resource="#Модуль"/>
+<owl:ObjectProperty rdf:about="#is_question_of_task">
+  <rdfs:subPropertyOf rdf:resource="#questionProps"/>
+  <rdfs:domain rdf:resource="#Вопрос"/>
+  <rdfs:range rdf:resource="#Задание"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Является вопросом задания</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#questionProps">
+  <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#is_template_of_task">
+  <rdfs:subPropertyOf rdf:resource="#taskTemplateProps"/>
+  <owl:inverseOf rdf:resource="#task_has_template"/>
+  <rdfs:domain rdf:resource="#ШаблонВопроса"/>
+  <rdfs:range rdf:resource="#Задание"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Является Шаблоном вопроса для Задания</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#taskTemplateProps">
+  <rdfs:subPropertyOf rdf:resource="#templateProps"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#task_has_template">
+  <rdfs:subPropertyOf rdf:resource="#taskTemplateProps"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Задание"/>
+  <rdfs:range rdf:resource="#ШаблонВопроса"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Задание имеет Шаблон вопроса</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#is_term_of_task">
+  <rdfs:subPropertyOf rdf:resource="#termTaskProps"/>
+  <owl:inverseOf rdf:resource="#task_has_term"/>
+  <rdfs:domain rdf:resource="#Термин"/>
+  <rdfs:range rdf:resource="#Задание"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Является Термином задания</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#termTaskProps">
+  <rdfs:subPropertyOf rdf:resource="#termProps"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#task_has_term">
+  <rdfs:subPropertyOf rdf:resource="#termTaskProps"/>
+  <rdfs:domain rdf:resource="#Задание"/>
+  <rdfs:range rdf:resource="#Термин"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Задание Имеет термин</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#is_term_template_of">
+  <rdfs:subPropertyOf rdf:resource="#termTemplateProps"/>
+  <owl:inverseOf rdf:resource="#term_has_template"/>
+  <rdfs:domain rdf:resource="#ШаблонВопроса"/>
+  <rdfs:range rdf:resource="#Термин"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Является шаблоном ворпроса для термина</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#termTemplateProps">
+  <rdfs:subPropertyOf rdf:resource="#termProps"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#term_has_template">
+  <rdfs:subPropertyOf rdf:resource="#termTemplateProps"/>
+  <rdfs:domain rdf:resource="#Термин"/>
+  <rdfs:range rdf:resource="#ШаблонВопроса"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Термин Имеет шаблон вопроса</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#is_unknown_term_of">
+  <rdfs:subPropertyOf rdf:resource="#isTermOfProps"/>
+  <owl:inverseOf rdf:resource="#unknown_term"/>
+  <rdfs:domain rdf:resource="#Термин"/>
+  <rdfs:range rdf:resource="#Пользователь"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Является Незвестным для пользователя термином</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#unknown_term">
+  <rdfs:subPropertyOf rdf:resource="#hasTermProps"/>
+  <rdfs:domain rdf:resource="#Пользователь"/>
+  <rdfs:range rdf:resource="#Термин"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Пользователь имеет неизвестный термин</rdfs:comment>
 </owl:ObjectProperty>
 
 <owl:ObjectProperty rdf:about="#is_wrong_answer_of">
+  <rdfs:subPropertyOf rdf:resource="#answerProps"/>
   <rdfs:domain rdf:resource="#Ответ"/>
   <rdfs:range rdf:resource="#Вопрос"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Является неверным ответом на вопрос</rdfs:comment>
 </owl:ObjectProperty>
 
 <owl:ObjectProperty rdf:about="#knownTerm">
@@ -201,50 +556,23 @@
   <rdfs:range rdf:resource="#Термин"/>
 </owl:ObjectProperty>
 
-<owl:ObjectProperty rdf:about="#known_term">
-  <rdfs:domain rdf:resource="#Пользователь"/>
-  <rdfs:range rdf:resource="#Термин"/>
-</owl:ObjectProperty>
-
 <owl:ObjectProperty rdf:about="#relates_to_test">
+  <rdfs:subPropertyOf rdf:resource="#testProps"/>
   <rdfs:domain rdf:resource="#Попытка_прохождения_теста"/>
   <rdfs:range rdf:resource="#Тест"/>
-</owl:ObjectProperty>
-
-<owl:ObjectProperty rdf:about="#task_has_answer">
-  <rdfs:domain rdf:resource="#Задание"/>
-  <rdfs:range rdf:resource="#Ответ"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Является попыткой прохождения теста</rdfs:comment>
 </owl:ObjectProperty>
 
 <owl:ObjectProperty rdf:about="#task_has_question">
+  <rdfs:subPropertyOf rdf:resource="#questionProps"/>
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
   <rdfs:domain rdf:resource="#Задание"/>
   <rdfs:range rdf:resource="#Вопрос"/>
-</owl:ObjectProperty>
-
-<owl:ObjectProperty rdf:about="#task_has_template">
-  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-  <rdfs:domain rdf:resource="#Задание"/>
-  <rdfs:range rdf:resource="#ШаблонВопроса"/>
-</owl:ObjectProperty>
-
-<owl:ObjectProperty rdf:about="#task_has_term">
-  <rdfs:domain rdf:resource="#Задание"/>
-  <rdfs:range rdf:resource="#Термин"/>
-</owl:ObjectProperty>
-
-<owl:ObjectProperty rdf:about="#term_has_template">
-  <rdfs:domain rdf:resource="#Термин"/>
-  <rdfs:range rdf:resource="#ШаблонВопроса"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Задание имеет вопрос</rdfs:comment>
 </owl:ObjectProperty>
 
 <owl:ObjectProperty rdf:about="#unknownTerm">
   <rdfs:subPropertyOf rdf:resource="#Палинология"/>
-  <rdfs:domain rdf:resource="#Пользователь"/>
-  <rdfs:range rdf:resource="#Термин"/>
-</owl:ObjectProperty>
-
-<owl:ObjectProperty rdf:about="#unknown_term">
   <rdfs:domain rdf:resource="#Пользователь"/>
   <rdfs:range rdf:resource="#Термин"/>
 </owl:ObjectProperty>
@@ -603,27 +931,51 @@
 
 <owl:Class rdf:about="#Пользователь"/>
 
-<owl:Class rdf:about="#Тест"/>
+<owl:Class rdf:about="#Тест">
+  <rdfs:subClassOf rdf:resource="#Модуль"/>
+</owl:Class>
 
 <owl:Class rdf:about="#Курс"/>
 
-<owl:Class rdf:about="#Задание"/>
+<owl:Class rdf:about="#Задание">
+  <rdfs:subClassOf rdf:resource="#Группа_заданий"/>
+</owl:Class>
 
 <owl:Class rdf:about="#Вопрос">
   <rdfs:subClassOf rdf:resource="#Задание"/>
 </owl:Class>
 
-<owl:Class rdf:about="#Элемент_теста"/>
+<owl:Class rdf:about="#Элемент_теста">
+  <rdfs:subClassOf rdf:resource="#Попытка_прохождения_теста"/>
+</owl:Class>
 
 <owl:Class rdf:about="#Ответ">
   <rdfs:subClassOf rdf:resource="#Задание"/>
 </owl:Class>
 
-<owl:Class rdf:about="#Группа_заданий"/>
+<owl:Class rdf:about="#Группа_заданий">
+  <rdfs:subClassOf rdf:resource="#Тест"/>
+</owl:Class>
 
-<owl:Class rdf:about="#Модуль"/>
+<owl:Class rdf:about="#Модуль">
+  <rdfs:subClassOf rdf:resource="#Курс"/>
+</owl:Class>
 
-<owl:Class rdf:about="#Лекция"/>
+<owl:Class rdf:about="#Лекция">
+  <rdfs:subClassOf rdf:resource="#Урок"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Урок">
+  <rdfs:subClassOf rdf:resource="#Модуль"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Практика">
+  <rdfs:subClassOf rdf:resource="#Урок"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Задание_практики">
+  <rdfs:subClassOf rdf:resource="#Практика"/>
+</owl:Class>
 
 <owl:Class rdf:about="#Область">
   <rdfs:subClassOf rdf:resource="#Предметная_область"/>
@@ -1374,6 +1726,10 @@
   <rdf:type rdf:resource="#Вопрос"/>
 </owl:NamedIndividual>
 
+<owl:NamedIndividual rdf:about="#вопрос23">
+  <rdf:type rdf:resource="#Вопрос"/>
+</owl:NamedIndividual>
+
 <owl:NamedIndividual rdf:about="#вопрос3">
   <rdf:type rdf:resource="#Вопрос"/>
 </owl:NamedIndividual>
@@ -1468,11 +1824,18 @@
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#модуль3">
-  <rdf:type rdf:resource="#Модуль"/>
   <has_subject_area rdf:resource="#палинология"/>
   <has_test rdf:resource="#тест2"/>
   <is_module_of rdf:resource="#курс2"/>
   <nameModule rdf:datatype="http://www.w3.org/2001/XMLSchema#string">module1</nameModule>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#группа_заданий3">
+  <rdf:type rdf:resource="#Группа_заданий"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#группа_заданий4">
+  <rdf:type rdf:resource="#Группа_заданий"/>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#единственный1">
@@ -1580,6 +1943,31 @@
   <rdf:type rdf:resource="#ШаблонВопроса"/>
   <nameTemplate rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Группа</nameTemplate>
   <titleTemplate rdf:datatype="http://www.w3.org/2001/XMLSchema#string">К какой группе относится ...?</titleTemplate>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#задание13">
+  <rdf:type rdf:resource="#Задание"/>
+  <hasTerm rdf:resource="#%23"/>
+  <is_task_of rdf:resource="#группа_заданий4"/>
+  <task_has_answer rdf:resource="#ответ19"/>
+  <task_has_question rdf:resource="#текстовый9"/>
+  <task_has_template rdf:resource="#шаблонвопроса2"/>
+  <task_has_term rdf:resource="#интина"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#%23">
+  <rdf:type rdf:resource="#Термин"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ответ19">
+  <rdf:type rdf:resource="#Ответ"/>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">eqwe</textAnswer>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#текстовый9">
+  <rdf:type rdf:resource="#Текстовый"/>
+  <has_correct_answer rdf:resource="#ответ19"/>
+  <textQuestion rdf:datatype="http://www.w3.org/2001/XMLSchema#string">На какие группы делится интина?</textQuestion>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#задание2">
@@ -1859,10 +2247,45 @@
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#модуль4">
-  <rdf:type rdf:resource="#Модуль"/>
   <has_subject_area rdf:resource="#палинология"/>
   <is_module_of rdf:resource="#курс2"/>
   <nameModule rdf:datatype="http://www.w3.org/2001/XMLSchema#string">module2</nameModule>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#курс3">
+  <rdf:type rdf:resource="#Курс"/>
+  <has_module rdf:resource="#модуль5"/>
+  <has_module rdf:resource="#модуль6"/>
+  <descriptionCourse rdf:datatype="http://www.w3.org/2001/XMLSchema#string">2222</descriptionCourse>
+  <infoCourse rdf:datatype="http://www.w3.org/2001/XMLSchema#string">2222</infoCourse>
+  <nameCourse rdf:datatype="http://www.w3.org/2001/XMLSchema#string">course2</nameCourse>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#модуль5">
+  <rdf:type rdf:resource="#Модуль"/>
+  <has_subject_area rdf:resource="#палинология"/>
+  <has_test rdf:resource="#тест4"/>
+  <nameModule rdf:datatype="http://www.w3.org/2001/XMLSchema#string">module1</nameModule>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#модуль6">
+  <rdf:type rdf:resource="#Модуль"/>
+  <has_subject_area rdf:resource="#палинология"/>
+  <has_test rdf:resource="#тест6"/>
+  <nameModule rdf:datatype="http://www.w3.org/2001/XMLSchema#string">module2</nameModule>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#тест4">
+  <rdf:type rdf:resource="#Тест"/>
+  <has_group_of_task rdf:resource="#группа_заданий4"/>
+  <testName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">qwewqeewqw</testName>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#лекция2">
+  <rdf:type rdf:resource="#Лекция"/>
+  <has_term rdf:resource="#апертура"/>
+  <is_lecture_of rdf:resource="#модуль5"/>
+  <lectureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Козлов (1).pdf</lectureName>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#лопастая">
@@ -2151,36 +2574,36 @@
 <owl:NamedIndividual rdf:about="#ответыстудента21">
   <rdf:type rdf:resource="#ОтветыСтудента"/>
   <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">gd</textAnswer>
   <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">gd</textAnswer>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#ответыстудента22">
   <rdf:type rdf:resource="#ОтветыСтудента"/>
   <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">dfdfg</textAnswer>
   <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">dfdfg</textAnswer>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#ответыстудента23">
   <rdf:type rdf:resource="#ОтветыСтудента"/>
   <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">a)	Истончённая область спородермы на дистальной стороне п.з., выполняет функцию апертуры, характерна для голосеменных</textAnswer>
   <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">a)	Истончённая область спородермы на дистальной стороне п.з., выполняет функцию апертуры, характерна для голосеменных</textAnswer>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#ответыстудента24">
   <rdf:type rdf:resource="#ОтветыСтудента"/>
   <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ads</textAnswer>
   <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ads</textAnswer>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#ответыстудента25">
   <rdf:type rdf:resource="#ОтветыСтудента"/>
   <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">as</textAnswer>
   <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">as</textAnswer>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#ответыстудента26">
@@ -2193,22 +2616,22 @@
 <owl:NamedIndividual rdf:about="#ответыстудента27">
   <rdf:type rdf:resource="#ОтветыСтудента"/>
   <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">sad</textAnswer>
   <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">sad</textAnswer>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#ответыстудента28">
   <rdf:type rdf:resource="#ОтветыСтудента"/>
   <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">-</textAnswer>
   <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">-</textAnswer>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#ответыстудента29">
   <rdf:type rdf:resource="#ОтветыСтудента"/>
   <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">-</textAnswer>
   <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">-</textAnswer>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#ответыстудента3">
@@ -2221,22 +2644,22 @@
 <owl:NamedIndividual rdf:about="#ответыстудента30">
   <rdf:type rdf:resource="#ОтветыСтудента"/>
   <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">-</textAnswer>
   <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">-</textAnswer>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#ответыстудента31">
   <rdf:type rdf:resource="#ОтветыСтудента"/>
   <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">-</textAnswer>
   <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">-</textAnswer>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#ответыстудента32">
   <rdf:type rdf:resource="#ОтветыСтудента"/>
   <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">-</textAnswer>
   <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">-</textAnswer>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#ответыстудента33">
@@ -2249,43 +2672,43 @@
 <owl:NamedIndividual rdf:about="#ответыстудента34">
   <rdf:type rdf:resource="#ОтветыСтудента"/>
   <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">-</textAnswer>
   <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">-</textAnswer>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#ответыстудента35">
   <rdf:type rdf:resource="#ОтветыСтудента"/>
   <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">-</textAnswer>
   <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">-</textAnswer>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#ответыстудента36">
   <rdf:type rdf:resource="#ОтветыСтудента"/>
   <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">-</textAnswer>
   <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">-</textAnswer>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#ответыстудента37">
   <rdf:type rdf:resource="#ОтветыСтудента"/>
   <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">-</textAnswer>
   <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">-</textAnswer>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#ответыстудента38">
   <rdf:type rdf:resource="#ОтветыСтудента"/>
   <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">-</textAnswer>
   <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">-</textAnswer>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#ответыстудента39">
   <rdf:type rdf:resource="#ОтветыСтудента"/>
   <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">-</textAnswer>
   <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">-</textAnswer>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#ответыстудента4">
@@ -2305,8 +2728,8 @@
 <owl:NamedIndividual rdf:about="#ответыстудента41">
   <rdf:type rdf:resource="#ОтветыСтудента"/>
   <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">-</textAnswer>
   <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">-</textAnswer>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#ответыстудента42">
@@ -2354,15 +2777,15 @@
 <owl:NamedIndividual rdf:about="#ответыстудента48">
   <rdf:type rdf:resource="#ОтветыСтудента"/>
   <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kljdsabhobshfyofbyhfsd</textAnswer>
   <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kljdsabhobshfyofbyhfsd</textAnswer>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#ответыстудента49">
   <rdf:type rdf:resource="#ОтветыСтудента"/>
   <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">dfklajsdbfdsabf;hsbf</textAnswer>
   <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">dfklajsdbfdsabf;hsbf</textAnswer>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#ответыстудента5">
@@ -2375,22 +2798,22 @@
 <owl:NamedIndividual rdf:about="#ответыстудента50">
   <rdf:type rdf:resource="#ОтветыСтудента"/>
   <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">dfdsf</textAnswer>
   <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">dfdsf</textAnswer>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#ответыстудента51">
   <rdf:type rdf:resource="#ОтветыСтудента"/>
   <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">asdfasdfdsaf</textAnswer>
   <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">asdfasdfdsaf</textAnswer>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#ответыстудента52">
   <rdf:type rdf:resource="#ОтветыСтудента"/>
   <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">fadsfdsfasdfsd</textAnswer>
   <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">fadsfdsfasdfsd</textAnswer>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#ответыстудента53">
@@ -2424,8 +2847,22 @@
 <owl:NamedIndividual rdf:about="#ответыстудента57">
   <rdf:type rdf:resource="#ОтветыСтудента"/>
   <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">fasddsafssd</textAnswer>
   <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">fasddsafssd</textAnswer>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ответыстудента58">
+  <rdf:type rdf:resource="#ОтветыСтудента"/>
+  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
+  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aaaaaaaaaaaaaa</textAnswer>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ответыстудента59">
+  <rdf:type rdf:resource="#ОтветыСтудента"/>
+  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
+  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aaaaaaaaaaaaaa</textAnswer>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#ответыстудента6">
@@ -2435,6 +2872,76 @@
   <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">вв</textAnswer>
 </owl:NamedIndividual>
 
+<owl:NamedIndividual rdf:about="#ответыстудента60">
+  <rdf:type rdf:resource="#ОтветыСтудента"/>
+  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
+  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aaaaaaaaaaaaaaa</textAnswer>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ответыстудента61">
+  <rdf:type rdf:resource="#ОтветыСтудента"/>
+  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
+  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aaaaaaaaaaaaaa</textAnswer>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ответыстудента62">
+  <rdf:type rdf:resource="#ОтветыСтудента"/>
+  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
+  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aaaaaaaaaaaaaa</textAnswer>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ответыстудента63">
+  <rdf:type rdf:resource="#ОтветыСтудента"/>
+  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</rightAnswer>
+  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">целлюлозы</textAnswer>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ответыстудента64">
+  <rdf:type rdf:resource="#ОтветыСтудента"/>
+  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</rightAnswer>
+  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">полисахарида каллозы</textAnswer>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ответыстудента65">
+  <rdf:type rdf:resource="#ОтветыСтудента"/>
+  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</rightAnswer>
+  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">пектиновых веществ</textAnswer>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ответыстудента66">
+  <rdf:type rdf:resource="#ОтветыСтудента"/>
+  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
+  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aaaaaaaaaaaaaa</textAnswer>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ответыстудента67">
+  <rdf:type rdf:resource="#ОтветыСтудента"/>
+  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
+  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">b</textAnswer>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ответыстудента68">
+  <rdf:type rdf:resource="#ОтветыСтудента"/>
+  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
+  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">b</textAnswer>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ответыстудента69">
+  <rdf:type rdf:resource="#ОтветыСтудента"/>
+  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
+  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">b</textAnswer>
+</owl:NamedIndividual>
+
 <owl:NamedIndividual rdf:about="#ответыстудента7">
   <rdf:type rdf:resource="#ОтветыСтудента"/>
   <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
@@ -2442,11 +2949,102 @@
   <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">простая и сложная</textAnswer>
 </owl:NamedIndividual>
 
+<owl:NamedIndividual rdf:about="#ответыстудента70">
+  <rdf:type rdf:resource="#ОтветыСтудента"/>
+  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
+  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">b</textAnswer>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ответыстудента71">
+  <rdf:type rdf:resource="#ОтветыСтудента"/>
+  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
+  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">b</textAnswer>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ответыстудента72">
+  <rdf:type rdf:resource="#ОтветыСтудента"/>
+  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</rightAnswer>
+  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">пектиновых веществ</textAnswer>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ответыстудента73">
+  <rdf:type rdf:resource="#ОтветыСтудента"/>
+  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</rightAnswer>
+  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">полисахарида каллозы</textAnswer>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ответыстудента74">
+  <rdf:type rdf:resource="#ОтветыСтудента"/>
+  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
+  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">b</textAnswer>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ответыстудента75">
+  <rdf:type rdf:resource="#ОтветыСтудента"/>
+  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
+  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">c</textAnswer>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ответыстудента76">
+  <rdf:type rdf:resource="#ОтветыСтудента"/>
+  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
+  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">c</textAnswer>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ответыстудента77">
+  <rdf:type rdf:resource="#ОтветыСтудента"/>
+  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
+  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">c</textAnswer>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ответыстудента78">
+  <rdf:type rdf:resource="#ОтветыСтудента"/>
+  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
+  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">c</textAnswer>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ответыстудента79">
+  <rdf:type rdf:resource="#ОтветыСтудента"/>
+  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
+  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">c</textAnswer>
+</owl:NamedIndividual>
+
 <owl:NamedIndividual rdf:about="#ответыстудента8">
   <rdf:type rdf:resource="#ОтветыСтудента"/>
   <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
   <score rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.3</score>
   <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">мэкитнтина экинтина</textAnswer>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ответыстудента80">
+  <rdf:type rdf:resource="#ОтветыСтудента"/>
+  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</rightAnswer>
+  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">пектиновых веществ</textAnswer>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ответыстудента81">
+  <rdf:type rdf:resource="#ОтветыСтудента"/>
+  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</rightAnswer>
+  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">полисахарида каллозы</textAnswer>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ответыстудента82">
+  <rdf:type rdf:resource="#ОтветыСтудента"/>
+  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
+  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">c</textAnswer>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#ответыстудента9">
@@ -2763,12 +3361,12 @@
   <has_test_element rdf:resource="#элемент_теста27"/>
   <is_attempt_to_pass_test_of rdf:resource="#пользователь5"/>
   <relates_to_test rdf:resource="#тест1"/>
+  <checked rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</checked>
   <dateAndTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2024-05-14T21:36:11.000</dateAndTime>
   <maxScore rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">7</maxScore>
-  <succesfullAttempt rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</succesfullAttempt>
-  <checked rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</checked>
-  <sumScore rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.3333333333333333</sumScore>
   <percentCompleteOfTest rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.19047619047619047</percentCompleteOfTest>
+  <succesfullAttempt rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</succesfullAttempt>
+  <sumScore rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.3333333333333333</sumScore>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#элемент_теста14">
@@ -2872,6 +3470,7 @@
 <owl:NamedIndividual rdf:about="#пользователь6">
   <rdf:type rdf:resource="#Пользователь"/>
   <enrolled_course rdf:resource="#курс1"/>
+  <enrolled_course rdf:resource="#курс3"/>
   <has_attempt_to_pass_test rdf:resource="#попытка_прохождения_теста10"/>
   <has_attempt_to_pass_test rdf:resource="#попытка_прохождения_теста8"/>
   <has_attempt_to_pass_test rdf:resource="#попытка_прохождения_теста9"/>
@@ -2879,7 +3478,8 @@
   <unknownTerm rdf:resource="#апертура"/>
   <unknownTerm rdf:resource="#бугорчатая"/>
   <unknownTerm rdf:resource="#скульптура_пыльцевого_зерна"/>
-  <unknownTerm rdf:resource="#оболочка_пыльцевого_зерна"/>
+  <knownTerm rdf:resource="#оболочка_пыльцевого_зерна"/>
+  <unknownTerm rdf:resource="#%23"/>
   <email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">admin@gmail.com</email>
   <firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">admin</firstName>
   <lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">admin</lastName>
@@ -2960,17 +3560,18 @@
 <owl:NamedIndividual rdf:about="#пользователь7">
   <rdf:type rdf:resource="#Пользователь"/>
   <enrolled_course rdf:resource="#курс1"/>
-  <enrolled_course rdf:resource="#курс2"/>
   <has_attempt_to_pass_test rdf:resource="#попытка_прохождения_теста11"/>
   <has_attempt_to_pass_test rdf:resource="#попытка_прохождения_теста12"/>
+  <has_attempt_to_pass_test rdf:resource="#попытка_прохождения_теста13"/>
+  <has_attempt_to_pass_test rdf:resource="#попытка_прохождения_теста14"/>
+  <has_attempt_to_pass_test rdf:resource="#попытка_прохождения_теста15"/>
   <has_attempt_to_pass_test rdf:resource="#попытка_прохождения_теста6"/>
   <has_attempt_to_pass_test rdf:resource="#попытка_прохождения_теста7"/>
   <unknownTerm rdf:resource="#апертура"/>
   <unknownTerm rdf:resource="#оболочка_пыльцевого_зерна"/>
   <unknownTerm rdf:resource="#скульптура_пыльцевого_зерна"/>
-  <has_attempt_to_pass_test rdf:resource="#попытка_прохождения_теста13"/>
-  <has_attempt_to_pass_test rdf:resource="#попытка_прохождения_теста14"/>
-  <has_attempt_to_pass_test rdf:resource="#попытка_прохождения_теста15"/>
+  <enrolled_course rdf:resource="#курс3"/>
+  <has_attempt_to_pass_test rdf:resource="#попытка_прохождения_теста16"/>
   <email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">student@gmail.com</email>
   <firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">new2</firstName>
   <lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">new</lastName>
@@ -3003,12 +3604,69 @@
   <has_test_element rdf:resource="#элемент_теста56"/>
   <is_attempt_to_pass_test_of rdf:resource="#пользователь7"/>
   <relates_to_test rdf:resource="#тест1"/>
+  <checked rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</checked>
   <dateAndTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2024-05-21T13:46:02.000</dateAndTime>
   <maxScore rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">7</maxScore>
   <percentCompleteOfTest rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.23809523809523808</percentCompleteOfTest>
   <succesfullAttempt rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</succesfullAttempt>
   <sumScore rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.6666666666666665</sumScore>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#попытка_прохождения_теста13">
+  <rdf:type rdf:resource="#Попытка_прохождения_теста"/>
+  <has_test_element rdf:resource="#элемент_теста57"/>
+  <has_test_element rdf:resource="#элемент_теста58"/>
+  <has_test_element rdf:resource="#элемент_теста59"/>
+  <has_test_element rdf:resource="#элемент_теста60"/>
+  <has_test_element rdf:resource="#элемент_теста61"/>
+  <has_test_element rdf:resource="#элемент_теста62"/>
+  <has_test_element rdf:resource="#элемент_теста63"/>
+  <is_attempt_to_pass_test_of rdf:resource="#пользователь7"/>
+  <relates_to_test rdf:resource="#тест1"/>
   <checked rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</checked>
+  <dateAndTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2024-05-22T14:56:07.000</dateAndTime>
+  <maxScore rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">7</maxScore>
+  <percentCompleteOfTest rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.2857142857142857</percentCompleteOfTest>
+  <succesfullAttempt rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</succesfullAttempt>
+  <sumScore rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">2.0</sumScore>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#попытка_прохождения_теста14">
+  <rdf:type rdf:resource="#Попытка_прохождения_теста"/>
+  <has_test_element rdf:resource="#элемент_теста64"/>
+  <has_test_element rdf:resource="#элемент_теста65"/>
+  <has_test_element rdf:resource="#элемент_теста66"/>
+  <has_test_element rdf:resource="#элемент_теста67"/>
+  <has_test_element rdf:resource="#элемент_теста68"/>
+  <has_test_element rdf:resource="#элемент_теста69"/>
+  <has_test_element rdf:resource="#элемент_теста70"/>
+  <is_attempt_to_pass_test_of rdf:resource="#пользователь7"/>
+  <relates_to_test rdf:resource="#тест1"/>
+  <checked rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</checked>
+  <dateAndTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2024-05-22T15:07:52.000</dateAndTime>
+  <maxScore rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">7</maxScore>
+  <percentCompleteOfTest rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.09523809523809523</percentCompleteOfTest>
+  <succesfullAttempt rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</succesfullAttempt>
+  <sumScore rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.6666666666666666</sumScore>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#попытка_прохождения_теста15">
+  <rdf:type rdf:resource="#Попытка_прохождения_теста"/>
+  <has_test_element rdf:resource="#элемент_теста71"/>
+  <has_test_element rdf:resource="#элемент_теста72"/>
+  <has_test_element rdf:resource="#элемент_теста73"/>
+  <has_test_element rdf:resource="#элемент_теста74"/>
+  <has_test_element rdf:resource="#элемент_теста75"/>
+  <has_test_element rdf:resource="#элемент_теста76"/>
+  <has_test_element rdf:resource="#элемент_теста77"/>
+  <is_attempt_to_pass_test_of rdf:resource="#пользователь7"/>
+  <relates_to_test rdf:resource="#тест1"/>
+  <checked rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</checked>
+  <dateAndTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2024-05-22T15:10:22.000</dateAndTime>
+  <maxScore rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">7</maxScore>
+  <percentCompleteOfTest rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.09523809523809523</percentCompleteOfTest>
+  <succesfullAttempt rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</succesfullAttempt>
+  <sumScore rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.6666666666666666</sumScore>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#попытка_прохождения_теста6">
@@ -3022,12 +3680,12 @@
   <has_test_element rdf:resource="#элемент_теста34"/>
   <is_attempt_to_pass_test_of rdf:resource="#пользователь7"/>
   <relates_to_test rdf:resource="#тест1"/>
+  <checked rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</checked>
   <dateAndTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2024-05-20T18:25:15.000</dateAndTime>
   <maxScore rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">7</maxScore>
-  <succesfullAttempt rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</succesfullAttempt>
-  <checked rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</checked>
-  <sumScore rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">4.333333333333333</sumScore>
   <percentCompleteOfTest rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.619047619047619</percentCompleteOfTest>
+  <succesfullAttempt rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</succesfullAttempt>
+  <sumScore rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">4.333333333333333</sumScore>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#попытка_прохождения_теста7">
@@ -3041,12 +3699,24 @@
   <has_test_element rdf:resource="#элемент_теста41"/>
   <is_attempt_to_pass_test_of rdf:resource="#пользователь7"/>
   <relates_to_test rdf:resource="#тест1"/>
+  <checked rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</checked>
   <dateAndTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2024-05-20T18:27:23.000</dateAndTime>
   <maxScore rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">7</maxScore>
-  <succesfullAttempt rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</succesfullAttempt>
-  <checked rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</checked>
-  <sumScore rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.3333333333333333</sumScore>
   <percentCompleteOfTest rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.19047619047619047</percentCompleteOfTest>
+  <succesfullAttempt rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</succesfullAttempt>
+  <sumScore rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.3333333333333333</sumScore>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#попытка_прохождения_теста16">
+  <rdf:type rdf:resource="#Попытка_прохождения_теста"/>
+  <relates_to_test rdf:resource="#тест4"/>
+  <has_test_element rdf:resource="#элемент_теста78"/>
+  <maxScore rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</maxScore>
+  <succesfullAttempt rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</succesfullAttempt>
+  <dateAndTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2024-05-23T00:35:18.000</dateAndTime>
+  <checked rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</checked>
+  <sumScore rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.0</sumScore>
+  <percentCompleteOfTest rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.0</percentCompleteOfTest>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#элемент_теста48">
@@ -3113,6 +3783,157 @@
   <has_answer rdf:resource="#ответыстудента57"/>
   <has_task rdf:resource="#задание7"/>
   <is_test_element_of rdf:resource="#попытка_прохождения_теста12"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#элемент_теста57">
+  <rdf:type rdf:resource="#Элемент_теста"/>
+  <has_answer rdf:resource="#ответыстудента58"/>
+  <has_task rdf:resource="#задание1"/>
+  <is_test_element_of rdf:resource="#попытка_прохождения_теста13"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#элемент_теста58">
+  <rdf:type rdf:resource="#Элемент_теста"/>
+  <has_answer rdf:resource="#ответыстудента59"/>
+  <has_task rdf:resource="#задание2"/>
+  <is_test_element_of rdf:resource="#попытка_прохождения_теста13"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#элемент_теста59">
+  <rdf:type rdf:resource="#Элемент_теста"/>
+  <has_answer rdf:resource="#ответыстудента60"/>
+  <has_task rdf:resource="#задание3"/>
+  <is_test_element_of rdf:resource="#попытка_прохождения_теста13"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#элемент_теста60">
+  <rdf:type rdf:resource="#Элемент_теста"/>
+  <has_answer rdf:resource="#ответыстудента61"/>
+  <has_task rdf:resource="#задание4"/>
+  <is_test_element_of rdf:resource="#попытка_прохождения_теста13"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#элемент_теста61">
+  <rdf:type rdf:resource="#Элемент_теста"/>
+  <has_answer rdf:resource="#ответыстудента62"/>
+  <has_task rdf:resource="#задание5"/>
+  <is_test_element_of rdf:resource="#попытка_прохождения_теста13"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#элемент_теста62">
+  <rdf:type rdf:resource="#Элемент_теста"/>
+  <has_answer rdf:resource="#ответыстудента63"/>
+  <has_answer rdf:resource="#ответыстудента64"/>
+  <has_answer rdf:resource="#ответыстудента65"/>
+  <has_task rdf:resource="#задание6"/>
+  <is_test_element_of rdf:resource="#попытка_прохождения_теста13"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#элемент_теста63">
+  <rdf:type rdf:resource="#Элемент_теста"/>
+  <has_answer rdf:resource="#ответыстудента66"/>
+  <has_task rdf:resource="#задание7"/>
+  <is_test_element_of rdf:resource="#попытка_прохождения_теста13"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#элемент_теста64">
+  <rdf:type rdf:resource="#Элемент_теста"/>
+  <has_answer rdf:resource="#ответыстудента67"/>
+  <has_task rdf:resource="#задание1"/>
+  <is_test_element_of rdf:resource="#попытка_прохождения_теста14"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#элемент_теста65">
+  <rdf:type rdf:resource="#Элемент_теста"/>
+  <has_answer rdf:resource="#ответыстудента68"/>
+  <has_task rdf:resource="#задание2"/>
+  <is_test_element_of rdf:resource="#попытка_прохождения_теста14"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#элемент_теста66">
+  <rdf:type rdf:resource="#Элемент_теста"/>
+  <has_answer rdf:resource="#ответыстудента69"/>
+  <has_task rdf:resource="#задание3"/>
+  <is_test_element_of rdf:resource="#попытка_прохождения_теста14"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#элемент_теста67">
+  <rdf:type rdf:resource="#Элемент_теста"/>
+  <has_answer rdf:resource="#ответыстудента70"/>
+  <has_task rdf:resource="#задание4"/>
+  <is_test_element_of rdf:resource="#попытка_прохождения_теста14"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#элемент_теста68">
+  <rdf:type rdf:resource="#Элемент_теста"/>
+  <has_answer rdf:resource="#ответыстудента71"/>
+  <has_task rdf:resource="#задание5"/>
+  <is_test_element_of rdf:resource="#попытка_прохождения_теста14"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#элемент_теста69">
+  <rdf:type rdf:resource="#Элемент_теста"/>
+  <has_answer rdf:resource="#ответыстудента72"/>
+  <has_answer rdf:resource="#ответыстудента73"/>
+  <has_task rdf:resource="#задание6"/>
+  <is_test_element_of rdf:resource="#попытка_прохождения_теста14"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#элемент_теста70">
+  <rdf:type rdf:resource="#Элемент_теста"/>
+  <has_answer rdf:resource="#ответыстудента74"/>
+  <has_task rdf:resource="#задание7"/>
+  <is_test_element_of rdf:resource="#попытка_прохождения_теста14"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#элемент_теста71">
+  <rdf:type rdf:resource="#Элемент_теста"/>
+  <has_answer rdf:resource="#ответыстудента75"/>
+  <has_task rdf:resource="#задание1"/>
+  <is_test_element_of rdf:resource="#попытка_прохождения_теста15"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#элемент_теста72">
+  <rdf:type rdf:resource="#Элемент_теста"/>
+  <has_answer rdf:resource="#ответыстудента76"/>
+  <has_task rdf:resource="#задание2"/>
+  <is_test_element_of rdf:resource="#попытка_прохождения_теста15"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#элемент_теста73">
+  <rdf:type rdf:resource="#Элемент_теста"/>
+  <has_answer rdf:resource="#ответыстудента77"/>
+  <has_task rdf:resource="#задание3"/>
+  <is_test_element_of rdf:resource="#попытка_прохождения_теста15"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#элемент_теста74">
+  <rdf:type rdf:resource="#Элемент_теста"/>
+  <has_answer rdf:resource="#ответыстудента78"/>
+  <has_task rdf:resource="#задание4"/>
+  <is_test_element_of rdf:resource="#попытка_прохождения_теста15"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#элемент_теста75">
+  <rdf:type rdf:resource="#Элемент_теста"/>
+  <has_answer rdf:resource="#ответыстудента79"/>
+  <has_task rdf:resource="#задание5"/>
+  <is_test_element_of rdf:resource="#попытка_прохождения_теста15"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#элемент_теста76">
+  <rdf:type rdf:resource="#Элемент_теста"/>
+  <has_answer rdf:resource="#ответыстудента80"/>
+  <has_answer rdf:resource="#ответыстудента81"/>
+  <has_task rdf:resource="#задание6"/>
+  <is_test_element_of rdf:resource="#попытка_прохождения_теста15"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#элемент_теста77">
+  <rdf:type rdf:resource="#Элемент_теста"/>
+  <has_answer rdf:resource="#ответыстудента82"/>
+  <has_task rdf:resource="#задание7"/>
+  <is_test_element_of rdf:resource="#попытка_прохождения_теста15"/>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#элемент_теста28">
@@ -3400,6 +4221,11 @@
   <textQuestion rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Что такое руги?</textQuestion>
 </owl:NamedIndividual>
 
+<owl:NamedIndividual rdf:about="#тест3">
+  <rdf:type rdf:resource="#Тест"/>
+  <testName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">qwewqeewqw</testName>
+</owl:NamedIndividual>
+
 <owl:NamedIndividual rdf:about="#угловатая">
   <rdf:type rdf:resource="#Термин"/>
   <rdf:type rdf:resource="#Форма"/>
@@ -3540,395 +4366,54 @@
   <termNormalize rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ямчатый</termNormalize>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#%23">
-  <rdf:type rdf:resource="#Термин"/>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#предметная%20область">
-  <rdf:type rdf:resource="#Область"/>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#попытка_прохождения_теста13">
-  <rdf:type rdf:resource="#Попытка_прохождения_теста"/>
-  <is_attempt_to_pass_test_of rdf:resource="#пользователь7"/>
-  <relates_to_test rdf:resource="#тест1"/>
-  <has_test_element rdf:resource="#элемент_теста57"/>
-  <has_test_element rdf:resource="#элемент_теста58"/>
-  <has_test_element rdf:resource="#элемент_теста59"/>
-  <has_test_element rdf:resource="#элемент_теста60"/>
-  <has_test_element rdf:resource="#элемент_теста61"/>
-  <has_test_element rdf:resource="#элемент_теста62"/>
-  <has_test_element rdf:resource="#элемент_теста63"/>
-  <maxScore rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">7</maxScore>
-  <succesfullAttempt rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</succesfullAttempt>
-  <dateAndTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2024-05-22T14:56:07.000</dateAndTime>
-  <checked rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</checked>
-  <sumScore rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">2.0</sumScore>
-  <percentCompleteOfTest rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.2857142857142857</percentCompleteOfTest>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#элемент_теста57">
+<owl:NamedIndividual rdf:about="#элемент_теста78">
   <rdf:type rdf:resource="#Элемент_теста"/>
-  <is_test_element_of rdf:resource="#попытка_прохождения_теста13"/>
-  <has_task rdf:resource="#задание1"/>
-  <has_answer rdf:resource="#ответыстудента58"/>
+  <has_task rdf:resource="#задание13"/>
+  <has_answer rdf:resource="#ответыстудента83"/>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#ответыстудента58">
+<owl:NamedIndividual rdf:about="#ответыстудента83">
   <rdf:type rdf:resource="#ОтветыСтудента"/>
   <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aaaaaaaaaaaaaa</textAnswer>
-  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</score>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#элемент_теста58">
-  <rdf:type rdf:resource="#Элемент_теста"/>
-  <is_test_element_of rdf:resource="#попытка_прохождения_теста13"/>
-  <has_task rdf:resource="#задание2"/>
-  <has_answer rdf:resource="#ответыстудента59"/>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#ответыстудента59">
-  <rdf:type rdf:resource="#ОтветыСтудента"/>
-  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aaaaaaaaaaaaaa</textAnswer>
+  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">adssaddsa</textAnswer>
   <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#элемент_теста59">
-  <rdf:type rdf:resource="#Элемент_теста"/>
-  <is_test_element_of rdf:resource="#попытка_прохождения_теста13"/>
-  <has_task rdf:resource="#задание3"/>
-  <has_answer rdf:resource="#ответыстудента60"/>
+<owl:NamedIndividual rdf:about="#тест5">
+  <rdf:type rdf:resource="#Тест"/>
+  <testName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">test0</testName>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#ответыстудента60">
-  <rdf:type rdf:resource="#ОтветыСтудента"/>
-  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aaaaaaaaaaaaaaa</textAnswer>
-  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
+<owl:NamedIndividual rdf:about="#группа_заданий5">
+  <rdf:type rdf:resource="#Группа_заданий"/>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#элемент_теста60">
-  <rdf:type rdf:resource="#Элемент_теста"/>
-  <is_test_element_of rdf:resource="#попытка_прохождения_теста13"/>
-  <has_task rdf:resource="#задание4"/>
-  <has_answer rdf:resource="#ответыстудента61"/>
+<owl:NamedIndividual rdf:about="#тест6">
+  <rdf:type rdf:resource="#Тест"/>
+  <has_group_of_task rdf:resource="#группа_заданий6"/>
+  <testName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">test0</testName>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#ответыстудента61">
-  <rdf:type rdf:resource="#ОтветыСтудента"/>
-  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aaaaaaaaaaaaaa</textAnswer>
-  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
+<owl:NamedIndividual rdf:about="#группа_заданий6">
+  <rdf:type rdf:resource="#Группа_заданий"/>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#элемент_теста61">
-  <rdf:type rdf:resource="#Элемент_теста"/>
-  <is_test_element_of rdf:resource="#попытка_прохождения_теста13"/>
-  <has_task rdf:resource="#задание5"/>
-  <has_answer rdf:resource="#ответыстудента62"/>
+<owl:NamedIndividual rdf:about="#задание14">
+  <rdf:type rdf:resource="#Задание"/>
+  <task_has_term rdf:resource="#интина"/>
+  <task_has_question rdf:resource="#текстовый10"/>
+  <task_has_template rdf:resource="#шаблонвопроса2"/>
+  <is_task_of rdf:resource="#группа_заданий6"/>
+  <hasTerm rdf:resource="#бугорчатая"/>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#ответыстудента62">
-  <rdf:type rdf:resource="#ОтветыСтудента"/>
-  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aaaaaaaaaaaaaa</textAnswer>
-  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
+<owl:NamedIndividual rdf:about="#вопрос24">
+  <rdf:type rdf:resource="#Вопрос"/>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#элемент_теста62">
-  <rdf:type rdf:resource="#Элемент_теста"/>
-  <is_test_element_of rdf:resource="#попытка_прохождения_теста13"/>
-  <has_task rdf:resource="#задание6"/>
-  <has_answer rdf:resource="#ответыстудента63"/>
-  <has_answer rdf:resource="#ответыстудента64"/>
-  <has_answer rdf:resource="#ответыстудента65"/>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#ответыстудента63">
-  <rdf:type rdf:resource="#ОтветыСтудента"/>
-  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</score>
-  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">целлюлозы</textAnswer>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#ответыстудента64">
-  <rdf:type rdf:resource="#ОтветыСтудента"/>
-  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</score>
-  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">полисахарида каллозы</textAnswer>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#ответыстудента65">
-  <rdf:type rdf:resource="#ОтветыСтудента"/>
-  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</score>
-  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">пектиновых веществ</textAnswer>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#элемент_теста63">
-  <rdf:type rdf:resource="#Элемент_теста"/>
-  <is_test_element_of rdf:resource="#попытка_прохождения_теста13"/>
-  <has_task rdf:resource="#задание7"/>
-  <has_answer rdf:resource="#ответыстудента66"/>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#ответыстудента66">
-  <rdf:type rdf:resource="#ОтветыСтудента"/>
-  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aaaaaaaaaaaaaa</textAnswer>
-  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#попытка_прохождения_теста14">
-  <rdf:type rdf:resource="#Попытка_прохождения_теста"/>
-  <is_attempt_to_pass_test_of rdf:resource="#пользователь7"/>
-  <relates_to_test rdf:resource="#тест1"/>
-  <has_test_element rdf:resource="#элемент_теста64"/>
-  <has_test_element rdf:resource="#элемент_теста65"/>
-  <has_test_element rdf:resource="#элемент_теста66"/>
-  <has_test_element rdf:resource="#элемент_теста67"/>
-  <has_test_element rdf:resource="#элемент_теста68"/>
-  <has_test_element rdf:resource="#элемент_теста69"/>
-  <has_test_element rdf:resource="#элемент_теста70"/>
-  <maxScore rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">7</maxScore>
-  <sumScore rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.6666666666666666</sumScore>
-  <succesfullAttempt rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</succesfullAttempt>
-  <checked rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</checked>
-  <dateAndTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2024-05-22T15:07:52.000</dateAndTime>
-  <percentCompleteOfTest rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.09523809523809523</percentCompleteOfTest>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#элемент_теста64">
-  <rdf:type rdf:resource="#Элемент_теста"/>
-  <is_test_element_of rdf:resource="#попытка_прохождения_теста14"/>
-  <has_task rdf:resource="#задание1"/>
-  <has_answer rdf:resource="#ответыстудента67"/>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#ответыстудента67">
-  <rdf:type rdf:resource="#ОтветыСтудента"/>
-  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
-  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">b</textAnswer>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#элемент_теста65">
-  <rdf:type rdf:resource="#Элемент_теста"/>
-  <is_test_element_of rdf:resource="#попытка_прохождения_теста14"/>
-  <has_task rdf:resource="#задание2"/>
-  <has_answer rdf:resource="#ответыстудента68"/>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#ответыстудента68">
-  <rdf:type rdf:resource="#ОтветыСтудента"/>
-  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
-  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">b</textAnswer>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#элемент_теста66">
-  <rdf:type rdf:resource="#Элемент_теста"/>
-  <is_test_element_of rdf:resource="#попытка_прохождения_теста14"/>
-  <has_task rdf:resource="#задание3"/>
-  <has_answer rdf:resource="#ответыстудента69"/>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#ответыстудента69">
-  <rdf:type rdf:resource="#ОтветыСтудента"/>
-  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
-  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">b</textAnswer>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#элемент_теста67">
-  <rdf:type rdf:resource="#Элемент_теста"/>
-  <is_test_element_of rdf:resource="#попытка_прохождения_теста14"/>
-  <has_task rdf:resource="#задание4"/>
-  <has_answer rdf:resource="#ответыстудента70"/>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#ответыстудента70">
-  <rdf:type rdf:resource="#ОтветыСтудента"/>
-  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
-  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">b</textAnswer>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#элемент_теста68">
-  <rdf:type rdf:resource="#Элемент_теста"/>
-  <is_test_element_of rdf:resource="#попытка_прохождения_теста14"/>
-  <has_task rdf:resource="#задание5"/>
-  <has_answer rdf:resource="#ответыстудента71"/>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#ответыстудента71">
-  <rdf:type rdf:resource="#ОтветыСтудента"/>
-  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
-  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">b</textAnswer>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#элемент_теста69">
-  <rdf:type rdf:resource="#Элемент_теста"/>
-  <is_test_element_of rdf:resource="#попытка_прохождения_теста14"/>
-  <has_task rdf:resource="#задание6"/>
-  <has_answer rdf:resource="#ответыстудента72"/>
-  <has_answer rdf:resource="#ответыстудента73"/>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#ответыстудента72">
-  <rdf:type rdf:resource="#ОтветыСтудента"/>
-  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</score>
-  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">пектиновых веществ</textAnswer>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#ответыстудента73">
-  <rdf:type rdf:resource="#ОтветыСтудента"/>
-  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</score>
-  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">полисахарида каллозы</textAnswer>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#элемент_теста70">
-  <rdf:type rdf:resource="#Элемент_теста"/>
-  <is_test_element_of rdf:resource="#попытка_прохождения_теста14"/>
-  <has_task rdf:resource="#задание7"/>
-  <has_answer rdf:resource="#ответыстудента74"/>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#ответыстудента74">
-  <rdf:type rdf:resource="#ОтветыСтудента"/>
-  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
-  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">b</textAnswer>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#попытка_прохождения_теста15">
-  <rdf:type rdf:resource="#Попытка_прохождения_теста"/>
-  <is_attempt_to_pass_test_of rdf:resource="#пользователь7"/>
-  <relates_to_test rdf:resource="#тест1"/>
-  <has_test_element rdf:resource="#элемент_теста71"/>
-  <has_test_element rdf:resource="#элемент_теста72"/>
-  <has_test_element rdf:resource="#элемент_теста73"/>
-  <has_test_element rdf:resource="#элемент_теста74"/>
-  <has_test_element rdf:resource="#элемент_теста75"/>
-  <has_test_element rdf:resource="#элемент_теста76"/>
-  <has_test_element rdf:resource="#элемент_теста77"/>
-  <maxScore rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">7</maxScore>
-  <succesfullAttempt rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</succesfullAttempt>
-  <dateAndTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2024-05-22T15:10:22.000</dateAndTime>
-  <checked rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</checked>
-  <sumScore rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.6666666666666666</sumScore>
-  <percentCompleteOfTest rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.09523809523809523</percentCompleteOfTest>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#элемент_теста71">
-  <rdf:type rdf:resource="#Элемент_теста"/>
-  <is_test_element_of rdf:resource="#попытка_прохождения_теста15"/>
-  <has_task rdf:resource="#задание1"/>
-  <has_answer rdf:resource="#ответыстудента75"/>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#ответыстудента75">
-  <rdf:type rdf:resource="#ОтветыСтудента"/>
-  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">c</textAnswer>
-  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#элемент_теста72">
-  <rdf:type rdf:resource="#Элемент_теста"/>
-  <is_test_element_of rdf:resource="#попытка_прохождения_теста15"/>
-  <has_task rdf:resource="#задание2"/>
-  <has_answer rdf:resource="#ответыстудента76"/>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#ответыстудента76">
-  <rdf:type rdf:resource="#ОтветыСтудента"/>
-  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">c</textAnswer>
-  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#элемент_теста73">
-  <rdf:type rdf:resource="#Элемент_теста"/>
-  <is_test_element_of rdf:resource="#попытка_прохождения_теста15"/>
-  <has_task rdf:resource="#задание3"/>
-  <has_answer rdf:resource="#ответыстудента77"/>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#ответыстудента77">
-  <rdf:type rdf:resource="#ОтветыСтудента"/>
-  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">c</textAnswer>
-  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#элемент_теста74">
-  <rdf:type rdf:resource="#Элемент_теста"/>
-  <is_test_element_of rdf:resource="#попытка_прохождения_теста15"/>
-  <has_task rdf:resource="#задание4"/>
-  <has_answer rdf:resource="#ответыстудента78"/>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#ответыстудента78">
-  <rdf:type rdf:resource="#ОтветыСтудента"/>
-  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">c</textAnswer>
-  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#элемент_теста75">
-  <rdf:type rdf:resource="#Элемент_теста"/>
-  <is_test_element_of rdf:resource="#попытка_прохождения_теста15"/>
-  <has_task rdf:resource="#задание5"/>
-  <has_answer rdf:resource="#ответыстудента79"/>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#ответыстудента79">
-  <rdf:type rdf:resource="#ОтветыСтудента"/>
-  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">c</textAnswer>
-  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#элемент_теста76">
-  <rdf:type rdf:resource="#Элемент_теста"/>
-  <is_test_element_of rdf:resource="#попытка_прохождения_теста15"/>
-  <has_task rdf:resource="#задание6"/>
-  <has_answer rdf:resource="#ответыстудента80"/>
-  <has_answer rdf:resource="#ответыстудента81"/>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#ответыстудента80">
-  <rdf:type rdf:resource="#ОтветыСтудента"/>
-  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</score>
-  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">пектиновых веществ</textAnswer>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#ответыстудента81">
-  <rdf:type rdf:resource="#ОтветыСтудента"/>
-  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</score>
-  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">полисахарида каллозы</textAnswer>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#элемент_теста77">
-  <rdf:type rdf:resource="#Элемент_теста"/>
-  <is_test_element_of rdf:resource="#попытка_прохождения_теста15"/>
-  <has_task rdf:resource="#задание7"/>
-  <has_answer rdf:resource="#ответыстудента82"/>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#ответыстудента82">
-  <rdf:type rdf:resource="#ОтветыСтудента"/>
-  <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
-  <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">c</textAnswer>
-  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
+<owl:NamedIndividual rdf:about="#текстовый10">
+  <rdf:type rdf:resource="#Текстовый"/>
+  <textQuestion rdf:datatype="http://www.w3.org/2001/XMLSchema#string">На какие группы делится интина?</textQuestion>
 </owl:NamedIndividual>
 
 

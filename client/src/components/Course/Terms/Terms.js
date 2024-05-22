@@ -20,6 +20,7 @@ const TermsPage = () => {
         try {
             let response = await TestingApi.getTermsByUser(user.userObj, user.uid);
             setTerms(response.data)
+            console.log(response.data)
             let response1 = await TestingApi.getSubjectAreas();
             setSubAreas(response1.data)
         } catch (err) {

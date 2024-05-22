@@ -597,7 +597,7 @@ def api_get_users_who_passed_the_test():
     _testName = request.args.get('_testName', '')
     print("courseObj: ", _testName,)
     data = ont.getUsersWhoPassedTheTest(_testName)
-    print("data: ", data)
+    # print("data: ", data)
     
     response = make_response(json.dumps({
         'statusCode': 200,

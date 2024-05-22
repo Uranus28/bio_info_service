@@ -447,7 +447,17 @@ class TestingService:
                     answerObj = re.sub(r'.*#',"", answerObj)
                     answerText = str(itemAnsw['answText'].toPython())
                     answerText = re.sub(r'.*#',"", answerText)
-                    listAnswers.append({"answer": answerText})
+                    if(len(listAnswers)==0):
+                        listAnswers.append({"answer": answerText})
+                    else:
+                        ishere=0
+                        for x in listAnswers:
+                            if x == {"answer": answerText}:
+                                ishere=1
+                                break
+                        if ishere==0:
+                            listAnswers.append({"answer": answerText})
+                    # listAnswers.append({"answer": answerText})
                 task["answers"] = listAnswers
                 listTasks.append(task)
             testItem["tasks"] = listTasks
@@ -507,7 +517,7 @@ class TestingService:
                     listSelectedTerms.remove('#')
 
                 task = {"taskObj": taskObj, "question": questionText, "term": term, "template": template, "concepts": listSelectedTerms, "type": getTypeTaskValue(typeQuestion)}
-
+               
                 query = queries.getAnswersByTask(taskObj, groupTask)
                 resultAnswers = self.graph.query(query)
                 query = queries.getCorrectAnswersByTask(taskObj, groupTask)
@@ -517,7 +527,17 @@ class TestingService:
                 for correctAnsw in resultCorrectAnswers:
                     correct = str(correctAnsw['answObj'].toPython())
                     correct = re.sub(r'.*#',"", correct)
-                    listCorrects.append(correct)
+                    if(len(listCorrects)==0):
+                        listCorrects.append(correct)
+                    else:
+                        ishere=0
+                        for x in listCorrects:
+                            if x == correct:
+                                ishere=1
+                                break
+                        if ishere==0:
+                            listCorrects.append(correct)
+                    
                 item = {}
                 for itemAnsw in resultAnswers:
                     answerObj = str(itemAnsw['answObj'].toPython())
@@ -525,7 +545,16 @@ class TestingService:
                     answerText = str(itemAnsw['answText'].toPython())
                     answerText = re.sub(r'.*#',"", answerText)
                     item = {"answerObj": answerObj, "answer": answerText, "correct": checkCorrectAnswer(answerObj, listCorrects)}
-                    listAnswers.append(item)
+                    if(len(listAnswers)==0):
+                        listAnswers.append(item)
+                    else:
+                        ishere=0
+                        for x in listAnswers:
+                            if x["answerObj"] == item["answerObj"]:
+                                ishere=1
+                                break
+                        if ishere==0:
+                            listAnswers.append(item)
                 if getTypeTaskValue(typeQuestion) == typeTask.Text.value:
                     task["answer"] = ""
                     for answ in listAnswers:
@@ -534,10 +563,29 @@ class TestingService:
                         task["answer"] = task["answer"].strip(', ')
                 else:
                     task["answers"] = listAnswers
-                listTasks.append(task)
+                if(len(listTasks)==0):
+                        listTasks.append(task)
+                else:
+                        # next((x for x in listModules if x["moduleObj"] == item["moduleObj"]), listModules.append(item))
+                        ishere=0
+                        for x in listTasks:
+                            if x["taskObj"] == task["taskObj"]:
+                                ishere=1
+                                break
+                        if ishere==0:
+                            listTasks.append(task)
             testItem["tasks"] = listTasks
-            listTests.append(testItem)
-        print(listTests)
+            if(len(listTests)==0):
+                        listTests.append(testItem)
+            else:
+                        # next((x for x in listModules if x["moduleObj"] == item["moduleObj"]), listModules.append(item))
+                        ishere=0
+                        for x in listTests:
+                            if x["testObj"] == testItem["testObj"]:
+                                ishere=1
+                                break
+                        if ishere==0:
+                            listTests.append(testItem)
         return listTests
 
     def getTestWithAnswers(self, testName):
@@ -778,22 +826,25 @@ class TestingService:
         query = queries.getUsers()
         resultUsers = self.graph.query(query)
         listUsers = []
+        allItemslistUsers = []
+
         for itemUser in resultUsers:
-            uid = str(itemUser['uid'].toPython())
-            uid = re.sub(r'.*#',"", uid)
-            userObj = str(itemUser['userObj'].toPython())
-            userObj = re.sub(r'.*#',"", userObj)
-            firstName = str(itemUser['firstName'].toPython())
-            firstName = re.sub(r'.*#',"", firstName)
-            lastName = str(itemUser['lastName'].toPython())
-            lastName = re.sub(r'.*#',"", lastName)
-            role = str(itemUser['role'].toPython())
-            role = re.sub(r'.*#',"", role)
-            email = str(itemUser['email'].toPython())
-            email = re.sub(r'.*#',"", email)
-            userItem = {"userObj": userObj, "firstName": firstName, "lastName": lastName, "email": email, "role": role, "uid": uid, "fullName": firstName + " " + lastName}
-            listUsers.append(userItem)        
-        
+            if(allItemslistUsers.count(itemUser)<1):
+                allItemslistUsers.append(itemUser)
+                uid = str(itemUser['uid'].toPython())
+                uid = re.sub(r'.*#',"", uid)
+                userObj = str(itemUser['userObj'].toPython())
+                userObj = re.sub(r'.*#',"", userObj)
+                firstName = str(itemUser['firstName'].toPython())
+                firstName = re.sub(r'.*#',"", firstName)
+                lastName = str(itemUser['lastName'].toPython())
+                lastName = re.sub(r'.*#',"", lastName)
+                role = str(itemUser['role'].toPython())
+                role = re.sub(r'.*#',"", role)
+                email = str(itemUser['email'].toPython())
+                email = re.sub(r'.*#',"", email)
+                userItem = {"userObj": userObj, "firstName": firstName, "lastName": lastName, "email": email, "role": role, "uid": uid, "fullName": firstName + " " + lastName}
+                listUsers.append(userItem)        
         return listUsers
     
     def getUsersWhoPassedTheTest(self, testName):
@@ -806,13 +857,12 @@ class TestingService:
             if listAttempts:
                 user["attempts"] = listAttempts
                 listUsers.append(user)
+                print(user)
 
-        print(listUsers)
         return listUsers
 
 
     def getAttempts(self, user_uid, nameTest):
-        print("UID NAMETEST: ", user_uid, nameTest)
         user = self.getUser(user_uid)
         test = self.getTestWithAnswers(nameTest)
         userObj = user["userObj"]
@@ -821,56 +871,65 @@ class TestingService:
         query = queries.getAttempts(userObj, testObj)
         resultAttempts = self.graph.query(query)
         listAttempts = []
+        allitemsAttemps=[]
+
         for itemAttempt in resultAttempts:
-            testCopy = copy.deepcopy(test)
-            tasksCopy = testCopy["tasks"]
-            attemptObj = str(itemAttempt['attemptObj'].toPython())
-            attemptObj = re.sub(r'.*#',"", attemptObj)
-            percentComplete = str(itemAttempt['percentComplete'].toPython())
-            percentComplete = re.sub(r'.*#',"", percentComplete)
-            succesfull = str(itemAttempt['succesfull'].toPython())
-            succesfull = re.sub(r'.*#',"", succesfull)
-            checked = str(itemAttempt['checked'].toPython())
-            checked = re.sub(r'.*#',"", checked)
-            testCopy["percentComplete"] = percentComplete
-            testCopy["succesfull"] = succesfull
-            testCopy["checked"] = checked
-            testCopy["attemptObj"] = attemptObj
-            query = queries.getTestElements(attemptObj)
-            resultTestElements = self.graph.query(query)
-            i = 0
-            for itemTestElement in resultTestElements:
-                print("TasksCopy: ", tasksCopy)
-                answersCopy = []
-                taskType = tasksCopy[i]["type"]
-                testElementObj = str(itemTestElement['testElem'].toPython())
-                testElementObj = re.sub(r'.*#',"", testElementObj)
-                query = queries.getAnswersAndCorrectByTestElem(testElementObj)
-                resultAnswersByTestElem = self.graph.query(query)
-                for itemAnswByTestElem in resultAnswersByTestElem:
-                    answObj = str(itemAnswByTestElem['answerObj'].toPython())
-                    answObj = re.sub(r'.*#',"", answObj)
-                    answText = str(itemAnswByTestElem['textAnswer'].toPython())
-                    answText = re.sub(r'.*#',"", answText)
-                    correctAnsw = str(itemAnswByTestElem['correct'].toPython())
-                    correctAnsw = re.sub(r'.*#',"", correctAnsw)
-                    answScore = str(itemAnswByTestElem['score'].toPython())
-                    answScore = re.sub(r'.*#',"", answScore)
-                    correctAnsw = True if correctAnsw == "True" else False
-                    if taskType == typeTask.Text.value:
-                        answersCopy = [{"answerObj": answObj, "answer": answText, "correct": False, "correctByUser": correctAnsw, "score": answScore}]
-                        #print("ASNWERSCOPY: ", answersCopy)
-                    else:
-                        answersCopy = tasksCopy[i]["answers"]
-                        for j in range(len(answersCopy)):
-                            if answersCopy[j]['answer'] == answText:
-                                answersCopy[j]["correctByUser"] = correctAnsw
-                            if "correctByUser" not in answersCopy[j]:
-                                answersCopy[j]["correctByUser"] = None
-                            answersCopy[j]["score"] = answScore
-                    testCopy["tasks"][i]["answers"] = answersCopy
-                i += 1
-            listAttempts.append(testCopy)
+            if(allitemsAttemps.count(itemAttempt)<1):
+                allitemsAttemps.append(itemAttempt)
+                testCopy = copy.deepcopy(test)
+                tasksCopy = testCopy["tasks"]
+                attemptObj = str(itemAttempt['attemptObj'].toPython())
+                attemptObj = re.sub(r'.*#',"", attemptObj)
+                percentComplete = str(itemAttempt['percentComplete'].toPython())
+                percentComplete = re.sub(r'.*#',"", percentComplete)
+                succesfull = str(itemAttempt['succesfull'].toPython())
+                succesfull = re.sub(r'.*#',"", succesfull)
+                checked = str(itemAttempt['checked'].toPython())
+                checked = re.sub(r'.*#',"", checked)
+                testCopy["percentComplete"] = percentComplete
+                testCopy["succesfull"] = succesfull
+                testCopy["checked"] = checked
+                testCopy["attemptObj"] = attemptObj
+                query = queries.getTestElements(attemptObj)
+                resultTestElements = self.graph.query(query)
+                i = 0
+                allitemsTestElement=[]
+                # prevItemTestElement=
+                for itemTestElement in resultTestElements:
+                    if(allitemsTestElement.count(itemTestElement)<1):
+                        allitemsTestElement.append(itemTestElement)
+                        # print("TasksCopy: ", tasksCopy)
+                        answersCopy = []
+                        taskType = tasksCopy[i]["type"]
+                        testElementObj = str(itemTestElement['testElem'].toPython())
+                        testElementObj = re.sub(r'.*#',"", testElementObj)
+                        query = queries.getAnswersAndCorrectByTestElem(testElementObj)
+                        resultAnswersByTestElem = self.graph.query(query)
+                        for itemAnswByTestElem in resultAnswersByTestElem:
+                            answObj = str(itemAnswByTestElem['answerObj'].toPython())
+                            answObj = re.sub(r'.*#',"", answObj)
+                            answText = str(itemAnswByTestElem['textAnswer'].toPython())
+                            answText = re.sub(r'.*#',"", answText)
+                            correctAnsw = str(itemAnswByTestElem['correct'].toPython())
+                            correctAnsw = re.sub(r'.*#',"", correctAnsw)
+                            answScore = str(itemAnswByTestElem['score'].toPython())
+                            answScore = re.sub(r'.*#',"", answScore)
+                            correctAnsw = True if correctAnsw == "True" else False
+                            if taskType == typeTask.Text.value:
+                                answersCopy = [{"answerObj": answObj, "answer": answText, "correct": False, "correctByUser": correctAnsw, "score": answScore}]
+                                #print("ASNWERSCOPY: ", answersCopy)
+                            else:
+                                answersCopy = tasksCopy[i]["answers"]
+                                for j in range(len(answersCopy)):
+                                    if answersCopy[j]['answer'] == answText:
+                                        answersCopy[j]["correctByUser"] = correctAnsw
+                                    if "correctByUser" not in answersCopy[j]:
+                                        answersCopy[j]["correctByUser"] = None
+                                    answersCopy[j]["score"] = answScore
+                            testCopy["tasks"][i]["answers"] = answersCopy
+                        i += 1
+                    
+                listAttempts.append(testCopy)
         return listAttempts
 
     def getUserCourses(self, user_uid):
@@ -981,7 +1040,16 @@ class TestingService:
             groupTasks = str(itemTest['groupTasks'].toPython())
             groupTasks = re.sub(r'.*#',"", groupTasks)
             item = {"testObj": testObj, "testName": testName, "groupTasks": groupTasks}
-            listTests.append(item)
+            if(len(listTests)==0):
+                listTests.append(item)
+            else:
+                ishere=0
+                for x in listTests:
+                    if x["testObj"] == item["testObj"]:
+                        ishere=1
+                        break
+                if ishere==0:
+                    listTests.append(item)
         
         print("Tests: ", listTests)
         return listTests
@@ -996,7 +1064,16 @@ class TestingService:
             lectureName = str(itemLecture['lectureName'].toPython())
             lectureName = re.sub(r'.*#',"", lectureName)
             item = {"lectureObj": lectureObj, "lectureName": lectureName}
-            listLectures.append(item)
+            if(len(listLectures)==0):
+                listLectures.append(item)
+            else:
+                ishere=0
+                for x in listLectures:
+                    if x["lectureObj"] == item["lectureObj"]:
+                        ishere=1
+                        break
+                if ishere==0:
+                    listLectures.append(item)
         
         print("Lectures: ", listLectures)
         return listLectures
@@ -1015,8 +1092,17 @@ class TestingService:
             listTests = self.getTestsOfModule(moduleObj)
             listLectures = self.getLecturesOfModule(moduleObj)
             item = {"moduleObj": moduleObj, "nameModule": nameModule, "subjectArea": subArea, "tests": listTests, "lectures": listLectures}
-            listModules.append(item)
-        
+            if(len(listModules)==0):
+                listModules.append(item)
+            else:
+                # next((x for x in listModules if x["moduleObj"] == item["moduleObj"]), listModules.append(item))
+                ishere=0
+                for x in listModules:
+                    if x["moduleObj"] == item["moduleObj"]:
+                        ishere=1
+                        break
+                if ishere==0:
+                    listModules.append(item)
         print(listModules)
         return listModules
 
@@ -1266,24 +1352,27 @@ class TestingService:
         sumCorr = {}
         sumCorrect = 0
         sumCount = 0
+        allItemTerm=[]
         for itemTerm in resultTerms:
-            termObj = str(itemTerm['term'].toPython())
-            termObj = re.sub(r'.*#',"", termObj)
-            subjectArea = str(itemTerm['subjectArea'].toPython())
-            subjectArea = re.sub(r'.*#',"", subjectArea)
-            term = termObj.replace("_", " ")
-            termStr = term[0].upper() + term[1:]
-            if termObj in termsScores:
-                item = {"termObj": termObj, "term": termStr, "sumCount": termsScores[termObj]["sum"], "sumCorrect": termsScores[termObj]["sumScore"], "subjectArea": subjectArea}
-                listTerms.append(item)
-                listTermObj.append(termObj)
-                if subjectArea not in sumCorr:
-                    sumCorr[subjectArea] = {"sumCorrect": termsScores[termObj]["sumScore"], "sumCount": termsScores[termObj]["sum"]}
-                else:
-                    sumCorr[subjectArea]["sumCorrect"] += termsScores[termObj]["sumScore"]
-                    sumCorr[subjectArea]["sumCount"] += termsScores[termObj]["sum"]
-                sumCorrect += termsScores[termObj]["sumScore"]
-                sumCount += termsScores[termObj]["sum"]
+            if(allItemTerm.count(itemTerm)<1):
+                allItemTerm.append(itemTerm)
+                termObj = str(itemTerm['term'].toPython())
+                termObj = re.sub(r'.*#',"", termObj)
+                subjectArea = str(itemTerm['subjectArea'].toPython())
+                subjectArea = re.sub(r'.*#',"", subjectArea)
+                term = termObj.replace("_", " ")
+                termStr = term[0].upper() + term[1:]
+                if termObj in termsScores:
+                    item = {"termObj": termObj, "term": termStr, "sumCount": termsScores[termObj]["sum"], "sumCorrect": termsScores[termObj]["sumScore"], "subjectArea": subjectArea}
+                    listTerms.append(item)
+                    listTermObj.append(termObj)
+                    if subjectArea not in sumCorr:
+                        sumCorr[subjectArea] = {"sumCorrect": termsScores[termObj]["sumScore"], "sumCount": termsScores[termObj]["sum"]}
+                    else:
+                        sumCorr[subjectArea]["sumCorrect"] += termsScores[termObj]["sumScore"]
+                        sumCorr[subjectArea]["sumCount"] += termsScores[termObj]["sum"]
+                    sumCorrect += termsScores[termObj]["sumScore"]
+                    sumCount += termsScores[termObj]["sum"]
         lectures = self.getLecturesByTerms(listTermObj)
 
         return listTerms, sumCorrect, sumCount, sumCorr, lectures
@@ -1615,13 +1704,17 @@ class TestingService:
             query = queries.getLecturesByTerm(term)
             resultLectures = self.graph.query(query)
             listLectures = []
+            allItemLecture=[]
             for itemLecture in resultLectures:
-                lectureObj = str(itemLecture['lectureObj'].toPython())
-                lectureObj = re.sub(r'.*#',"", lectureObj)
-                lectureName = str(itemLecture['lectureName'].toPython())
-                lectureName = re.sub(r'.*#',"", lectureName)
-                item = {"lectureObj": lectureObj, "lectureName": lectureName}
-                listLectures.append(item)
+                if(allItemLecture.count(itemLecture)<1):
+                    print(itemLecture)
+                    allItemLecture.append(itemLecture)
+                    lectureObj = str(itemLecture['lectureObj'].toPython())
+                    lectureObj = re.sub(r'.*#',"", lectureObj)
+                    lectureName = str(itemLecture['lectureName'].toPython())
+                    lectureName = re.sub(r'.*#',"", lectureName)
+                    item = {"lectureObj": lectureObj, "lectureName": lectureName}
+                    listLectures.append(item)
             lectures[term] = listLectures
 
         #print(lectures)
