@@ -47,17 +47,6 @@ const Testing = () => {
         return (
             <Menu.Item key={item.id} icon={<CourseTestingIcon type={item.link} is_back={item.name==="Назад" ? true:false} />}>
                 <Link to={item.link} onClick={()=>{cleanLocalStore(item.link)}}>{item.name}</Link>
-                {/* <Link to={item.link} onClick={item.name==="Назад" ? ()=>{ clearCurCourse();
-            clearCurAttemps();
-            clearCurLecture();
-            clearCurModule();
-            clearCurTest();
-            clearCurUser()}:item.link===COURSE_TESTS_ROUTE ?  ()=>{ ;
-                clearCurAttemps();
-                clearCurLecture();
-                clearCurModule();
-                clearCurTest();
-                clearCurUser()}:null}>{item.name}</Link> */}
             </Menu.Item>
         )
     })
@@ -91,14 +80,7 @@ const Testing = () => {
             <Layout>
                 <Sider
                 breakpoint="lg"
-                // collapsedWidth="0"
                 width={200}
-                // onBreakpoint={broken => {
-                //     console.log(broken);
-                // }}
-                // onCollapse={(collapsed, type) => {
-                //     console.log(collapsed, type);
-                // }}
                 >
                     <Menu 
                         theme="dark" 
