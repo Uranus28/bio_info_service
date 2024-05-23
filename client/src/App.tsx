@@ -37,7 +37,7 @@ export const App: FC = () => {
             setUser={setUser}
             setSelectedKey={setSelectedKey}
           />
-          <Footer style={{ textAlign: "center" }}>PSU, 2020</Footer>
+          <Footer style={{ textAlign: "center" }}>PSU, 2024</Footer>
         </Layout>
       </Router>
     </SpeciesContextProvider>
