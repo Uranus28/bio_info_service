@@ -28,12 +28,13 @@ import { clearCurLecture } from '../../entities/LocalStore/curLecture';
 import { clearCurModule } from '../../entities/LocalStore/curModule';
 import { clearCurTest } from '../../entities/LocalStore/curTest';
 import { clearCurUser } from '../../entities/LocalStore/curUser';
+import { getKey } from './getKey';
 const { Header, Content, Sider } = Layout;
 
 const Testing = () => {
     
     const {services} = useContext(Context)
-
+    const [selectedKey,setSelectedKey]=useState(getKey())
     const curCourse = getCurCourse();
     const routes = services.Routes[history.location.pathname];
 
@@ -44,7 +45,7 @@ const Testing = () => {
 
     const menuItemsList = menuItems.map((item) => {
         return (
-            <Menu.Item key={item.link} icon={<CourseTestingIcon type={item.link} is_back={item.name==="Назад" ? true:false} />}>
+            <Menu.Item key={item.id} icon={<CourseTestingIcon type={item.link} is_back={item.name==="Назад" ? true:false} />}>
                 <Link to={item.link} onClick={()=>{cleanLocalStore(item.link)}}>{item.name}</Link>
                 {/* <Link to={item.link} onClick={item.name==="Назад" ? ()=>{ clearCurCourse();
             clearCurAttemps();
@@ -102,8 +103,9 @@ const Testing = () => {
                     <Menu 
                         theme="dark" 
                         mode="inline" 
-                        defaultSelectedKeys={['/']}
-                        selectedKeys={[history.location.pathname]}
+                        // defaultSelectedKeys={['/']}
+                        selectedKeys={[selectedKey]}
+                        onClick={(e)=>setSelectedKey(getKey())}
                     >
                         {menuItemsList}
                     </Menu>

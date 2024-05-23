@@ -316,7 +316,7 @@ const CreateTestForm = ({isVisible, setIsVisible, onUpdate}) => {
                                         </Form.Item>
                                     : null
                                 }
-                                <MinusCircleOutlined onClick={() => remove(field.name)} />
+                                <MinusCircleOutlined style={{position:"relative", top:"-365px"}}onClick={() => remove(field.name)} />
                             </Space>
                             ))}
     
