@@ -3,7 +3,7 @@ import "antd/dist/antd.css";
 import { ListGroup, Row, Col, Button } from "react-bootstrap";
 import { Divider, message } from "antd";
 import history from "../../services/history";
-import { isTeacher } from "../utils/testing";
+import { isAdmin, isTeacher } from "../utils/testing";
 import CreateCourse from "../Course/ModalForms/CreateCourse";
 import { COURSE_INFO_ROUTE } from "../../utils/consts";
 import TestingApi from "../../API/TestingApi";
@@ -118,8 +118,8 @@ export const CoursesAll: FC = () => {
             <AvatarInfo firstL={item.courseName.substring(0, 1)} />
           </Col>
           <Col
-            style={{ cursor: "pointer" }}
-            onClick={() => handleCourse(item)}
+            style={{ cursor: isAdmin(user) ? "pointer" : "default" }}
+            onClick={() => (isAdmin(user) ? handleCourse(item) : {})}
             xs={9}
           >
             <div className="ms-2 me-auto">
