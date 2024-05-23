@@ -56,7 +56,6 @@ const CourseLecture = () => {
         }
     }
 
-    if (curLecture.materials) {
         return (
             <>
                 <Row>
@@ -81,12 +80,8 @@ const CourseLecture = () => {
                 <CourseLectureEditForm isVisible={isCreateLectureFormVisible} setIsVisible={setIsCreateLectureFormVisible}></CourseLectureEditForm>
             </>
         )
-    } 
-    else {
-        return (
-            <Divider orientation="center">Выберите курс</Divider>
-        )
-    }
+    
+   
 }
 
 export default CourseLecture;

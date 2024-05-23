@@ -190,7 +190,6 @@ const CourseLections = () => {
                             </Button>
                         : null
                     }
-                    <CreateLectureForm isVisible={isCreateLectureFormVisible} setIsVisible={setIsCreateLectureFormVisible} onUpdate={onUpdate}></CreateLectureForm>                
                 </ListGroup.Item>
             )
         })
@@ -212,6 +211,7 @@ const CourseLections = () => {
                         <ListGroup>
                             {listModules}
                         </ListGroup>
+                        <CreateLectureForm isVisible={isCreateLectureFormVisible} setIsVisible={setIsCreateLectureFormVisible} onUpdate={onUpdate}></CreateLectureForm>                
                         { isTeacher(user)
                             ?   <Button 
                                 style={{verticalAlign: "bottom", marginTop: "20px"}} 

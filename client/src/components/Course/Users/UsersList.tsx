@@ -3,7 +3,7 @@ import "antd/dist/antd.css";
 import { Button, Divider, List } from "antd";
 import InfiniteScroll from "react-infinite-scroll-component";
 import EditRole from "../ModalForms/EditRole";
-import { isAdmin } from "../../utils/testing";
+import { isAdmin, isTeacher } from "../../utils/testing";
 import { Loader } from "../../UI/Loader/Loader";
 import { AvatarInfo } from "../../../shared/AvatarInfo/AvatarInfo";
 import { getUserStore } from "../../../entities/LocalStore/userStore";
@@ -69,7 +69,10 @@ export const UsersList: FC<UsersListProps> = ({
                   Изменить роль
                 </Button>
               ) : null}
-              {isAdmin(user) && isCheck && !isAdmin(item) ? (
+              {isTeacher(user) &&
+              isCheck &&
+              !isAdmin(item) &&
+              user.userObj !== item.userObj ? (
                 <Button
                   onClick={() => handleCheckAttempts(item)}
                   style={{ marginLeft: "5px" }}

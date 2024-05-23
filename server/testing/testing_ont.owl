@@ -1449,6 +1449,16 @@
   <termNormalize rdf:datatype="http://www.w3.org/2001/XMLSchema#string">форма_пыльцевого_зёрный</termNormalize>
 </owl:NamedIndividual>
 
+<owl:NamedIndividual rdf:about="#морфологические_характеристики">
+  <rdf:type rdf:resource="#Термин"/>
+  <hasPrevTerm rdf:resource="#палинология"/>
+  <isTermOf rdf:resource="#палинология"/>
+  <divided_in_groups rdf:datatype="http://www.w3.org/2001/XMLSchema#string">высшие</divided_in_groups>
+  <divided_in_groups rdf:datatype="http://www.w3.org/2001/XMLSchema#string">низшие</divided_in_groups>
+  <moveToPrev rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</moveToPrev>
+  <termNormalize rdf:datatype="http://www.w3.org/2001/XMLSchema#string">морфологические_характеристика</termNormalize>
+</owl:NamedIndividual>
+
 <owl:NamedIndividual rdf:about="#Зубровка">
   <rdf:type rdf:resource="#Злаки"/>
 </owl:NamedIndividual>
@@ -1581,6 +1591,22 @@
   <nameModule rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Модуль 1</nameModule>
 </owl:NamedIndividual>
 
+<owl:NamedIndividual rdf:about="#тест1">
+  <rdf:type rdf:resource="#Тест"/>
+  <has_group_of_task rdf:resource="#группа_заданий1"/>
+  <is_test_of rdf:resource="#модуль1"/>
+  <testName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Морфология пыльцевых зерен</testName>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#курс1">
+  <rdf:type rdf:resource="#Курс"/>
+  <has_module rdf:resource="#модуль1"/>
+  <has_module rdf:resource="#модуль2"/>
+  <descriptionCourse rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Какое то описание</descriptionCourse>
+  <infoCourse rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Какая то информация</infoCourse>
+  <nameCourse rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Палинология</nameCourse>
+</owl:NamedIndividual>
+
 <owl:NamedIndividual rdf:about="#бороздо-оровые">
   <rdf:type rdf:resource="#Термин"/>
   <hasPrevTerm rdf:resource="#сложная_апертура"/>
@@ -1654,16 +1680,6 @@
   <moveToPrev rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</moveToPrev>
   <relates_to_the_group rdf:datatype="http://www.w3.org/2001/XMLSchema#string">форма_пыльцевого_зерна</relates_to_the_group>
   <termNormalize rdf:datatype="http://www.w3.org/2001/XMLSchema#string">клетки_пыльцевого_зёрный</termNormalize>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#морфологические_характеристики">
-  <rdf:type rdf:resource="#Термин"/>
-  <hasPrevTerm rdf:resource="#палинология"/>
-  <isTermOf rdf:resource="#палинология"/>
-  <divided_in_groups rdf:datatype="http://www.w3.org/2001/XMLSchema#string">высшие</divided_in_groups>
-  <divided_in_groups rdf:datatype="http://www.w3.org/2001/XMLSchema#string">низшие</divided_in_groups>
-  <moveToPrev rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</moveToPrev>
-  <termNormalize rdf:datatype="http://www.w3.org/2001/XMLSchema#string">морфологические_характеристика</termNormalize>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#вопрос1">
@@ -1804,13 +1820,6 @@
   <is_group_of_task rdf:resource="#тест1"/>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#тест1">
-  <rdf:type rdf:resource="#Тест"/>
-  <has_group_of_task rdf:resource="#группа_заданий1"/>
-  <is_test_of rdf:resource="#модуль1"/>
-  <testName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Морфология пыльцевых зерен</testName>
-</owl:NamedIndividual>
-
 <owl:NamedIndividual rdf:about="#группа_заданий2">
   <rdf:type rdf:resource="#Группа_заданий"/>
   <is_group_of_task rdf:resource="#тест2"/>
@@ -1828,6 +1837,15 @@
   <has_test rdf:resource="#тест2"/>
   <is_module_of rdf:resource="#курс2"/>
   <nameModule rdf:datatype="http://www.w3.org/2001/XMLSchema#string">module1</nameModule>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#курс2">
+  <rdf:type rdf:resource="#Курс"/>
+  <has_module rdf:resource="#модуль3"/>
+  <has_module rdf:resource="#модуль4"/>
+  <descriptionCourse rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Описание Курса1</descriptionCourse>
+  <infoCourse rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Информация о Курсе1</infoCourse>
+  <nameCourse rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Курс1</nameCourse>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#группа_заданий3">
@@ -2221,29 +2239,11 @@
   <termNormalize rdf:datatype="http://www.w3.org/2001/XMLSchema#string">крупный</termNormalize>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#курс1">
-  <rdf:type rdf:resource="#Курс"/>
-  <has_module rdf:resource="#модуль1"/>
-  <has_module rdf:resource="#модуль2"/>
-  <descriptionCourse rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Какое то описание</descriptionCourse>
-  <infoCourse rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Какая то информация</infoCourse>
-  <nameCourse rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Палинология</nameCourse>
-</owl:NamedIndividual>
-
 <owl:NamedIndividual rdf:about="#модуль2">
   <rdf:type rdf:resource="#Модуль"/>
   <has_subject_area rdf:resource="#палинология"/>
   <is_module_of rdf:resource="#курс1"/>
   <nameModule rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Модуль 2</nameModule>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#курс2">
-  <rdf:type rdf:resource="#Курс"/>
-  <has_module rdf:resource="#модуль3"/>
-  <has_module rdf:resource="#модуль4"/>
-  <descriptionCourse rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Описание Курса1</descriptionCourse>
-  <infoCourse rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Информация о Курсе1</infoCourse>
-  <nameCourse rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Курс1</nameCourse>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#модуль4">
@@ -2279,6 +2279,12 @@
   <rdf:type rdf:resource="#Тест"/>
   <has_group_of_task rdf:resource="#группа_заданий4"/>
   <testName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">qwewqeewqw</testName>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#тест6">
+  <rdf:type rdf:resource="#Тест"/>
+  <has_group_of_task rdf:resource="#группа_заданий6"/>
+  <testName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">test0</testName>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#лекция2">
@@ -4034,6 +4040,12 @@
   <is_test_element_of rdf:resource="#попытка_прохождения_теста7"/>
 </owl:NamedIndividual>
 
+<owl:NamedIndividual rdf:about="#элемент_теста78">
+  <rdf:type rdf:resource="#Элемент_теста"/>
+  <has_task rdf:resource="#задание13"/>
+  <has_answer rdf:resource="#ответыстудента83"/>
+</owl:NamedIndividual>
+
 <owl:NamedIndividual rdf:about="#полярная">
   <rdf:type rdf:resource="#Термин"/>
   <hasPrevTerm rdf:resource="#проекция_пыльцевого_зерна"/>
@@ -4366,12 +4378,6 @@
   <termNormalize rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ямчатый</termNormalize>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#элемент_теста78">
-  <rdf:type rdf:resource="#Элемент_теста"/>
-  <has_task rdf:resource="#задание13"/>
-  <has_answer rdf:resource="#ответыстудента83"/>
-</owl:NamedIndividual>
-
 <owl:NamedIndividual rdf:about="#ответыстудента83">
   <rdf:type rdf:resource="#ОтветыСтудента"/>
   <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
@@ -4388,12 +4394,6 @@
   <rdf:type rdf:resource="#Группа_заданий"/>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#тест6">
-  <rdf:type rdf:resource="#Тест"/>
-  <has_group_of_task rdf:resource="#группа_заданий6"/>
-  <testName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">test0</testName>
-</owl:NamedIndividual>
-
 <owl:NamedIndividual rdf:about="#группа_заданий6">
   <rdf:type rdf:resource="#Группа_заданий"/>
 </owl:NamedIndividual>
@@ -4407,13 +4407,20 @@
   <hasTerm rdf:resource="#бугорчатая"/>
 </owl:NamedIndividual>
 
+<owl:NamedIndividual rdf:about="#текстовый10">
+  <rdf:type rdf:resource="#Текстовый"/>
+  <textQuestion rdf:datatype="http://www.w3.org/2001/XMLSchema#string">На какие группы делится интина?</textQuestion>
+</owl:NamedIndividual>
+
 <owl:NamedIndividual rdf:about="#вопрос24">
   <rdf:type rdf:resource="#Вопрос"/>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#текстовый10">
-  <rdf:type rdf:resource="#Текстовый"/>
-  <textQuestion rdf:datatype="http://www.w3.org/2001/XMLSchema#string">На какие группы делится интина?</textQuestion>
+<owl:NamedIndividual rdf:about="#лекция3">
+  <rdf:type rdf:resource="#Лекция"/>
+  <is_lecture_of rdf:resource="#модуль1"/>
+  <has_term rdf:resource="#бугорчатая"/>
+  <lectureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">bugorchataya.pdf</lectureName>
 </owl:NamedIndividual>
 
 

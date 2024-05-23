@@ -18,6 +18,7 @@ const CourseTest = ({viewDetails,setViewDetails}) => {
     const [result, setResult] = useState({})
     const [isLoading, setIsLoading] = useState(false)
     const [isAttemptCompleted, setIsAttemptCompleted] = useState(false)
+    let listTasks = []
     
     const user = getUserStore();
     const curTest = getCurTest()
@@ -39,7 +40,6 @@ const CourseTest = ({viewDetails,setViewDetails}) => {
         }
         setIsLoading(false)
     }
-
 
     if (curTest.tasks) {
         listTasks = curTest.tasks.map((item, ind) => {
