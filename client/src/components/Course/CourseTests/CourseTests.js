@@ -67,7 +67,6 @@ const CourseTests = () => {
     }
 
     const handleCreateTest = (module) => {
-        console.log(module)
         setCurModule(module)
         setIsCreateTestFormVisible(true)
     }

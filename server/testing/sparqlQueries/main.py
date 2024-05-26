@@ -651,6 +651,7 @@ class TestingService:
                             termsScores[termObj] = {"sum": 1, "sumScore": 0}
                         else:
                             termsScores[termObj]["sum"] += 1
+               
                 for answer in tasks[i]["answers"]:
                     if termObj != "":
                         termsScores[termObj]["sumScore"] += float(answer["score"])
@@ -660,9 +661,48 @@ class TestingService:
             termItem = Термин(termObj)
             if term["sum"] != 0:
                 if term["sumScore"] / term["sum"] > 0.6:
-                    user.knownTerm.append(termItem)
+                    print("=====+",termItem)
+                    try:
+                        while True:
+                            user.unknownTerm.remove(termItem)
+                    except Exception:
+                        print('Нельзя удалить несуществующее from unknown')
+                    if(termItem not in user.knownTerm):                        
+                        user.knownTerm.append(termItem)
+                    
                 else:
-                    user.unknownTerm.append(termItem)
+                    try:
+                        while True:
+                            user.knownTerm.remove(termItem)
+                    except Exception:
+                        print('Нельзя удалить несуществующее from known')
+                    if(termItem not in user.unknownTerm):
+                        user.unknownTerm.append(termItem)
+        # print("WIW_W__W_W_")
+        # woduplicatesK = list(set(user.knownTerm))
+        # woduplicatesUK = list(set(user.unknownTerm))       
+        print(len(user.knownTerm))
+        print(len(user.unknownTerm))
+        # user.knownTerm.clear()
+        # user.unknownTerm.clear()      
+
+        # for kkk in woduplicatesK:
+        #     user.knownTerm.append(kkk)
+        # for uuu in woduplicatesUK:
+        #     user.unknownTerm.append(uuu)
+        # print(len(user.knownTerm))
+        # print(len(user.unknownTerm))
+        # print("____++")       
+        # for knowns in user.knownTerm:
+        #     print(knowns)
+        # print("____++")
+        # print("____--")
+        # for unknowns in user.unknownTerm:
+        #     print(unknowns)
+        # print("____--")
+
+        self.onto.save(self.path)
+
         return termsScores
 
 
@@ -740,15 +780,33 @@ class TestingService:
                 newAnsw.rightAnswer = False
                 newAnsw.textAnswer = userAnswers[i]["answer"]
                 newTestElement.has_answer.append(newAnsw)
-        
+        print("___createNewAttempt_____")
         for termObj, term in termsScores.items():
             print("TermObj: ", termObj)
             termItem = Термин(termObj)
             if term["sum"] != 0:
                 if term["sumScore"] / term["sum"] > 0.6:
-                    user.knownTerm.append(termItem)
+                    print("=====+",termItem)
+                    try:
+                        while True:
+                            user.unknownTerm.remove(termItem)
+                    except Exception:
+                        print('Нельзя удалить несуществующее from unknown')
+                    if(termItem not in user.knownTerm):                        
+                        user.knownTerm.append(termItem)
+                    
                 else:
-                    user.unknownTerm.append(termItem)
+                    try:
+                        while True:
+                            user.knownTerm.remove(termItem)
+                    except Exception:
+                        print('Нельзя удалить несуществующее from known')
+                    if(termItem not in user.unknownTerm):
+                        user.unknownTerm.append(termItem)
+                # if term["sumScore"] / term["sum"] > 0.6:
+                #     user.knownTerm.append(termItem)
+                # else:
+                #     user.unknownTerm.append(termItem)
         
         succesfullAttempt = False
         if sum / len(tasks) > 0.3:
@@ -1259,18 +1317,24 @@ class TestingService:
             termItem = Термин(termObj)
             if term["sum"] != 0:
                 if term["sumScore"] / term["sum"] > 0.6:
+                    print("=====+",termItem)
                     try:
-                        user.unknownTerm.remove(termItem)
+                        while True:
+                            user.unknownTerm.remove(termItem)
                     except Exception:
-                        print('Нельзя удалить несуществующее')
-                    user.knownTerm.append(termItem)
+                        print('Нельзя удалить несуществующее from unknown')
+                    if(termItem not in user.knownTerm):                        
+                        user.knownTerm.append(termItem)
+                    
                 else:
                     try:
-                        user.knownTerm.remove(termItem)
+                        while True:
+                            user.knownTerm.remove(termItem)
                     except Exception:
-                        print('Нельзя удалить несуществующее')
-                    user.unknownTerm.append(termItem)
-        
+                        print('Нельзя удалить несуществующее from known')
+                    if(termItem not in user.unknownTerm):
+                        user.unknownTerm.append(termItem)
+               
         print("Попытка изменена!")
         self.onto.save(self.path)
 
@@ -1324,6 +1388,8 @@ class TestingService:
         sumCou = {}
         sumCorrect = 0
         sumCount = 0
+        print("_________termScores_____________")
+        print(termsScores)
         for itemTerm in resultTerms:
             termObj = str(itemTerm['term'].toPython())
             termObj = re.sub(r'.*#',"", termObj)
@@ -1382,18 +1448,23 @@ class TestingService:
         knownTerms, sumKnown, sumCountKnown, sumCorrKnown = self.getKnownTermsByUser(userObj, termsScores)
         unknownTerms, sumUnknown, sumCountUnknown, sumCorrUnknown, lectures = self.getUnknownTermsByUser(userObj, termsScores)
         sumScores = {}
+
         for field in sumCorrKnown:
             if field not in sumScores:
                 sumScores[field] = {"sumCorrect": sumCorrKnown[field]["sumCorrect"], "sumCount": sumCorrKnown[field]["sumCount"]}
             else:
                 sumScores[field]["sumCorrect"] += sumCorrKnown[field]["sumCorrect"]
                 sumScores[field]["sumCount"] += sumCorrKnown[field]["sumCount"]
+
         for field in sumCorrUnknown:
             if field not in sumScores:
                 sumScores[field] = {"sumCorrect": sumCorrUnknown[field]["sumCorrect"], "sumCount": sumCorrUnknown[field]["sumCount"]}
             else:
                 sumScores[field]["sumCorrect"] += sumCorrUnknown[field]["sumCorrect"]
                 sumScores[field]["sumCount"] += sumCorrUnknown[field]["sumCount"]
+                print("_______-==")
+                print(field)
+                print("_______-==")
         
         item = {"knownTerms": knownTerms, "unknownTerms": unknownTerms, "sumScores": sumKnown + sumUnknown, "sumCount": sumCountKnown + sumCountUnknown, "sumScoresLite": sumScores, "lectures": lectures}
         return item

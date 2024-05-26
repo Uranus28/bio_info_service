@@ -801,7 +801,7 @@ def api_get_terms_by_user():
     _uid = request.args.get('_uid', '')
     print("userObj: ", _userObj, _uid)
     data = ont.getTermsByUser(_userObj, _uid)
-    print("data: ", data)
+    # print("data: ", data)
     
     response = make_response(json.dumps({
         'statusCode': 200,

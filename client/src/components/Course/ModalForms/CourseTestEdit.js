@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import 'antd/dist/antd.css';
 import { Modal, Button, Form, Input, Space, Select, message } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import EditTask from '../Task/EditTask';
+import EditTask from '../EditTask/EditTask';
 import TestingApi from '../../../API/TestingApi';
 import {Loader} from '../../UI/Loader/Loader';
 import { deepEqual } from '../../utils/testing';

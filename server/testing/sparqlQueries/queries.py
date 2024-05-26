@@ -331,5 +331,5 @@ def getLastAttemptsForAverageScoreByUser(userObj):
             "?attempt tst:relates_to_test ?test. " \
             "?test tst:testName ?testName. " \
             "?attempt tst:dateAndTime ?date. " \
-            "} ORDER BY (?test) DESC(?date)" % (userObj)
+            "} ORDER BY ?test DESC(?date)" % (userObj)
     return query
