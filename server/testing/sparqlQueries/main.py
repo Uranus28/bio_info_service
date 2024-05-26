@@ -6,6 +6,8 @@ from owlready2 import *
 from enum import Enum
 from datetime import datetime
 import copy
+import nltk
+nltk.download('punkt')
 
 path_dir = (os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 sys.path.append(path_dir)
