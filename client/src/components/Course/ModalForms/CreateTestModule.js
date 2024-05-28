@@ -224,7 +224,7 @@ const CreateTestForm = ({isVisible, setIsVisible, onUpdate}) => {
                         {(fields, { add, remove }) => (
                         <>
                             {fields.map(field => (
-                            <Space key={field.key} style={{display: 'flex', justifyContent: 'center'}}>
+                            <Space key={field.key} style={{display: 'flex', justifyContent: 'center'}} align="baseline">
                                 { !(isLoading) 
                                     ?   <Form.Item
                                             style={{borderTop: '1px solid', width: "100%"}}
