@@ -21,14 +21,18 @@ const CourseTestVariants = () => {
     const curCourse = getCurCourse()
     const user = getUserStore()
 
+    const [testToggle,setTestToggle]=useState(false)
+
     const [isEsitTestFormVisible, setIsEditTestFormVisible] = useState(false)
 
     const fetchAttempts = async () => {
         setIsLoading(true)
         try {
-            let response = await TestingApi.getAttempts(user.uid, curTest.testName)
+            let response = await TestingApi.checkTestOpened(user.uid, curTest.testName)
+            setTestToggle(response.data)
+            response = await TestingApi.getAttempts(user.uid, curTest.testName)
             setAttempts(response.data)
-            // setCurAttemps(response.data)
+            
         } catch (err) {
             let errMessage = "";
             if (err instanceof Error) {
@@ -121,9 +125,9 @@ const CourseTestVariants = () => {
                 </Row>
                 <Row>
                     <Button 
-                        style={{lineHeight: "0.8", margin: "30px 30px"}} 
+                        style={{lineHeight: "0.8", margin: "30px 30px", opacity:testToggle?1:0.4}} 
                         variant="outline-success"
-                        onClick={handleStartTest}
+                        onClick={testToggle?handleStartTest:null}
                     >
                         Начать попытку
                     </Button>

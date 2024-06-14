@@ -233,6 +233,14 @@ export default class TestingApi {
         return response.data
     }
 
+    static async checkTestOpened(user_uid,nameTest) {
+        const response = await axios.get('http://localhost:5000/api/check_test_opened',{ params: {
+            _uid: user_uid,
+            _nameTest: nameTest,
+        }})
+        return response.data
+    }
+
     static async editRole(user) {
         const response = await axios.post('http://localhost:5000/api/edit_role', { user })
         return response.data

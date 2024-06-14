@@ -91,6 +91,15 @@ def getUsers():
             "}"
     return query
 
+# запрос на получение заблокированных тестов пользователя
+def getBlockedTests(userObj):
+    query = "PREFIX tst: <http://www.semanticweb.org/nike0/ontologies/2022/4/untitled-ontology-16#>" \
+            "SELECT ?test " \
+            "WHERE { " \
+            "tst:%s tst:has_blocked_test ?test. " \
+            "}" % (userObj)
+    return query
+
 # запрос на получение попыток пользователя
 def getAttempts(userObj, testObj):
     query = "PREFIX tst: <http://www.semanticweb.org/nike0/ontologies/2022/4/untitled-ontology-16#>" \

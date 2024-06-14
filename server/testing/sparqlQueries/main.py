@@ -921,7 +921,26 @@ class TestingService:
 
         return listUsers
 
-
+    def checkTestOpened(self,user_uid,nameTest):
+        user = self.getUser(user_uid)
+        test = self.getTestWithAnswers(nameTest)
+        userObj = user["userObj"]
+        testObj1 = test["testObj"]
+        
+        query = queries.getBlockedTests(userObj)
+        resultTests = self.graph.query(query)
+        allitemsTests=[]
+        for itemTest in resultTests:
+            if(allitemsTests.count(itemTest)<1):
+                allitemsTests.append(itemTest)
+                testObj = str(itemTest['test'].toPython())
+                testObj = re.sub(r'.*#',"", testObj)
+                
+                if(testObj1==testObj):
+                    print("+++++++++")
+                    return False
+        return True
+    
     def getAttempts(self, user_uid, nameTest):
         user = self.getUser(user_uid)
         test = self.getTestWithAnswers(nameTest)
@@ -1087,8 +1106,6 @@ class TestingService:
                 uid = re.sub(r'.*#',"", uid)
                 user = self.getUser(uid)
                 listUsers.append(user)
-                print("___________________________________")
-                print(user)
             
         return listUsers
 

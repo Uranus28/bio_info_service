@@ -488,6 +488,21 @@ def api_get_last_attempts():
     print(response)
     return response 
 
+@app.get('/api/check_test_opened')
+def api_check_test_opened():
+    ont = TestingService()
+    _uid = request.args.get('_uid', '')
+    _nameTest = request.args.get('_nameTest', '')
+    print("Uid TestName: ", _uid, _nameTest)
+    data=ont.checkTestOpened(_uid, _nameTest)
+    
+    response = make_response(json.dumps({
+        'statusCode': 200,
+        'data':data
+    })), 200
+    print(response)
+    return response 
+
 @app.get('/api/get_user_courses')
 def api_get_user_courses():
     ont = TestingService()
