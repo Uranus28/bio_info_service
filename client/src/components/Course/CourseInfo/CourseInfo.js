@@ -5,7 +5,7 @@ import {Row, Col, ListGroup, Button, Badge} from "react-bootstrap"
 import { BookOutlined } from '@ant-design/icons';
 import TestingApi from "../../../API/TestingApi";
 import {Loader} from "../../UI/Loader/Loader";
-import { isTeacher } from "../../utils/testing";
+import { isAdmin, isTeacher } from "../../utils/testing";
 import {  TESTING_ALL_COURSES_ROUTE } from "../../../utils/consts";
 import history from "../../../services/history";
 import {UsersList} from "../Users/UsersList";
@@ -33,7 +33,7 @@ const CourseInfo = () => {
         try {
             let response = await TestingApi.getCourseInfo(curCourse.courseObj);
             setCurCourse(response.data)
-            setStudents(response.data.students)
+            setStudents(response.data.students.filter(item =>!isTeacher(user)? item.role !== "admin" && item.role !== "teacher":(user.role=="teacher")?item.role !== "admin":item.role))
             setModules(response.data.modules)
         } catch (err) {
             let errMessage = "";
@@ -136,23 +136,6 @@ const CourseInfo = () => {
     const isSubscribe = () => {
         const courses = myCourses.filter(elem => elem.courseName === curCourse.courseName)
         return courses.length > 0 ? true : false
-    }
-
-    if (students) {
-        listStudents = students.map((item) => {
-            return (
-                <ListGroup.Item 
-                    as="li"
-                    className="d-flex justify-content-between align-items-start"
-                    key={item.uid}
-                >
-                    <Avatar src="https://joeschmoe.io/api/v1/random" style={{marginRight: "20px"}}/>
-                    <div className="ms-2 me-auto">
-                        {item.firstName} {item.lastName}
-                    </div>                    
-                </ListGroup.Item>
-            )
-        })
     }
 
     if (modules) {

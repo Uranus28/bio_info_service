@@ -14,7 +14,6 @@ export const isMenuCourses = () => {
 } 
 
 export const isAdmin = (user:any) => {
-    console.log(user)
     return user.role === "admin"; 
 }
 

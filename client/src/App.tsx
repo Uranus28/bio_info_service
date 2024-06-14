@@ -9,6 +9,7 @@ import "./App.css";
 import { RouterSwitcher } from "./app/RouterSwitcher/RouterSwitcher";
 import { AppHeader } from "./widgets/MainFormWidgets";
 import { getDefaultKey } from "./app/Consts/getDefaultKey";
+
 const { Footer } = Layout;
 
 export const App: FC = () => {

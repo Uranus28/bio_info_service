@@ -1080,11 +1080,15 @@ class TestingService:
         query = queries.getStudentsCourse(courseObj)
         resultUsers = self.graph.query(query)
         listUsers = []
+        allUsersItems=[]
         for itemUser in resultUsers:
-            uid = str(itemUser['uid'].toPython())
-            uid = re.sub(r'.*#',"", uid)
-            user = self.getUser(uid)
-            listUsers.append(user)
+            if(allUsersItems.count(itemUser)<1):
+                uid = str(itemUser['uid'].toPython())
+                uid = re.sub(r'.*#',"", uid)
+                user = self.getUser(uid)
+                listUsers.append(user)
+                print("___________________________________")
+                print(user)
             
         return listUsers
 
