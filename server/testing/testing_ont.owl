@@ -1698,6 +1698,10 @@
   <testName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Тест. Морфология пыльцевых зерен.</testName>
 </owl:NamedIndividual>
 
+<owl:NamedIndividual rdf:about="#группа_заданий7">
+  <rdf:type rdf:resource="#Группа_заданий"/>
+</owl:NamedIndividual>
+
 <owl:NamedIndividual rdf:about="#бороздо-оровые">
   <rdf:type rdf:resource="#Термин"/>
   <hasPrevTerm rdf:resource="#сложная_апертура"/>
@@ -2033,10 +2037,6 @@
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#группа_заданий6">
-  <rdf:type rdf:resource="#Группа_заданий"/>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#группа_заданий7">
   <rdf:type rdf:resource="#Группа_заданий"/>
 </owl:NamedIndividual>
 
@@ -3278,7 +3278,7 @@
   <rdf:type rdf:resource="#ОтветыСтудента"/>
   <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
   <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ncxnxc</textAnswer>
-  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
+  <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</score>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#ответыстудента12">
@@ -4365,9 +4365,8 @@
   <knownTerm rdf:resource="#экзинтина"/>
   <unknownTerm rdf:resource="#бугорчатая"/>
   <unknownTerm rdf:resource="#%23"/>
-  <unknownTerm rdf:resource="#борозды"/>
-  <has_blocked_test rdf:resource="#тест8"/>
-  <knownTerm rdf:resource="#интина"/>
+  <unknownTerm rdf:resource="#интина"/>
+  <knownTerm rdf:resource="#борозды"/>
   <email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">admin@gmail.com</email>
   <firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Админ</firstName>
   <lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Админов</lastName>
@@ -4469,7 +4468,7 @@
   <unknownTerm rdf:resource="#апертура"/>
   <unknownTerm rdf:resource="#интина"/>
   <unknownTerm rdf:resource="#оболочка_пыльцевого_зерна"/>
-  <unknownTerm rdf:resource="#борозды"/>
+  <knownTerm rdf:resource="#борозды"/>
   <email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">student@gmail.com</email>
   <firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Студент</firstName>
   <lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Студентов</lastName>
@@ -4602,8 +4601,8 @@
   <maxScore rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</maxScore>
   <succesfullAttempt rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</succesfullAttempt>
   <checked rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</checked>
-  <sumScore rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.0</sumScore>
-  <percentCompleteOfTest rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.0</percentCompleteOfTest>
+  <sumScore rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.0</sumScore>
+  <percentCompleteOfTest rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.5</percentCompleteOfTest>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#попытка_прохождения_теста6">
@@ -5506,12 +5505,6 @@
 <owl:NamedIndividual rdf:about="#неизвестный_термин1">
   <rdf:type rdf:resource="#Неизвестный_термин"/>
   <relates_to_term rdf:resource="#интина"/>
-  <has_next_term rdf:resource="#неизвестный_термин2"/>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#неизвестный_термин2">
-  <rdf:type rdf:resource="#Неизвестный_термин"/>
-  <relates_to_term rdf:resource="#борозды"/>
 </owl:NamedIndividual>
 
 

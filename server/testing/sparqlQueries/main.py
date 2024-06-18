@@ -681,29 +681,9 @@ class TestingService:
                         print('Нельзя удалить несуществующее from known')
                     if(termItem not in user.unknownTerm):
                         user.unknownTerm.append(termItem)
-                   
-        # print("WIW_W__W_W_")
-        # woduplicatesK = list(set(user.knownTerm))
-        # woduplicatesUK = list(set(user.unknownTerm))       
+                    
         print(len(user.knownTerm))
         print(len(user.unknownTerm))
-        # user.knownTerm.clear()
-        # user.unknownTerm.clear()      
-
-        # for kkk in woduplicatesK:
-        #     user.knownTerm.append(kkk)
-        # for uuu in woduplicatesUK:
-        #     user.unknownTerm.append(uuu)
-        # print(len(user.knownTerm))
-        # print(len(user.unknownTerm))
-        # print("____++")       
-        # for knowns in user.knownTerm:
-        #     print(knowns)
-        # print("____++")
-        # print("____--")
-        # for unknowns in user.unknownTerm:
-        #     print(unknowns)
-        # print("____--")
 
         self.onto.save(self.path)
 
@@ -796,20 +776,37 @@ class TestingService:
             if term["sum"] != 0:
                 if term["sumScore"] / term["sum"] > 0.6:
                     print("=====+",termItem)
-                    for unItem in user.unknownTerm:
-                        print(unItem)
-                        if(str(unItem)==str(termItem)):
+                    try:
+                        while True:
                             user.unknownTerm.remove(termItem)
+                    except Exception:
+                        print('Нельзя удалить несуществующее from unknown')
                     if(termItem not in user.knownTerm):                        
                         user.knownTerm.append(termItem)
-                   
+                    
                 else:
-                    for knItem in user.knownTerm:
-                        print(knItem)
-                        if(str(knItem)==str(termItem)):
+                    try:
+                        while True:
                             user.knownTerm.remove(termItem)
+                    except Exception:
+                        print('Нельзя удалить несуществующее from known')
                     if(termItem not in user.unknownTerm):
                         user.unknownTerm.append(termItem)
+                #     for unItem in user.unknownTerm:
+                #         print(unItem)
+                #         if(str(unItem)==str(termItem)):
+                #             user.unknownTerm.remove(termItem)
+                #     if(termItem not in user.knownTerm):                        
+                #         user.knownTerm.append(termItem)
+                   
+                # else:
+                #     for knItem in user.knownTerm:
+                #         print(knItem)
+                #         if(str(knItem)==str(termItem)):
+                #             user.knownTerm.remove(termItem)
+                #     if(termItem not in user.unknownTerm):
+                #         user.unknownTerm.append(termItem)
+
                     # для пути обучения
                     newUnknownTestTerm = Неизвестный_термин()
                     print("aaaaa")
@@ -826,7 +823,7 @@ class TestingService:
             succesfullAttempt = True
             #удаление теста из заблокированных
             for tsItem in user.has_blocked_test:
-                        print(unItem)
+                        print(tsItem)
                         if(str(tsItem)==str(test)):
                             user.has_blocked_test.remove(test)
         else:
@@ -1384,24 +1381,23 @@ class TestingService:
             if term["sum"] != 0:
                 if term["sumScore"] / term["sum"] > 0.6:
                     print("=====+",termItem)
-                    for unItem in user.unknownTerm:
-                        print(unItem)
-                        if(str(unItem)==str(termItem)):
+                    try:
+                        while True:
                             user.unknownTerm.remove(termItem)
-                    # try:
-                    # except Exception:
-                    #     print('Нельзя удалить несуществующее from unknown')
-                    
+                    except Exception:
+                        print('Нельзя удалить несуществующее from unknown')
                     if(termItem not in user.knownTerm):                        
                         user.knownTerm.append(termItem)
-                   
+                    
                 else:
-                    for knItem in user.knownTerm:
-                        print(knItem)
-                        if(str(knItem)==str(termItem)):
+                    try:
+                        while True:
                             user.knownTerm.remove(termItem)
+                    except Exception:
+                        print('Нельзя удалить несуществующее from known')
                     if(termItem not in user.unknownTerm):
                         user.unknownTerm.append(termItem)
+
                     # для пути обучения
                     newUnknownTestTerm = Неизвестный_термин()
                     print("bbbbb")
@@ -1416,7 +1412,7 @@ class TestingService:
         if attempt.percentCompleteOfTest > 0.3:
             #удаление теста из заблокированных
             for tsItem in user.has_blocked_test:
-                        print(unItem)
+                        print(tsItem)
                         if(str(tsItem)==str(test)):
                             user.has_blocked_test.remove(test)
         else:
