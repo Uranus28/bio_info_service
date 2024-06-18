@@ -937,6 +937,34 @@ class TestingService:
                 print(user)
 
         return listUsers
+    #получение термина
+    def getTerm(self,unknownTerm):
+        for term in unknownTerm.relates_to_term:
+                print(term) 
+                termObj= str(term).removeprefix(self.path[:-3])
+        return termObj
+    
+    # поучение списка терминов
+    def recurcivePath(self,unknownTerm):
+        print("hsss")
+
+        if unknownTerm.has_next_term:
+            return [self.getTerm(unknownTerm)]+self.recurcivePath(unknownTerm.has_next_term)
+        else:
+            return [self.getTerm(unknownTerm)]
+
+    def getPathTerms(self,userObj,attemptObj):
+        with self.onto:
+            class Попытка_прохождения_теста(Thing):
+                pass
+        attempt = Попытка_прохождения_теста(attemptObj)
+        PathTerms = []
+
+        if(attempt.has_first_term):
+            newTerms=self.recurcivePath(attempt.has_first_term)
+            PathTerms+=newTerms
+        
+        return PathTerms
 
     def checkTestOpened(self,user_uid,nameTest):
         user = self.getUser(user_uid)
@@ -1289,7 +1317,6 @@ class TestingService:
             
         else:
             destroy_entity(unknownTerm)
-            print("a")
 
     def editAttempt(self,test,attemptItem):
         with self.onto:

@@ -30,9 +30,16 @@ const CourseTestVariants = () => {
         try {
             let response = await TestingApi.checkTestOpened(user.uid, curTest.testName)
             setTestToggle(response.data)
+            let isOpenned=response.data
+            
             response = await TestingApi.getAttempts(user.uid, curTest.testName)
             setAttempts(response.data)
-            
+            console.log(response.data.at(-1))
+            if (!isOpenned){
+                response = await TestingApi.getPathsTerms(user.userObj, response.data.at(-1).attemptObj)
+                console.log(response.data)
+            }
+
         } catch (err) {
             let errMessage = "";
             if (err instanceof Error) {

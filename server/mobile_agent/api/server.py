@@ -488,6 +488,21 @@ def api_get_last_attempts():
     print(response)
     return response 
 
+@app.get('/api/get_path_terms')
+def get_path_terms():
+    ont = TestingService()
+    _userObj = request.args.get('_userObj', '')
+    _attemptObj = request.args.get('_attemptObj', '')
+    print("User Attempt: ", _userObj, _attemptObj)
+    data=ont.getPathTerms(_userObj, _attemptObj)
+    
+    response = make_response(json.dumps({
+        'statusCode': 200,
+        'data':data
+    })), 200
+    print(response)
+    return response 
+
 @app.get('/api/check_test_opened')
 def api_check_test_opened():
     ont = TestingService()

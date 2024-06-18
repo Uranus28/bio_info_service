@@ -232,6 +232,14 @@ export default class TestingApi {
         const response = await axios.get('http://localhost:5000/api/get_users')
         return response.data
     }
+    
+    static async getPathsTerms(userObj,attemptObj) {
+        const response = await axios.get('http://localhost:5000/api/get_path_terms',{ params: {
+            _userObj: userObj,
+            _attemptObj: attemptObj,
+        }})
+        return response.data
+    }
 
     static async checkTestOpened(user_uid,nameTest) {
         const response = await axios.get('http://localhost:5000/api/check_test_opened',{ params: {
