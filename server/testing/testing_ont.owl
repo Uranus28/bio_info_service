@@ -4997,6 +4997,11 @@
   <is_test_element_of rdf:resource="#попытка_прохождения_теста7"/>
 </owl:NamedIndividual>
 
+<owl:NamedIndividual rdf:about="#неизвестный_термин2">
+  <rdf:type rdf:resource="#Неизвестный_термин"/>
+  <relates_to_term rdf:resource="#борозды"/>
+</owl:NamedIndividual>
+
 <owl:NamedIndividual rdf:about="#пользователь8">
   <rdf:type rdf:resource="#Пользователь"/>
   <enrolled_course rdf:resource="#курс1"/>
@@ -5507,11 +5512,6 @@
   <relates_to_the_group rdf:datatype="http://www.w3.org/2001/XMLSchema#string">поверхность_пыльцевого_зерна</relates_to_the_group>
   <relates_to_the_group rdf:datatype="http://www.w3.org/2001/XMLSchema#string">скульптура_пыльцевого_зерна</relates_to_the_group>
   <termNormalize rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ямчатый</termNormalize>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#неизвестный_термин2">
-  <rdf:type rdf:resource="#Неизвестный_термин"/>
-  <relates_to_term rdf:resource="#борозды"/>
 </owl:NamedIndividual>
 
 

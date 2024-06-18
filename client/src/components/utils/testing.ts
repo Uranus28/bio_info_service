@@ -8,6 +8,21 @@ import { clearCurUser } from "../../entities/LocalStore/curUser"
 import history from "../../services/history"
 import { ADD_ROUTE, ALLERGENS_ROUTE, ARCHIVE_ROUTE, COURSE_INFO_ROUTE, COURSE_LECTIONS_ROUTE, COURSE_ONTOLOGY_ROUTE, COURSE_TERMS_ROUTE, COURSE_TESTS_ROUTE, COURSE_TESTS_TEST_EDIT_ROUTE, COURSE_TESTS_TEST_VARIANTS_ROUTE, LOGIN_ROUTE, MAIN_ROUTE, PROFILE_ROUTE, SEARCH_ROUTE, TESTING_ALL_COURSES_ROUTE, TESTING_COURSES_ROUTE, TESTING_ROUTE, TESTS_TEST_CHECK_WORKS_ROUTE, VIEW_ROUTE } from "../../utils/consts"
 
+export const downloadEmployeeData = (lecture:any) => {
+    const url = 'http://localhost:5000/api/dowload_file/' + lecture.lectureName 
+    fetch(url)
+        .then(response => {
+            response.blob().then(blob => {
+                let url = window.URL.createObjectURL(blob);
+                let a = document.createElement('a');
+                a.href = url;
+                a.download = lecture.lectureName;
+                a.click();
+            });
+            //window.location.href = response.url;
+    });
+}
+
 export const isMenuCourses = () => {
     return  history.location.pathname === TESTING_ROUTE || history.location.pathname === TESTING_COURSES_ROUTE ||
         history.location.pathname === TESTING_ALL_COURSES_ROUTE

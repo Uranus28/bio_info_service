@@ -7,24 +7,26 @@ import {  isTeacher } from "../../utils/testing";
 import TestEdit from "../ModalForms/CourseTestEdit";
 import {Loader} from "../../UI/Loader/Loader";
 import TestingApi from "../../../API/TestingApi";
-import { Divider, message, Row } from "antd";
+import { Divider, message, Modal, Row } from "antd";
 import { getCurTest, setCurTest } from "../../../entities/LocalStore/curTest";
 import { getCurCourse, setCurCourse } from "../../../entities/LocalStore/curCourse";
 import { getUserStore } from "../../../entities/LocalStore/userStore";
 import { setCurAttemps } from "../../../entities/LocalStore/curAttemps";
+import { List } from "antd/lib/form/Form";
+import { ListLectures } from "../../api/ListLectures";
 
 const CourseTestVariants = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [attempts, setAttempts] = useState([])
-    
+    const [pathTerms,setPathTerms]=useState([])
+
     const curTest = getCurTest()
     const curCourse = getCurCourse()
     const user = getUserStore()
-
     const [testToggle,setTestToggle]=useState(false)
 
     const [isEsitTestFormVisible, setIsEditTestFormVisible] = useState(false)
-
+    const [isTermsFormVisible,setIsTermsFormVisible] = useState(false)
     const fetchAttempts = async () => {
         setIsLoading(true)
         try {
@@ -37,9 +39,9 @@ const CourseTestVariants = () => {
             console.log(response.data.at(-1))
             if (!isOpenned){
                 response = await TestingApi.getPathsTerms(user.userObj, response.data.at(-1).attemptObj)
+                setPathTerms(response.data)
                 console.log(response.data)
             }
-
         } catch (err) {
             let errMessage = "";
             if (err instanceof Error) {
@@ -68,6 +70,7 @@ const CourseTestVariants = () => {
     }
 
     useEffect(() => {
+        
         fetchAttempts()
         fetchTest()
     }, [])
@@ -114,10 +117,48 @@ const CourseTestVariants = () => {
         fetchDelete()
     }
 
+
+
+    const listTerms = (unknownTerms,type) => {
+        console.log(testToggle)
+        console.log(unknownTerms)
+        console.log(pathTerms)
+        return (
+            <List
+            size="small"
+            bordered
+            itemLayout="horizontal"
+            style={{borderColor: type ? "green" : "red"}}
+            dataSource={unknownTerms}
+            renderItem={(term, index) => {
+                return (
+                    <>
+                        <List.Item 
+                        style={{color: 'rgba(0, 0, 0, 0.65)', display: 'flex', justifyContent: 'between', alignItems: 'center'}}
+                        key={index}
+                        >
+                            <div 
+                            style={{fontWeight: '700', marginLeft: '2', marginRight: 'auto'}}
+                            key={term.termObj} 
+                            > 
+                                {term.term}
+                            </div>
+                            {type ? null : pathTerms.lectures[term.termObj].length != 0 ? (
+                                <ListLectures terms={pathTerms} term={term} index={index} />
+                            ) : null}
+                        </List.Item>
+                    </>
+                )                    
+            }}
+        />
+        )
+    }
+
     const View = () => {
         return (
             <>
                 <Divider orientation="left">{curTest.testName}</Divider>
+                
                 <Row>
                     { isTeacher(user)
                         ?<Button 
@@ -134,9 +175,9 @@ const CourseTestVariants = () => {
                     <Button 
                         style={{lineHeight: "0.8", margin: "30px 30px", opacity:testToggle?1:0.4}} 
                         variant="outline-success"
-                        onClick={testToggle?handleStartTest:null}
+                        onClick={testToggle ? handleStartTest : setIsTermsFormVisible(true)}
                     >
-                        Начать попытку
+                        {testToggle?"Начать попытку":"Посмотреть рекомендации"}
                     </Button>
                 </Row>
                 <Row style={{lineHeight: "0.8", margin: "0 30px 30px 30px"}} >
@@ -162,6 +203,20 @@ const CourseTestVariants = () => {
                         : null
                     }
                 </Row>
+                { !isLoading ?
+                // { !isLoading && !testToggle?
+                <Modal 
+                title="Рекомендации" 
+                visible={isTermsFormVisible}
+                onCancel={setIsTermsFormVisible(false)}
+                footer={[
+                    <Button key="back" onClick={setIsTermsFormVisible(false)}>
+                      Назад
+                    </Button>
+                  ]}>
+                    <Divider/>
+                    {listTerms(pathTerms.pathTerms,false)}
+                </Modal>:null}
                 { !isLoading
                     ? <TestEdit isVisible={isEsitTestFormVisible} setIsVisible={setIsEditTestFormVisible}></TestEdit>
                     : null

@@ -943,17 +943,21 @@ class TestingService:
                 print(term) 
                 termObj= str(term).removeprefix(self.path[:-3])
         return termObj
-    
+    #получение нормального имени термина
+    def normilizedName(self,termObj):
+        term = termObj.replace("_", " ")
+        return term[0].upper() + term[1:] 
+        # termObj=self.getTerm(unknownTerm)     
+        # {"termObj": termObj, "term": self.normilizedName(termObj)}
+   
     # поучение списка терминов
     def recurcivePath(self,unknownTerm):
-        print("hsss")
-
         if unknownTerm.has_next_term:
             return [self.getTerm(unknownTerm)]+self.recurcivePath(unknownTerm.has_next_term)
         else:
             return [self.getTerm(unknownTerm)]
 
-    def getPathTerms(self,userObj,attemptObj):
+    def getPathTerms(self,attemptObj):
         with self.onto:
             class Попытка_прохождения_теста(Thing):
                 pass
@@ -963,8 +967,12 @@ class TestingService:
         if(attempt.has_first_term):
             newTerms=self.recurcivePath(attempt.has_first_term)
             PathTerms+=newTerms
-        
-        return PathTerms
+        lectures = self.getLecturesByTerms(PathTerms)
+        unknownTerms=[]
+        for term in PathTerms:
+            unknownTerms.append({"termObj": term, "term": self.normilizedName(term)})
+        item = {"pathTerms": unknownTerms,"lectures": lectures}
+        return item
 
     def checkTestOpened(self,user_uid,nameTest):
         user = self.getUser(user_uid)
