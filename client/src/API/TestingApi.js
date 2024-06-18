@@ -246,8 +246,8 @@ export default class TestingApi {
         return response.data
     }
 
-    static async editAttempt(attempt) {
-        const response = await axios.post('http://localhost:5000/api/edit_attempt', { attempt })
+    static async editAttempt(test,attempt) {
+        const response = await axios.post('http://localhost:5000/api/edit_attempt', { test,attempt })
         return response.data
     }
 

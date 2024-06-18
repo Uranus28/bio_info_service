@@ -86,7 +86,7 @@ const AttemptsDetails = ({onUpdate,viewDetails,setViewDetails, isCheck,curcurAtt
     const fetchEditAttempt = async (attempt) => {
         setIsLoading(true)
         try {
-            let response = await TestingApi.editAttempt(attempt);
+            let response = await TestingApi.editAttempt(attempt.testObj,attempt);
             if (response.data === "ok") {
                 message.success('Попытка проверена успешно');
             }

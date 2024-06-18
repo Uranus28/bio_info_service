@@ -657,9 +657,11 @@ def api_edit_role():
 def api_edit_attempt():
     ont = TestingService()
     _item = request.get_json()
+    _test=_item.get('test')
     _item = _item.get('attempt')
+    
     print("Attempt: ", _item)
-    ont.editAttempt(_item)
+    ont.editAttempt(_test,_item)
     
     response = make_response(json.dumps({
         'statusCode': 200,

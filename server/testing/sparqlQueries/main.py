@@ -659,6 +659,7 @@ class TestingService:
                         termsScores[termObj]["sumScore"] += float(answer["score"])
                         break
         print("TermsSCORES: ", termsScores)
+        
         for termObj, term in termsScores.items():
             termItem = Термин(termObj)
             if term["sum"] != 0:
@@ -680,6 +681,7 @@ class TestingService:
                         print('Нельзя удалить несуществующее from known')
                     if(termItem not in user.unknownTerm):
                         user.unknownTerm.append(termItem)
+                   
         # print("WIW_W__W_W_")
         # woduplicatesK = list(set(user.knownTerm))
         # woduplicatesUK = list(set(user.unknownTerm))       
@@ -720,6 +722,8 @@ class TestingService:
                 pass
             class Попытка_прохождения_теста(Thing):
                 pass
+            class Неизвестный_термин(Thing):
+                pass
             class Элемент_теста(Thing):
                 pass
             class Термин(Thing):
@@ -753,7 +757,7 @@ class TestingService:
                 termObj = re.sub(r'.*#',"", termObj)
                 if termObj != "":
                     if termObj not in termsScores:
-                        termsScores[termObj] = {"sum": 0, "sumScore": 0}
+                        termsScores[termObj] = {"sum": 1, "sumScore": 0}
                     else:
                         termsScores[termObj]["sum"] += 1
             newTestElement.has_task.append(task)
@@ -783,36 +787,52 @@ class TestingService:
                 newAnsw.textAnswer = userAnswers[i]["answer"]
                 newTestElement.has_answer.append(newAnsw)
         print("___createNewAttempt_____")
+        print(user.uid)
+        oldUnknownTestTerm =None
         for termObj, term in termsScores.items():
             print("TermObj: ", termObj)
             termItem = Термин(termObj)
+            print(term)
             if term["sum"] != 0:
                 if term["sumScore"] / term["sum"] > 0.6:
                     print("=====+",termItem)
-                    try:
-                        while True:
+                    for unItem in user.unknownTerm:
+                        print(unItem)
+                        if(str(unItem)==str(termItem)):
                             user.unknownTerm.remove(termItem)
-                    except Exception:
-                        print('Нельзя удалить несуществующее from unknown')
                     if(termItem not in user.knownTerm):                        
                         user.knownTerm.append(termItem)
-                    
+                   
                 else:
-                    try:
-                        while True:
+                    for knItem in user.knownTerm:
+                        print(knItem)
+                        if(str(knItem)==str(termItem)):
                             user.knownTerm.remove(termItem)
-                    except Exception:
-                        print('Нельзя удалить несуществующее from known')
                     if(termItem not in user.unknownTerm):
                         user.unknownTerm.append(termItem)
-                # if term["sumScore"] / term["sum"] > 0.6:
-                #     user.knownTerm.append(termItem)
-                # else:
-                #     user.unknownTerm.append(termItem)
-        
+                    # для пути обучения
+                    newUnknownTestTerm = Неизвестный_термин()
+                    print("aaaaa")
+                    print(termItem)
+                    newUnknownTestTerm.relates_to_term.append(termItem)
+                    if(newAttempt.has_first_term):
+                        oldUnknownTestTerm.has_next_term=newUnknownTestTerm
+                    else:
+                        newAttempt.has_first_term=newUnknownTestTerm
+                    oldUnknownTestTerm = Неизвестный_термин(newUnknownTestTerm)
+                    
         succesfullAttempt = False
         if sum / len(tasks) > 0.3:
             succesfullAttempt = True
+            #удаление теста из заблокированных
+            for tsItem in user.has_blocked_test:
+                        print(unItem)
+                        if(str(tsItem)==str(test)):
+                            user.has_blocked_test.remove(test)
+        else:
+            if(test not in user.has_blocked_test):# добавление теста в заблокированные
+                user.has_blocked_test.append(test) 
+        
         newAttempt.maxScore = len(tasks)
         newAttempt.sumScore = sum
         newAttempt.succesfullAttempt = succesfullAttempt
@@ -925,8 +945,7 @@ class TestingService:
         user = self.getUser(user_uid)
         test = self.getTestWithAnswers(nameTest)
         userObj = user["userObj"]
-        testObj1 = test["testObj"]
-        
+        testObj1 = test["testObj"]        
         query = queries.getBlockedTests(userObj)
         resultTests = self.graph.query(query)
         allitemsTests=[]
@@ -937,7 +956,6 @@ class TestingService:
                 testObj = re.sub(r'.*#',"", testObj)
                 
                 if(testObj1==testObj):
-                    print("+++++++++")
                     return False
         return True
     
@@ -1267,8 +1285,16 @@ class TestingService:
         
         print("Профиль изменен!")
         self.onto.save(self.path)
+#рекурсивное удаление цепочки
+    def recurciveDelete(self,unknownTerm):
+        if(unknownTerm.has_next_term):
+            self.recurciveDelete(unknownTerm.has_next_term)
+            
+        else:
+            destroy_entity(unknownTerm)
+            print("a")
 
-    def editAttempt(self, attemptItem):
+    def editAttempt(self,test,attemptItem):
         with self.onto:
             class Попытка_прохождения_теста(Thing):
                 pass
@@ -1276,9 +1302,16 @@ class TestingService:
                 pass
             class Пользователь(Thing):
                 pass
+            class Неизвестный_термин(Thing):
+                pass
             class Термин(Thing):
                 pass
-        
+            class Тест(Thing):
+                pass
+        print
+        testObj = test
+        test = Тест(testObj)
+
         attemptObj = attemptItem["attemptObj"]
         userObj = attemptItem["userObj"]
         user = Пользователь(userObj)
@@ -1334,30 +1367,62 @@ class TestingService:
         #     for answer in task:
         #         answer.score=float(answer.score)
 
+
+        # удаление старой цепи рекомендаций
+        if(attempt.has_first_term):
+            self.recurciveDelete(attempt.has_first_term)
+            print("::::")
+            if(attempt.has_first_term):
+                destroy_entity(attempt.has_first_term)
+            # att
+        
         print("TERMSCORES: ", termsScores)
+        oldUnknownTestTerm=None
         for termObj, term in termsScores.items():
             print("TermObj: ", termObj)
             termItem = Термин(termObj)
             if term["sum"] != 0:
                 if term["sumScore"] / term["sum"] > 0.6:
                     print("=====+",termItem)
-                    try:
-                        while True:
+                    for unItem in user.unknownTerm:
+                        print(unItem)
+                        if(str(unItem)==str(termItem)):
                             user.unknownTerm.remove(termItem)
-                    except Exception:
-                        print('Нельзя удалить несуществующее from unknown')
+                    # try:
+                    # except Exception:
+                    #     print('Нельзя удалить несуществующее from unknown')
+                    
                     if(termItem not in user.knownTerm):                        
                         user.knownTerm.append(termItem)
-                    
+                   
                 else:
-                    try:
-                        while True:
+                    for knItem in user.knownTerm:
+                        print(knItem)
+                        if(str(knItem)==str(termItem)):
                             user.knownTerm.remove(termItem)
-                    except Exception:
-                        print('Нельзя удалить несуществующее from known')
                     if(termItem not in user.unknownTerm):
                         user.unknownTerm.append(termItem)
-               
+                    # для пути обучения
+                    newUnknownTestTerm = Неизвестный_термин()
+                    print("bbbbb")
+                    print(termItem)
+                    newUnknownTestTerm.relates_to_term.append(termItem)
+                    if(attempt.has_first_term):
+                        oldUnknownTestTerm.has_next_term=newUnknownTestTerm
+                    else:
+                        attempt.has_first_term=newUnknownTestTerm
+                    oldUnknownTestTerm = Неизвестный_термин(newUnknownTestTerm)
+
+        if attempt.percentCompleteOfTest > 0.3:
+            #удаление теста из заблокированных
+            for tsItem in user.has_blocked_test:
+                        print(unItem)
+                        if(str(tsItem)==str(test)):
+                            user.has_blocked_test.remove(test)
+        else:
+            if(test not in user.has_blocked_test):# добавление теста в заблокированные
+                user.has_blocked_test.append(test) 
+
         print("Попытка изменена!")
         self.onto.save(self.path)
 
@@ -1485,9 +1550,6 @@ class TestingService:
             else:
                 sumScores[field]["sumCorrect"] += sumCorrUnknown[field]["sumCorrect"]
                 sumScores[field]["sumCount"] += sumCorrUnknown[field]["sumCount"]
-                print("_______-==")
-                print(field)
-                print("_______-==")
         
         item = {"knownTerms": knownTerms, "unknownTerms": unknownTerms, "sumScores": sumKnown + sumUnknown, "sumCount": sumCountKnown + sumCountUnknown, "sumScoresLite": sumScores, "lectures": lectures}
         return item
