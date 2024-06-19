@@ -39,3 +39,6 @@ export const CUR_MODULE_STORAGE = 'curModule'
 export const CUR_TEST_STORAGE = 'curTest'
 export const CUR_ATTEMPTS_STORAGE = 'curAttempts'
 export const CUR_LECTURE_STORAGE = 'curLecture'
+
+
+export const adminCourse='курс4'

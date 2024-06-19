@@ -5,7 +5,7 @@ import { Divider, message } from "antd";
 import history from "../../services/history";
 import { isAdmin, isTeacher } from "../utils/testing";
 import CreateCourse from "../Course/ModalForms/CreateCourse";
-import { COURSE_INFO_ROUTE } from "../../utils/consts";
+import { COURSE_INFO_ROUTE, adminCourse } from "../../utils/consts";
 import TestingApi from "../../API/TestingApi";
 import { useFetching } from "../hooks/useFetching";
 import { Loader } from "../UI/Loader/Loader";
@@ -99,53 +99,58 @@ export const CoursesAll: FC = () => {
 
   const isSubscribe = (item: any) => {
     console.log(myCourses);
-    const courses = myCourses.filter(
-      (elem: { courseName: any }) => elem.courseName === item.courseName
-    );
+    let courses = [];
+    if (myCourses.length > 0)
+      courses = myCourses.filter(
+        (elem: { courseName: any }) => elem.courseName === item.courseName
+      );
     return courses.length > 0 ? true : false;
   };
 
   const View = () => {
     const listCourses = allCourses.map((item: any) => {
       const isSubscr = isSubscribe(item);
-      return (
-        <ListGroup.Item
-          as="li"
-          className="d-flex justify-content-between align-items-start"
-          key={item.courseName}
-        >
-          <Col xs={1}>
-            <AvatarInfo firstL={item.courseName.substring(0, 1)} />
-          </Col>
-          <Col
-            style={{ cursor: isAdmin(user) ? "pointer" : "default" }}
-            onClick={() => (isAdmin(user) ? handleCourse(item) : {})}
-            xs={9}
+      console.log(item);
+      if (item.courseObj == adminCourse && !isAdmin(user)) return null;
+      else
+        return (
+          <ListGroup.Item
+            as="li"
+            className="d-flex justify-content-between align-items-start"
+            key={item.courseName}
           >
-            <div className="ms-2 me-auto">
-              <div className="fw-bold">{item.courseName}</div>
-              {item.courseDescription}
-            </div>
-          </Col>
-          <Col>
-            {isSubscr ? (
-              <Button
-                onClick={() => handleUnsubscribeCourse(item)}
-                variant="outline-danger"
-              >
-                Покинуть курс
-              </Button>
-            ) : (
-              <Button
-                onClick={() => handleSubscribeCourse(item)}
-                variant="outline-secondary"
-              >
-                Подписаться
-              </Button>
-            )}
-          </Col>
-        </ListGroup.Item>
-      );
+            <Col xs={1}>
+              <AvatarInfo firstL={item.courseName.substring(0, 1)} />
+            </Col>
+            <Col
+              style={{ cursor: isAdmin(user) ? "pointer" : "default" }}
+              onClick={() => (isAdmin(user) ? handleCourse(item) : {})}
+              xs={9}
+            >
+              <div className="ms-2 me-auto">
+                <div className="fw-bold">{item.courseName}</div>
+                {item.courseDescription}
+              </div>
+            </Col>
+            <Col>
+              {isSubscr ? (
+                <Button
+                  onClick={() => handleUnsubscribeCourse(item)}
+                  variant="outline-danger"
+                >
+                  Покинуть курс
+                </Button>
+              ) : (
+                <Button
+                  onClick={() => handleSubscribeCourse(item)}
+                  variant="outline-secondary"
+                >
+                  Подписаться
+                </Button>
+              )}
+            </Col>
+          </ListGroup.Item>
+        );
     });
 
     return (

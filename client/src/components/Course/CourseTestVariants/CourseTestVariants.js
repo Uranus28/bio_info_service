@@ -33,11 +33,9 @@ const CourseTestVariants = () => {
             
             response = await TestingApi.getAttempts(user.uid, curTest.testName)
             setAttempts(response.data)
-            console.log(response.data.at(-1))
             if (!isOpenned && !isTeacher(user)){
                 response = await TestingApi.getPathsTerms(user.userObj, response.data.at(-1).attemptObj)
                 setPathTerms(response.data)
-                console.log(response.data)
             }
         } catch (err) {
             let errMessage = "";

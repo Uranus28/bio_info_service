@@ -10,9 +10,6 @@ export const CheckRecomendations=({pathTerms,isTermsFormVisible,setIsTermsFormVi
         setIsLoading(true)
         setIsLoading(false)
         }
-        else{
-            console.log("whyyyyyyy")
-        }
 
     },[])
     const handleCancel = () => {
@@ -55,7 +52,6 @@ export const CheckRecomendations=({pathTerms,isTermsFormVisible,setIsTermsFormVi
     if (isLoading) {
         return <Loader/>
     } else {
-        console.log(isTermsFormVisible)
     return(
     <Modal 
     width={"800px"}
