@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Loader } from '../../UI/Loader/Loader';
 import { Modal, Button,Divider,List} from 'antd';
 import { ListLectures } from '../../api/ListLectures';
-
+import { TESTS_TEST_ATTEMPT_ROUTE } from '../../../utils/consts';
+import history from "../../../services/history";
 export const CheckRecomendations=({pathTerms,isTermsFormVisible,setIsTermsFormVisible})=>{
     const [isLoading,setIsLoading] = useState(false)
     useEffect(()=>{
