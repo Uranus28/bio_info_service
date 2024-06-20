@@ -415,12 +415,8 @@ class TestingService:
             destroy_entity(Задание(taskObj))
             destroy_entity(self.onto.search(is_a = self.onto[questionObj])[0])
             #destroy_entity(self.onto.search(is_a = self.onto[taskObj])[0])
-
-    def getTests(self):
-        query = queries.getTestsNames()
-        resultsTests = self.graph.query(query)
-        listTests = []
-        for itemTest in resultsTests:
+    
+    def createTestItem(self,itemTest):
             testItem = {}
             nameTest = str(itemTest['nameTest'].toPython())
             nameTest = re.sub(r'.*#',"", nameTest)
@@ -463,7 +459,36 @@ class TestingService:
                 task["answers"] = listAnswers
                 listTasks.append(task)
             testItem["tasks"] = listTasks
-            listTests.append(testItem)
+            return testItem
+
+    
+    def getTermTest(self,terms):
+        tests={}
+        for term in terms:
+            query=queries.getTestOfTerm(term)
+            resultsTests = self.graph.query(query)
+            listTests = []
+            itemTestsList=[]
+            for itemTest in resultsTests:
+                if(itemTestsList.count(itemTest)<1):
+                    print("ssssssssss")
+                    print(itemTest)   
+                    print("ssssssssss")
+                    itemTestsList.append(itemTest)
+                    listTests.append(self.createTestItem(itemTest))
+            tests[term]=listTests
+        return tests
+
+    def getTests(self):
+        query = queries.getTestsNames()
+        resultsTests = self.graph.query(query)
+        listTests = []
+        for itemTest in resultsTests:     
+            print("tststststst")
+            print(itemTest)   
+            print("tststststst")
+    
+            listTests.append(self.createTestItem(itemTest))
         return listTests
 
     def getTest(self, testName):
@@ -949,7 +974,7 @@ class TestingService:
         return term[0].upper() + term[1:] 
         # termObj=self.getTerm(unknownTerm)     
         # {"termObj": termObj, "term": self.normilizedName(termObj)}
-   
+# 
     # поучение списка терминов
     def recurcivePath(self,unknownTerm):
         if unknownTerm.has_next_term:
@@ -969,9 +994,10 @@ class TestingService:
             PathTerms+=newTerms
         lectures = self.getLecturesByTerms(PathTerms)
         unknownTerms=[]
+        tests = self.getTermTest(PathTerms)
         for term in PathTerms:
             unknownTerms.append({"termObj": term, "term": self.normilizedName(term)})
-        item = {"pathTerms": unknownTerms,"lectures": lectures}
+        item = {"pathTerms": unknownTerms,"lectures": lectures,"tests":tests}
         return item
 
     def checkTestOpened(self,user_uid,nameTest):
@@ -1894,7 +1920,6 @@ class TestingService:
             allItemLecture=[]
             for itemLecture in resultLectures:
                 if(allItemLecture.count(itemLecture)<1):
-                    print(itemLecture)
                     allItemLecture.append(itemLecture)
                     lectureObj = str(itemLecture['lectureObj'].toPython())
                     lectureObj = re.sub(r'.*#',"", lectureObj)

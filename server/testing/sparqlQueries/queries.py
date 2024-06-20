@@ -200,6 +200,17 @@ def getTestsOfModule(moduleObj):
             "}" % (moduleObj)
     return query
 
+#запрос на получение теста Термина
+def getTestOfTerm(termObj):
+    query = "PREFIX tst: <http://www.semanticweb.org/nike0/ontologies/2022/4/untitled-ontology-16#>" \
+            "SELECT ?testObj ?nameTest ?groupTasks " \
+            "WHERE { " \
+            "tst:%s tst:has_term_test ?testObj. " \
+            "?testObj tst:testName ?nameTest. " \
+            "?testObj tst:has_group_of_task ?groupTasks. " \
+            "}" % (termObj)
+    return query
+
 # запрос на получение лекций у модуля
 def getLecturesOfModule(moduleObj):
     query = "PREFIX tst: <http://www.semanticweb.org/nike0/ontologies/2022/4/untitled-ontology-16#>" \

@@ -15,9 +15,12 @@ export const CheckRecomendations=({pathTerms,isTermsFormVisible,setIsTermsFormVi
     const handleCancel = () => {
         setIsTermsFormVisible(false);
     };
+    const handleStartTest = () => {
+        history.push(TESTS_TEST_ATTEMPT_ROUTE);
+    }
     const listTerms = (unknownTerms,type) => {
         // console.log(unknownTerms)
-        // console.log(pathTerms)
+        console.log(pathTerms)
         return (
             <List
             size="small"
@@ -38,6 +41,14 @@ export const CheckRecomendations=({pathTerms,isTermsFormVisible,setIsTermsFormVi
                             > 
                                 {term.term}
                             </div>
+                            {pathTerms.lectures[term.termObj]?(<Button
+                             style={{
+                                verticalAlign: "bottom",
+                                lineHeight: "0.7",
+                            }}
+                            onClick={() => handleStartTest()}>
+                                Перейти к тесту
+                            </Button>):null}
                             {type ? null : pathTerms.lectures[term.termObj].length != 0 ? (
                                 <ListLectures terms={pathTerms} term={term} index={index} />
                             ) : null}

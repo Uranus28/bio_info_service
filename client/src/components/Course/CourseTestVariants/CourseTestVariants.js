@@ -3,7 +3,7 @@ import 'antd/dist/antd.css';
 import {Button} from "react-bootstrap"
 import history from "../../../services/history";
 import { COURSE_TESTS_ROUTE,  TESTS_TEST_ATTEMPTS_DETAILS_ROUTE, TESTS_TEST_ATTEMPT_ROUTE, TESTS_TEST_CHECK_WORKS_ROUTE } from "../../../utils/consts";
-import {  isAdmin, isTeacher } from "../../utils/testing";
+import {   isTeacher } from "../../utils/testing";
 import TestEdit from "../ModalForms/CourseTestEdit";
 import {Loader} from "../../UI/Loader/Loader";
 import TestingApi from "../../../API/TestingApi";
@@ -50,6 +50,7 @@ const CourseTestVariants = () => {
     const fetchTest = async () => {
         try {
             let response = await TestingApi.getTest(curTest.testName)
+            console.log(response.data)
             setCurTest(response.data)
         } catch (err) {
             let errMessage = "";
