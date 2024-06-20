@@ -470,10 +470,7 @@ class TestingService:
             listTests = []
             itemTestsList=[]
             for itemTest in resultsTests:
-                if(itemTestsList.count(itemTest)<1):
-                    print("ssssssssss")
-                    print(itemTest)   
-                    print("ssssssssss")
+                if(itemTestsList.count(itemTest)<1):                   
                     itemTestsList.append(itemTest)
                     listTests.append(self.createTestItem(itemTest))
             tests[term]=listTests
@@ -483,11 +480,7 @@ class TestingService:
         query = queries.getTestsNames()
         resultsTests = self.graph.query(query)
         listTests = []
-        for itemTest in resultsTests:     
-            print("tststststst")
-            print(itemTest)   
-            print("tststststst")
-    
+        for itemTest in resultsTests:         
             listTests.append(self.createTestItem(itemTest))
         return listTests
 
@@ -990,6 +983,8 @@ class TestingService:
         PathTerms = []
 
         if(attempt.has_first_term):
+            # print("jjjjjjjjj")
+            # print(((attempt.has_first_term).relates_to_term)[0].has_term_test)
             newTerms=self.recurcivePath(attempt.has_first_term)
             PathTerms+=newTerms
         lectures = self.getLecturesByTerms(PathTerms)
