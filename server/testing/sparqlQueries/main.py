@@ -958,22 +958,26 @@ class TestingService:
     #получение термина
     def getTerm(self,unknownTerm):
         for term in unknownTerm.relates_to_term:
-                print(term) 
                 termObj= str(term).removeprefix(self.path[:-3])
         return termObj
     #получение нормального имени термина
     def normilizedName(self,termObj):
         term = termObj.replace("_", " ")
         return term[0].upper() + term[1:] 
-        # termObj=self.getTerm(unknownTerm)     
-        # {"termObj": termObj, "term": self.normilizedName(termObj)}
-# 
+ 
     # поучение списка терминов
     def recurcivePath(self,unknownTerm):
         if unknownTerm.has_next_term:
             return [self.getTerm(unknownTerm)]+self.recurcivePath(unknownTerm.has_next_term)
         else:
             return [self.getTerm(unknownTerm)]
+    # поучение списка тестов терминов
+    def recurcivePathTests(self,unknownTerm):
+        
+        if unknownTerm.has_next_term:
+            return [self.removeOntoPath(((unknownTerm.relates_to_term)[0].has_term_test)[0])]+self.recurcivePathTests(unknownTerm.has_next_term)
+        else:
+            return [self.removeOntoPath(((unknownTerm.relates_to_term)[0].has_term_test)[0])]
 
     def getPathTerms(self,attemptObj):
         with self.onto:
@@ -983,8 +987,6 @@ class TestingService:
         PathTerms = []
 
         if(attempt.has_first_term):
-            # print("jjjjjjjjj")
-            # print(((attempt.has_first_term).relates_to_term)[0].has_term_test)
             newTerms=self.recurcivePath(attempt.has_first_term)
             PathTerms+=newTerms
         lectures = self.getLecturesByTerms(PathTerms)
@@ -994,6 +996,46 @@ class TestingService:
             unknownTerms.append({"termObj": term, "term": self.normilizedName(term)})
         item = {"pathTerms": unknownTerms,"lectures": lectures,"tests":tests}
         return item
+    
+    #получение нормального имени
+    def getPythonName(self,item,key):
+        itemObj = str(item[key].toPython())
+        return re.sub(r'.*#',"", itemObj)
+    #убрать лишнее для нормального имени
+    def removeOntoPath(self,item):
+        return str(item).removeprefix(self.path[:-3])
+    #проверка есть ли не закрытые тесты в неизвестных терминах
+    def checkLastAttempt(self,userObj,testObj):
+        with self.onto:
+            class Попытка_прохождения_теста(Thing):
+                pass
+        query=queries.getLastAttemptWithPercentComplition(userObj)
+        allAttempts=self.graph.query(query)
+        attemptTestObj=""
+        for itemAttempt in allAttempts:
+            itemTestObj =self.getPythonName(itemAttempt,'test')
+            if(itemTestObj==testObj):
+                attemptTestObj =self.getPythonName(itemAttempt,'attempt')
+                break
+        attempt=Попытка_прохождения_теста(attemptTestObj)
+        pathTermsTests = []
+        if(attempt.has_first_term):
+            newPathTerms=self.recurcivePathTests(attempt.has_first_term)
+            pathTermsTests+=newPathTerms
+        print(pathTermsTests)
+        kTests=0
+        kCompleteTests=0
+        for itemAttempt in allAttempts:
+            itemTestObj = self.getPythonName(itemAttempt,'test')
+            if(itemTestObj==testObj):
+                kTests+=1
+                print(self.getPythonName(itemAttempt,'attempt'))
+                percentTestObj =self.getPythonName(itemAttempt,'percentComp')
+                if(percentTestObj>0.5):
+                    kCompleteTests+=1
+        print("kTests:",kTests)
+        print("kCompleteTests:",kCompleteTests)
+        return kTests==kCompleteTests and kTests!=0
 
     def checkTestOpened(self,user_uid,nameTest):
         user = self.getUser(user_uid)
@@ -1006,10 +1048,10 @@ class TestingService:
         for itemTest in resultTests:
             if(allitemsTests.count(itemTest)<1):
                 allitemsTests.append(itemTest)
-                testObj = str(itemTest['test'].toPython())
-                testObj = re.sub(r'.*#',"", testObj)
-                
+                testObj = self.getPythonName(itemTest,'test')                
                 if(testObj1==testObj):
+                    #тут написать проверку и разблокировку теста с удалением неизвестных терминов
+                    print(self.checkLastAttempt(userObj,testObj))
                     return False
         return True
     

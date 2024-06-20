@@ -353,3 +353,15 @@ def getLastAttemptsForAverageScoreByUser(userObj):
             "?attempt tst:dateAndTime ?date. " \
             "} ORDER BY ?test DESC(?date)" % (userObj)
     return query
+
+# запрос на получение попыток для открытия доступа к тесту
+def getLastAttemptWithPercentComplition(userObj):
+    query = "PREFIX tst: <http://www.semanticweb.org/nike0/ontologies/2022/4/untitled-ontology-16#>" \
+            "SELECT ?attempt ?test ?date ?percentComp " \
+            "WHERE { " \
+            "tst:%s tst:has_attempt_to_pass_test ?attempt. " \
+            "?attempt tst:relates_to_test ?test. " \
+            "?attempt tst:percentCompleteOfTest ?percentComp. " \
+            "?attempt tst:dateAndTime ?date. " \
+            "} ORDER BY ?test DESC(?date)" % (userObj)
+    return query
