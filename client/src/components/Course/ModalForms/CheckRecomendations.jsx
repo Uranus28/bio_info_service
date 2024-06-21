@@ -4,6 +4,8 @@ import { Modal, Button,Divider,List} from 'antd';
 import { ListLectures } from '../../api/ListLectures';
 import { TESTS_TEST_ATTEMPT_ROUTE } from '../../../utils/consts';
 import history from "../../../services/history";
+import { setPrevTest } from '../../../entities/LocalStore/prevTest';
+import { getCurTest, setCurTest } from '../../../entities/LocalStore/curTest';
 export const CheckRecomendations=({pathTerms,isTermsFormVisible,setIsTermsFormVisible})=>{
     const [isLoading,setIsLoading] = useState(false)
     useEffect(()=>{
@@ -42,12 +44,17 @@ export const CheckRecomendations=({pathTerms,isTermsFormVisible,setIsTermsFormVi
                             > 
                                 {term.term}
                             </div>
-                            {pathTerms.lectures[term.termObj]?(<Button
+                            {pathTerms.tests[term.termObj]?(<Button
                              style={{
                                 verticalAlign: "bottom",
                                 lineHeight: "0.7",
                             }}
-                            onClick={() => handleStartTest()}>
+                            onClick={() => {    
+                                setPrevTest(getCurTest())
+                                setCurTest(pathTerms.tests[term.termObj][0])    
+                                console.log(getCurTest())
+                                handleStartTest()}
+                            }>
                                 Перейти к тесту
                             </Button>):null}
                             {type ? null : pathTerms.lectures[term.termObj].length != 0 ? (

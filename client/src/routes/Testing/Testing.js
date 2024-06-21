@@ -22,13 +22,9 @@ import CheckWorks from '../../components/Course/CheckWorsk/CheckWorks';
 import TermsPage from '../../components/Course/Terms/Terms';
 import OntologyPage from '../../components/Course/Ontology/OntologyPage';
 import { CourseTestingIcon } from '../../shared/CourseTestingIcon/CourseTestingIcon';
-import { clearCurCourse, getCurCourse } from '../../entities/LocalStore/curCourse';
-import { clearCurAttemps } from '../../entities/LocalStore/curAttemps';
-import { clearCurLecture } from '../../entities/LocalStore/curLecture';
-import { clearCurModule } from '../../entities/LocalStore/curModule';
-import { clearCurTest } from '../../entities/LocalStore/curTest';
-import { clearCurUser } from '../../entities/LocalStore/curUser';
+import { getCurCourse } from '../../entities/LocalStore/curCourse';
 import { getKey } from './getKey';
+
 const { Header, Content, Sider } = Layout;
 
 const Testing = () => {

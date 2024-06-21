@@ -3,7 +3,7 @@ import 'antd/dist/antd.css';
 import {Button} from "react-bootstrap"
 import history from "../../../services/history";
 import { COURSE_TESTS_ROUTE,  TESTS_TEST_ATTEMPTS_DETAILS_ROUTE, TESTS_TEST_ATTEMPT_ROUTE, TESTS_TEST_CHECK_WORKS_ROUTE } from "../../../utils/consts";
-import {   isTeacher } from "../../utils/testing";
+import {   cleanLocalStore, isTeacher } from "../../utils/testing";
 import TestEdit from "../ModalForms/CourseTestEdit";
 import {Loader} from "../../UI/Loader/Loader";
 import TestingApi from "../../../API/TestingApi";
@@ -12,12 +12,17 @@ import { getCurTest, setCurTest } from "../../../entities/LocalStore/curTest";
 import { getCurCourse, setCurCourse } from "../../../entities/LocalStore/curCourse";
 import { getUserStore } from "../../../entities/LocalStore/userStore";
 import { CheckRecomendations } from "../ModalForms/CheckRecomendations";
+import { getPrevTest,clearPrevTest } from "../../../entities/LocalStore/prevTest";
 
 const CourseTestVariants = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [attempts, setAttempts] = useState([])
     const [pathTerms,setPathTerms]=useState([])
-    const curTest = getCurTest()
+    // if (getPrevTest() !== null) {
+    //     setCurTest(getPrevTest())
+    //     clearPrevTest()
+    //   }
+    const curTest =  getCurTest()
     const curCourse = getCurCourse()
     const user = getUserStore()
     //открытый закрытый тест
@@ -62,7 +67,9 @@ const CourseTestVariants = () => {
         }
     }
 
-    useEffect(() => {     
+    useEffect(() => {  
+        cleanLocalStore(history.location.pathname)
+   
         setIsLoading(true)  
         if(!testToggle && attempts.length==0 && !isTeacher(user)) 
         {     

@@ -11,8 +11,9 @@ import TestingApi from "../../../API/TestingApi";
 import {Loader} from "../../UI/Loader/Loader";
 // import AttemptsDetails from "../AttemptsDetails/AttemptsDetails";
 import { getUserStore } from "../../../entities/LocalStore/userStore";
-import { getCurTest } from "../../../entities/LocalStore/curTest";
+import { getCurTest, setCurTest } from "../../../entities/LocalStore/curTest";
 import history from "../../../services/history";
+import { clearPrevTest, getPrevTest } from "../../../entities/LocalStore/prevTest";
 const CourseTest = ({viewDetails,setViewDetails}) => {
     const [form] = Form.useForm();
     const [result, setResult] = useState({})
@@ -56,6 +57,11 @@ const CourseTest = ({viewDetails,setViewDetails}) => {
     }
 
     const onFinish = values => {
+        //вернуть основной тест в локалстор
+        if (getPrevTest() !== null) {
+            setCurTest(getPrevTest())
+            clearPrevTest()
+          }
         fetchAttempt(values)
         console.log('Received values of form:', values);
     };

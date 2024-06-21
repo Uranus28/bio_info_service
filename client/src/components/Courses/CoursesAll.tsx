@@ -2,8 +2,7 @@ import React, { FC, useEffect, useState } from "react";
 import "antd/dist/antd.css";
 import { ListGroup, Row, Col, Button } from "react-bootstrap";
 import { Divider, message } from "antd";
-import history from "../../services/history";
-import { isAdmin, isTeacher } from "../utils/testing";
+import { cleanLocalStore, isAdmin, isTeacher } from "../utils/testing";
 import CreateCourse from "../Course/ModalForms/CreateCourse";
 import { COURSE_INFO_ROUTE, adminCourse } from "../../utils/consts";
 import TestingApi from "../../API/TestingApi";
@@ -17,6 +16,7 @@ import {
   setMyCourses,
 } from "../../entities/LocalStore/myCourses";
 import { setCurCourse } from "../../entities/LocalStore/curCourse";
+import history from "../../services/history";
 export const CoursesAll: FC = () => {
   const [isCreateCourseFormVisible, setIsCreateCourseFormVisible] =
     useState(false);
@@ -77,6 +77,7 @@ export const CoursesAll: FC = () => {
   };
 
   useEffect(() => {
+    cleanLocalStore(history.location.pathname);
     fetchCourses();
   }, [update]);
 

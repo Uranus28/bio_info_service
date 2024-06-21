@@ -989,6 +989,7 @@ class TestingService:
         if(attempt.has_first_term):
             newTerms=self.recurcivePath(attempt.has_first_term)
             PathTerms+=newTerms
+        print("PathTerms",PathTerms)
         lectures = self.getLecturesByTerms(PathTerms)
         unknownTerms=[]
         tests = self.getTermTest(PathTerms)

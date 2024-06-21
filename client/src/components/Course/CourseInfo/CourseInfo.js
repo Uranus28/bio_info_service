@@ -13,6 +13,7 @@ import EditCourse from "../ModalForms/CourseEdit";
 import { getUserStore } from "../../../entities/LocalStore/userStore";
 import { getCurCourse, setCurCourse } from "../../../entities/LocalStore/curCourse";
 import { getMyCourses, setMyCourses } from "../../../entities/LocalStore/myCourses";
+import { cleanLocalStore } from "../../utils/testing";
 
 const CourseInfo = () => {
     const [students, setStudents] = useState([])
@@ -114,6 +115,7 @@ const CourseInfo = () => {
     }
 
     useEffect(() => {
+        cleanLocalStore(history.location.pathname)
         fetchCourseInfo()
     }, [update])
 

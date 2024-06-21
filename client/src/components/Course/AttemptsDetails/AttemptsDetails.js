@@ -11,6 +11,8 @@ import { getCurTest } from "../../../entities/LocalStore/curTest";
 import { Loader } from "../../UI/Loader/Loader";
 import { clearCurHasAttempt, getCurHasAttempt, setCurHasAttempt } from "../../../entities/LocalStore/curHasAttempt";
 import { MapAttempts } from "./MapAttempts";
+import { cleanLocalStore } from "../../utils/testing";
+import history from "../../../services/history";
 
 const AttemptsDetails = ({onUpdate,viewDetails,setViewDetails, isCheck,curcurAttemps}) => {
     const [curAttempt, setCurAttempt] = useState({})
@@ -35,6 +37,7 @@ const AttemptsDetails = ({onUpdate,viewDetails,setViewDetails, isCheck,curcurAtt
       }
 
     useEffect(() => {
+        cleanLocalStore(history.location.pathname)
         var timerID = setInterval(() => tick(), 300);
 
         

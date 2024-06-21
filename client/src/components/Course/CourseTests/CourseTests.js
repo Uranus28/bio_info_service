@@ -4,7 +4,7 @@ import { Divider, message } from "antd";
 import {Row, Col, ListGroup, Button} from "react-bootstrap"
 import history from "../../../services/history";
 import { COURSE_TESTS_TEST_VARIANTS_ROUTE } from "../../../utils/consts";
-import { isTeacher } from "../../utils/testing";
+import { cleanLocalStore, isTeacher } from "../../utils/testing";
 import { FormOutlined } from '@ant-design/icons';
 import CreateTestForm from "../ModalForms/CreateTestModule";
 import CreateModule from "../ModalForms/CreateModule";
@@ -56,6 +56,8 @@ const CourseTests = () => {
     }
 
     useEffect(() => {
+        cleanLocalStore(history.location.pathname)
+
         console.log("update")
         //onUpdate()
     }, [curCourse])

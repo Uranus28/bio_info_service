@@ -9,6 +9,8 @@ import AttemptsDetails from "../AttemptsDetails/AttemptsDetails";
 import { getCurTest } from "../../../entities/LocalStore/curTest";
 import { setCurAttemps } from "../../../entities/LocalStore/curAttemps";
 import { setCurHasAttempt } from "../../../entities/LocalStore/curHasAttempt";
+import { cleanLocalStore } from "../../utils/testing";
+import history from "../../../services/history";
 
 const CheckWorks = () => {
     const [usersAttempts, setUsersAttempts] = useState([])
@@ -40,6 +42,7 @@ const CheckWorks = () => {
     }
 
     useEffect(() => {
+        cleanLocalStore(history.location.pathname)
         //setLocalStorage(CUR_ATTEMPTS_STORAGE, [])
         fetchUsersWhoPassedTheTest()
     }, [update])

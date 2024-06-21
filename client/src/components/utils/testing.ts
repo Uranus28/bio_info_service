@@ -5,6 +5,7 @@ import { clearCurLecture } from "../../entities/LocalStore/curLecture"
 import { clearCurModule } from "../../entities/LocalStore/curModule"
 import { clearCurTest } from "../../entities/LocalStore/curTest"
 import { clearCurUser } from "../../entities/LocalStore/curUser"
+import { clearPrevTest } from "../../entities/LocalStore/prevTest"
 import history from "../../services/history"
 import { ADD_ROUTE, ALLERGENS_ROUTE, ARCHIVE_ROUTE, COURSE_INFO_ROUTE, COURSE_LECTIONS_ROUTE, COURSE_ONTOLOGY_ROUTE, COURSE_TERMS_ROUTE, COURSE_TESTS_ROUTE, COURSE_TESTS_TEST_EDIT_ROUTE, COURSE_TESTS_TEST_VARIANTS_ROUTE, LOGIN_ROUTE, MAIN_ROUTE, PROFILE_ROUTE, SEARCH_ROUTE, TESTING_ALL_COURSES_ROUTE, TESTING_COURSES_ROUTE, TESTING_ROUTE, TESTS_TEST_CHECK_WORKS_ROUTE, VIEW_ROUTE } from "../../utils/consts"
 
@@ -66,6 +67,7 @@ export const cleanLocalStore=(type:string)=>{
             clearCurAttemps();
             clearCurLecture();
             clearCurModule();
+            clearPrevTest();
             clearCurTest();
             clearCurUser()
             clearCurHasAttempt();
@@ -76,11 +78,13 @@ export const cleanLocalStore=(type:string)=>{
         case COURSE_TERMS_ROUTE:
         case COURSE_TESTS_ROUTE:
             clearCurAttemps();
-                clearCurLecture();
-                clearCurModule();
-                clearCurTest();
-                clearCurUser()
-                clearCurHasAttempt();
+            clearCurLecture();
+            clearCurModule();
+            clearCurTest();
+            clearCurUser()
+            clearCurHasAttempt();
+            clearPrevTest();
+
 
             return;
         default:

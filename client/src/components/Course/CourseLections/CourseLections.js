@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import 'antd/dist/antd.css';
 import { Divider, message } from "antd";
 import {Row, Col, ListGroup, Button} from "react-bootstrap"
-import { isTeacher } from "../../utils/testing";
+import { cleanLocalStore, isTeacher } from "../../utils/testing";
 import { FormOutlined } from '@ant-design/icons';
 import CreateModule from "../ModalForms/CreateModule";
 import CreateLectureForm from "../ModalForms/CreateLectureForm";
@@ -11,7 +11,7 @@ import {Loader} from "../../UI/Loader/Loader";
 import { getUserStore } from "../../../entities/LocalStore/userStore";
 import { getCurCourse, setCurCourse } from "../../../entities/LocalStore/curCourse";
 import { setCurModule } from "../../../entities/LocalStore/curModule";
-
+import history from "../../../services/history";
 const CourseLections = () => {
     const [dataFile, setDataFile] = useState("")
     const [isLoading, setIsLoading] = useState(false)
@@ -85,6 +85,8 @@ const CourseLections = () => {
     }
 
     useEffect(() => {
+        cleanLocalStore(history.location.pathname)
+
         fetchCourseInfo()
     }, [update])
 
