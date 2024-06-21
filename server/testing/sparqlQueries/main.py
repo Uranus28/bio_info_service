@@ -418,22 +418,17 @@ class TestingService:
     
     def createTestItem(self,itemTest):
             testItem = {}
-            nameTest = str(itemTest['nameTest'].toPython())
-            nameTest = re.sub(r'.*#',"", nameTest)
-            groupTask = str(itemTest['groupTasks'].toPython())
-            groupTask = re.sub(r'.*#',"", groupTask)
+            nameTest = self.getPythonName(itemTest,'nameTest')
+            groupTask = self.getPythonName(itemTest,'groupTasks')
             testItem["testName"] = nameTest
             query = queries.getTasksQuestions(groupTask)
             resultsTasks = self.graph.query(query)
             listTasks = []
             for itemTask in resultsTasks:
                 task = {}
-                taskObj = str(itemTask['task'].toPython())
-                taskObj = re.sub(r'.*#',"", taskObj)
-                questionText = str(itemTask['questText'].toPython())
-                questionText = re.sub(r'.*#',"", questionText)
-                typeQuestion = str(itemTask['taskType'].toPython())
-                typeQuestion = re.sub(r'.*#',"", typeQuestion)
+                taskObj = self.getPythonName(itemTask,'task')
+                questionText =  self.getPythonName(itemTask,'questText')
+                typeQuestion =self.getPythonName(itemTask,'taskType')
 
                 task = {"question": questionText, "type": getTypeTaskValue(typeQuestion)}
 
@@ -441,10 +436,8 @@ class TestingService:
                 resultAnswers = self.graph.query(query)
                 listAnswers = []
                 for itemAnsw in resultAnswers:
-                    answerObj = str(itemAnsw['answObj'].toPython())
-                    answerObj = re.sub(r'.*#',"", answerObj)
-                    answerText = str(itemAnsw['answText'].toPython())
-                    answerText = re.sub(r'.*#',"", answerText)
+                    answerObj = self.getPythonName(itemAnsw,'answObj')
+                    answerText = self.getPythonName(itemAnsw,'answText')
                     if(len(listAnswers)==0):
                         listAnswers.append({"answer": answerText})
                     else:
@@ -462,7 +455,7 @@ class TestingService:
             return testItem
 
     
-    def getTermTest(self,terms):
+    def getTermTest(self,userObj,terms):
         tests={}
         for term in terms:
             query=queries.getTestOfTerm(term)
@@ -471,9 +464,23 @@ class TestingService:
             itemTestsList=[]
             for itemTest in resultsTests:
                 if(itemTestsList.count(itemTest)<1):                   
-                    itemTestsList.append(itemTest)
-                    listTests.append(self.createTestItem(itemTest))
-            tests[term]=listTests
+                    itemTestsList.append(itemTest)                    
+                    testObj=self.getPythonName(itemTest,'testObj')
+                    print(testObj)
+                    query=queries.getLastAttemptWithPercentComplition(userObj)
+                    allAttempts=self.graph.query(query)
+                    percentTestObj="0"
+                    for itemAttempt in allAttempts:
+                        itemTestObj =self.getPythonName(itemAttempt,'test')
+                        print(testObj," : ",itemTestObj)
+                        if(itemTestObj==testObj):
+                            print(itemTestObj,self.getPythonName(itemAttempt,'percentComp'))
+                            percentTestObj =self.getPythonName(itemAttempt,'percentComp')
+                            break
+                    if(float(percentTestObj)<0.5):
+                        listTests.append(self.createTestItem(itemTest))
+            if len(listTests)>0:
+                tests[term]=listTests
         return tests
 
     def getTests(self):
@@ -981,7 +988,7 @@ class TestingService:
         else:
             return [self.removeOntoPath(((unknownTerm.relates_to_term)[0].has_term_test)[0])]
 
-    def getPathTerms(self,attemptObj):
+    def getPathTerms(self,userObj,attemptObj):
         with self.onto:
             class Попытка_прохождения_теста(Thing):
                 pass
@@ -994,7 +1001,7 @@ class TestingService:
         print("PathTerms",PathTerms)
         lectures = self.getLecturesByTerms(PathTerms)
         unknownTerms=[]
-        tests = self.getTermTest(PathTerms)
+        tests = self.getTermTest(userObj,PathTerms)
         for term in PathTerms:
             unknownTerms.append({"termObj": term, "term": self.normilizedName(term)})
         item = {"pathTerms": unknownTerms,"lectures": lectures,"tests":tests}
@@ -1004,6 +1011,7 @@ class TestingService:
     def getPythonName(self,item,key):
         itemObj = str(item[key].toPython())
         return re.sub(r'.*#',"", itemObj)
+    
     #убрать лишнее для нормального имени
     def removeOntoPath(self,item):
         return str(item).removeprefix(self.path[:-3])

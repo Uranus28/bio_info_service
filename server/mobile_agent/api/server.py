@@ -494,7 +494,7 @@ def get_path_terms():
     _userObj = request.args.get('_userObj', '')
     _attemptObj = request.args.get('_attemptObj', '')
     print("User Attempt: ", _userObj, _attemptObj)
-    data=ont.getPathTerms(_attemptObj)
+    data=ont.getPathTerms(_userObj,_attemptObj)
     
     response = make_response(json.dumps({
         'statusCode': 200,

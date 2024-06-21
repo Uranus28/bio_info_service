@@ -5472,8 +5472,8 @@
   <has_attempt_to_pass_test rdf:resource="#попытка_прохождения_теста27"/>
   <has_attempt_to_pass_test rdf:resource="#попытка_прохождения_теста31"/>
   <has_attempt_to_pass_test rdf:resource="#попытка_прохождения_теста35"/>
-  <unknownTerm rdf:resource="#интина"/>
-  <unknownTerm rdf:resource="#борозды"/>
+  <knownTerm rdf:resource="#интина"/>
+  <knownTerm rdf:resource="#борозды"/>
   <email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">student@gmail.com</email>
   <firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Студент</firstName>
   <lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Студентов</lastName>
@@ -5704,7 +5704,6 @@
   <relates_to_test rdf:resource="#тест8"/>
   <has_test_element rdf:resource="#элемент_теста131"/>
   <has_test_element rdf:resource="#элемент_теста132"/>
-  <has_first_term rdf:resource="#неизвестный_термин9"/>
   <maxScore rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</maxScore>
   <sumScore rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</sumScore>
   <succesfullAttempt rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</succesfullAttempt>
@@ -6114,12 +6113,6 @@
   <has_answer rdf:resource="#ответыстудента142"/>
 </owl:NamedIndividual>
 
-<owl:NamedIndividual rdf:about="#неизвестный_термин9">
-  <rdf:type rdf:resource="#Неизвестный_термин"/>
-  <relates_to_term rdf:resource="#интина"/>
-  <has_next_term rdf:resource="#неизвестный_термин10"/>
-</owl:NamedIndividual>
-
 <owl:NamedIndividual rdf:about="#ответыстудента116">
   <rdf:type rdf:resource="#ОтветыСтудента"/>
   <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
@@ -6160,11 +6153,6 @@
   <score rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</score>
   <rightAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</rightAnswer>
   <textAnswer rdf:datatype="http://www.w3.org/2001/XMLSchema#string">das</textAnswer>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#неизвестный_термин10">
-  <rdf:type rdf:resource="#Неизвестный_термин"/>
-  <relates_to_term rdf:resource="#борозды"/>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#пользователь8">
