@@ -5472,8 +5472,8 @@
   <has_attempt_to_pass_test rdf:resource="#попытка_прохождения_теста27"/>
   <has_attempt_to_pass_test rdf:resource="#попытка_прохождения_теста31"/>
   <has_attempt_to_pass_test rdf:resource="#попытка_прохождения_теста35"/>
-  <knownTerm rdf:resource="#интина"/>
-  <knownTerm rdf:resource="#борозды"/>
+  <unknownTerm rdf:resource="#интина"/>
+  <unknownTerm rdf:resource="#борозды"/>
   <email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">student@gmail.com</email>
   <firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Студент</firstName>
   <lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Студентов</lastName>

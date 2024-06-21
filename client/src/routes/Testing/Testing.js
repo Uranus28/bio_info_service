@@ -5,11 +5,10 @@ import { Layout, Menu,Divider } from 'antd';
 import { Breadcrumb } from 'react-bootstrap'
 import { Router, Switch, Route, Link } from "react-router-dom";
 import Courses from '../../components/Courses/Courses';
-import { UserOutlined } from '@ant-design/icons';
 import history from '../../services/history';
 import { Context } from '../..';
 import { COURSE_INFO_ROUTE, COURSE_LECTIONS_ROUTE, COURSE_ONTOLOGY_ROUTE, COURSE_TERMS_ROUTE, COURSE_TESTS_ROUTE, COURSE_TESTS_TEST_EDIT_ROUTE, COURSE_TESTS_TEST_VARIANTS_ROUTE, TESTING_ALL_COURSES_ROUTE, TESTING_COURSES_ROUTE, TESTING_ROUTE, TESTS_TEST_ATTEMPTS_DETAILS_ROUTE, TESTS_TEST_ATTEMPT_ROUTE, TESTS_TEST_CHECK_WORKS_ROUTE } from '../../utils/consts';
-import { cleanLocalStore, isMenuCourses } from '../../components/utils/testing';
+import { cleanLocalStore, isMenuCourses, isTeacher } from '../../components/utils/testing';
 import CourseInfo from '../../components/Course/CourseInfo/CourseInfo';
 import CourseTests from '../../components/Course/CourseTests/CourseTests';
 import CourseTest from '../../components/Course/CourseTest/CourseTest';
@@ -24,6 +23,7 @@ import OntologyPage from '../../components/Course/Ontology/OntologyPage';
 import { CourseTestingIcon } from '../../shared/CourseTestingIcon/CourseTestingIcon';
 import { getCurCourse } from '../../entities/LocalStore/curCourse';
 import { getKey } from './getKey';
+import { getUserStore } from '../../entities/LocalStore/userStore';
 
 const { Header, Content, Sider } = Layout;
 
@@ -34,13 +34,14 @@ const Testing = () => {
     const curCourse = getCurCourse();
     const routes = services.Routes[history.location.pathname];
 
-
     const [viewDetails,setViewDetails]=useState(false)
 
     const menuItems = isMenuCourses() ? services.MenuTesting : services.MenuCourse;
 
     const menuItemsList = menuItems.map((item) => {
-        return (
+        if(item.link===COURSE_ONTOLOGY_ROUTE && !isTeacher(getUserStore()))
+            return null
+        else return (
             <Menu.Item key={item.id} icon={<CourseTestingIcon type={item.link} is_back={item.name==="Назад" ? true:false} />}>
                 <Link to={item.link} onClick={()=>{cleanLocalStore(item.link)}}>{item.name}</Link>
             </Menu.Item>
@@ -51,7 +52,8 @@ const Testing = () => {
 
     if (routes) {
         listRoutes = routes.map((item) => {
-                return (
+                
+                    return (
                     <Breadcrumb.Item onClick={
                         item.active?()=>{}
                         :
