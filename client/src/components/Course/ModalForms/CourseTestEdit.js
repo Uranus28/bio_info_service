@@ -5,12 +5,11 @@ import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import EditTask from '../EditTask/EditTask';
 import TestingApi from '../../../API/TestingApi';
 import {Loader} from '../../UI/Loader/Loader';
-import { cleanLocalStore, deepEqual } from '../../utils/testing';
+import {  deepEqual } from '../../utils/testing';
 import TextArea from 'antd/lib/input/TextArea';
 import {  MULTIPLE_TASK_TYPE, TEXT_TASK_TYPE } from '../../../utils/consts';
 import { getCurTest } from '../../../entities/LocalStore/curTest';
 import { getCurModule } from '../../../entities/LocalStore/curModule';
-import history from '../../../services/history';
 
 const { Option } = Select;
 
@@ -88,7 +87,6 @@ const TestEdit = ({isVisible, setIsVisible}) => {
     }
 
     useEffect(() => {
-        cleanLocalStore(history.location.pathname)
         if (isVisible) {
             fetchTest()
         }

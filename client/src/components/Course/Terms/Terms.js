@@ -6,8 +6,6 @@ import TestingApi from "../../../API/TestingApi";
 import {Loader} from "../../UI/Loader/Loader";
 import { getUserStore } from "../../../entities/LocalStore/userStore";
 import { ListLectures } from "../../api/ListLectures";
-import { cleanLocalStore } from "../../utils/testing";
-import history from "../../../services/history";
 const { Panel } = Collapse;
 
 const TermsPage = () => {
@@ -37,7 +35,6 @@ const TermsPage = () => {
     }
 
     useEffect(() => {
-        cleanLocalStore(history.location.pathname)
 
         fetchTermsByUser()
     }, [])

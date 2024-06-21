@@ -3,7 +3,7 @@ import 'antd/dist/antd.css';
 import {Button} from "react-bootstrap"
 import history from "../../../services/history";
 import { COURSE_TESTS_ROUTE,  TESTS_TEST_ATTEMPTS_DETAILS_ROUTE, TESTS_TEST_ATTEMPT_ROUTE, TESTS_TEST_CHECK_WORKS_ROUTE } from "../../../utils/consts";
-import {   cleanLocalStore, isTeacher } from "../../utils/testing";
+import { isTeacher } from "../../utils/testing";
 import TestEdit from "../ModalForms/CourseTestEdit";
 import {Loader} from "../../UI/Loader/Loader";
 import TestingApi from "../../../API/TestingApi";
@@ -68,7 +68,6 @@ const CourseTestVariants = () => {
     }
 
     useEffect(() => {  
-        cleanLocalStore(history.location.pathname)
    
         setIsLoading(true)  
         if(!testToggle && attempts.length==0 && !isTeacher(user)) 

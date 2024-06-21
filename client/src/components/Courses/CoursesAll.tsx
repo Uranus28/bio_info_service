@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from "react";
 import "antd/dist/antd.css";
 import { ListGroup, Row, Col, Button } from "react-bootstrap";
 import { Divider, message } from "antd";
-import { cleanLocalStore, isAdmin, isTeacher } from "../utils/testing";
+import { isAdmin, isTeacher } from "../utils/testing";
 import CreateCourse from "../Course/ModalForms/CreateCourse";
 import { COURSE_INFO_ROUTE, adminCourse } from "../../utils/consts";
 import TestingApi from "../../API/TestingApi";
@@ -77,7 +77,6 @@ export const CoursesAll: FC = () => {
   };
 
   useEffect(() => {
-    cleanLocalStore(history.location.pathname);
     fetchCourses();
   }, [update]);
 

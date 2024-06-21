@@ -4,7 +4,7 @@ import { ListGroup, Row, Col, Button } from 'react-bootstrap';
 import { Context } from '../../index';
 import { Divider, message } from "antd";
 import history from "../../services/history";
-import { cleanLocalStore, isTeacher } from '../utils/testing';
+import {  isTeacher } from '../utils/testing';
 import CreateCourse from '../Course/ModalForms/CreateCourse';
 import { COURSE_INFO_ROUTE, TESTING_ALL_COURSES_ROUTE } from '../../utils/consts';
 import TestingApi from '../../API/TestingApi';
@@ -40,7 +40,6 @@ const Courses = () => {
     }
 
     useEffect(() => {
-        cleanLocalStore(history.location.pathname)
         fetchCourses()
     }, [])
 

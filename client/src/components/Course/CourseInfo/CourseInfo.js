@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import 'antd/dist/antd.css';
-import { Divider, Avatar, message } from "antd";
+import { Divider, message } from "antd";
 import {Row, Col, ListGroup, Button, Badge} from "react-bootstrap"
 import { BookOutlined } from '@ant-design/icons';
 import TestingApi from "../../../API/TestingApi";
 import {Loader} from "../../UI/Loader/Loader";
-import { isAdmin, isTeacher } from "../../utils/testing";
+import { isTeacher } from "../../utils/testing";
 import {  TESTING_ALL_COURSES_ROUTE } from "../../../utils/consts";
 import history from "../../../services/history";
 import {UsersList} from "../Users/UsersList";
@@ -13,7 +13,6 @@ import EditCourse from "../ModalForms/CourseEdit";
 import { getUserStore } from "../../../entities/LocalStore/userStore";
 import { getCurCourse, setCurCourse } from "../../../entities/LocalStore/curCourse";
 import { getMyCourses, setMyCourses } from "../../../entities/LocalStore/myCourses";
-import { cleanLocalStore } from "../../utils/testing";
 
 const CourseInfo = () => {
     const [students, setStudents] = useState([])
@@ -115,7 +114,6 @@ const CourseInfo = () => {
     }
 
     useEffect(() => {
-        cleanLocalStore(history.location.pathname)
         fetchCourseInfo()
     }, [update])
 
