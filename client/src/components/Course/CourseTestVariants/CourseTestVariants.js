@@ -12,16 +12,12 @@ import { getCurTest, setCurTest } from "../../../entities/LocalStore/curTest";
 import { getCurCourse, setCurCourse } from "../../../entities/LocalStore/curCourse";
 import { getUserStore } from "../../../entities/LocalStore/userStore";
 import { CheckRecomendations } from "../ModalForms/CheckRecomendations";
-import { getPrevTest,clearPrevTest } from "../../../entities/LocalStore/prevTest";
+import { setPrevTest } from "../../../entities/LocalStore/prevTest";
 
 const CourseTestVariants = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [attempts, setAttempts] = useState([])
     const [pathTerms,setPathTerms]=useState([])
-    // if (getPrevTest() !== null) {
-    //     setCurTest(getPrevTest())
-    //     clearPrevTest()
-    //   }
     const curTest =  getCurTest()
     const curCourse = getCurCourse()
     const user = getUserStore()
@@ -104,6 +100,7 @@ const CourseTestVariants = () => {
     }
 
     const handleStartTest = () => {
+        setPrevTest(getCurTest())
         history.push(TESTS_TEST_ATTEMPT_ROUTE);
     }
 

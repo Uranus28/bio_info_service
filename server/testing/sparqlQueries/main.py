@@ -673,6 +673,7 @@ class TestingService:
                             termsScores[termObj]["sum"] += 1
                
                 for answer in tasks[i]["answers"]:
+                    print(answer)
                     if termObj != "":
                         termsScores[termObj]["sumScore"] += float(answer["score"])
                         break
@@ -863,6 +864,7 @@ class TestingService:
         test = self.getTestWithAnswers(nameTest)
         userObj = user["userObj"]
         userAnswers = answers['answers']
+        print(userObj)
         sum = self.createNewAttempt(test, userObj, userAnswers)
         result = {"trueCount": sum, "countTasks": len(test['tasks'])}
 
@@ -1005,6 +1007,49 @@ class TestingService:
     #убрать лишнее для нормального имени
     def removeOntoPath(self,item):
         return str(item).removeprefix(self.path[:-3])
+    def removeAttemptFull(self,attempt):
+        for tesElemItem in (attempt.has_test_element):
+            for answerItem in (tesElemItem.has_answer):
+                destroy_entity(answerItem)
+            destroy_entity(tesElemItem)
+        # удаление старой цепи рекомендаций
+        if(attempt.has_first_term):
+            self.recurciveDelete(attempt.has_first_term)
+            print("::::")
+            if(attempt.has_first_term):
+                destroy_entity(attempt.has_first_term)
+        destroy_entity(attempt)
+        self.onto.save(self.path)
+
+        
+    #удаление попыток если тест открылся
+    def deleteAttemptsOfTermTest(self,userObj,testObj):
+        with self.onto:
+            class Попытка_прохождения_теста(Thing):
+                pass
+        query=queries.getLastAttemptWithPercentComplition(userObj)
+        allAttempts=self.graph.query(query)
+        attemptTestObj=""
+        for itemAttempt in allAttempts:
+            itemTestObj =self.getPythonName(itemAttempt,'test')
+            if(itemTestObj==testObj):
+                attemptTestObj =self.getPythonName(itemAttempt,'attempt')
+                break
+        attempt=Попытка_прохождения_теста(attemptTestObj)
+        pathTermsTests = []
+        if(attempt.has_first_term):
+            newPathTerms=self.recurcivePathTests(attempt.has_first_term)
+            pathTermsTests+=newPathTerms
+        print(pathTermsTests)
+        allAttempts=self.graph.query(query)
+        for itemAttempt in allAttempts:
+            itemTestObj = self.getPythonName(itemAttempt,'test')
+            if itemTestObj in pathTermsTests:
+                attemptTestObj =self.getPythonName(itemAttempt,'attempt')
+                attempt=Попытка_прохождения_теста(attemptTestObj)
+                self.removeAttemptFull(attempt)
+        self.onto.save(self.path)
+
     #проверка есть ли не закрытые тесты в неизвестных терминах
     def checkLastAttempt(self,userObj,testObj):
         with self.onto:
@@ -1024,23 +1069,60 @@ class TestingService:
             newPathTerms=self.recurcivePathTests(attempt.has_first_term)
             pathTermsTests+=newPathTerms
         print(pathTermsTests)
-        kTests=0
         kCompleteTests=0
+        checkedTests=[]
+        allAttempts=self.graph.query(query)
         for itemAttempt in allAttempts:
+
             itemTestObj = self.getPythonName(itemAttempt,'test')
-            if(itemTestObj==testObj):
-                kTests+=1
+            if itemTestObj in pathTermsTests and itemTestObj not in checkedTests:
+                checkedTests.append(itemTestObj)
                 print(self.getPythonName(itemAttempt,'attempt'))
                 percentTestObj =self.getPythonName(itemAttempt,'percentComp')
-                if(percentTestObj>0.5):
+                if(float(percentTestObj)>0.5):
                     kCompleteTests+=1
-        print("kTests:",kTests)
+        print("kTests:",len(pathTermsTests))
         print("kCompleteTests:",kCompleteTests)
-        return kTests==kCompleteTests and kTests!=0
+        return len(pathTermsTests)==kCompleteTests
+    
+    def openTest(self,user,test):
+        with self.onto:
+            class Попытка_прохождения_теста(Thing):
+                pass
+            class Пользователь(Thing):
+                pass
+        userObj = user["userObj"]
+        testObj = test["testObj"]
+        query=queries.getLastAttemptWithPercentComplition(userObj)
+        allAttempts=self.graph.query(query)
+        attemptTestObj=""
 
+        self.deleteAttemptsOfTermTest(userObj,testObj)
+        
+        for itemAttempt in allAttempts:
+            itemTestObj =self.getPythonName(itemAttempt,'test')
+            if(itemTestObj==testObj):
+                attemptTestObj =self.getPythonName(itemAttempt,'attempt')
+                break
+        attempt=Попытка_прохождения_теста(attemptTestObj)
+        # удаление старой цепи рекомендаций
+        if(attempt.has_first_term):
+            self.recurciveDelete(attempt.has_first_term)
+            print("::::")
+            if(attempt.has_first_term):
+                destroy_entity(attempt.has_first_term)
+            # att
+        user = Пользователь(userObj)
+        for tsItem in user.has_blocked_test:
+                        print(tsItem)
+                        if(str(tsItem)==str(test)):
+                            user.has_blocked_test.remove(test)
+        self.onto.save(self.path)
+        
     def checkTestOpened(self,user_uid,nameTest):
         user = self.getUser(user_uid)
         test = self.getTestWithAnswers(nameTest)
+        print(test)
         userObj = user["userObj"]
         testObj1 = test["testObj"]        
         query = queries.getBlockedTests(userObj)
@@ -1052,8 +1134,11 @@ class TestingService:
                 testObj = self.getPythonName(itemTest,'test')                
                 if(testObj1==testObj):
                     #тут написать проверку и разблокировку теста с удалением неизвестных терминов
-                    print(self.checkLastAttempt(userObj,testObj))
-                    return False
+                    if self.checkLastAttempt(userObj,testObj):
+                        self.openTest(user,test)
+                        return True
+                    else:
+                        return False
         return True
     
     def getAttempts(self, user_uid, nameTest):
@@ -1571,8 +1656,7 @@ class TestingService:
         sumCou = {}
         sumCorrect = 0
         sumCount = 0
-        print("_________termScores_____________")
-        print(termsScores)
+
         for itemTerm in resultTerms:
             termObj = str(itemTerm['term'].toPython())
             termObj = re.sub(r'.*#',"", termObj)
@@ -1623,11 +1707,13 @@ class TestingService:
                     sumCorrect += termsScores[termObj]["sumScore"]
                     sumCount += termsScores[termObj]["sum"]
         lectures = self.getLecturesByTerms(listTermObj)
-
+        listTerms.sort(key=lambda x: float(x["sumCorrect"])/float(x["sumCount"]))
         return listTerms, sumCorrect, sumCount, sumCorr, lectures
 
     def getTermsByUser(self, userObj, uid):
         termsScores = self.getTermsScoresByLastAttempts(userObj, uid)
+        print("_________termScores_____________")
+        print(termsScores)
         knownTerms, sumKnown, sumCountKnown, sumCorrKnown = self.getKnownTermsByUser(userObj, termsScores)
         unknownTerms, sumUnknown, sumCountUnknown, sumCorrUnknown, lectures = self.getUnknownTermsByUser(userObj, termsScores)
         sumScores = {}

@@ -58,6 +58,7 @@ const CourseTest = ({viewDetails,setViewDetails}) => {
 
     const onFinish = values => {
         //вернуть основной тест в локалстор
+        console.log(getPrevTest())
         if (getPrevTest() !== null) {
             setCurTest(getPrevTest())
             clearPrevTest()
