@@ -307,16 +307,16 @@ const CreateTestForm = ({isVisible, setIsVisible, onUpdate}) => {
                                                         options={listTerms}
                                                         />
                                                     </Form.Item>
-                                                    <Form.Item>
+                                                    {/* <Form.Item>
                                                         <Button onClick={() => handleGenerateAnswers(field.key)} type="dashed">Сгенерировать ответы</Button>
-                                                    </Form.Item>
+                                                    </Form.Item> */}
                                                 <EditTask form={form} field={field}></EditTask>
                                                 </>
                                             )}
                                         </Form.Item>
-                                    : null
+                                    : <Loader/>
                                 }
-                                <MinusCircleOutlined style={{position:"relative", top:"-365px"}}onClick={() => remove(field.name)} />
+                                <MinusCircleOutlined onClick={() => remove(field.name)} />
                             </Space>
                             ))}
     

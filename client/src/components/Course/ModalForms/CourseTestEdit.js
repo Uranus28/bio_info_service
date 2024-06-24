@@ -301,9 +301,9 @@ const TestEdit = ({isVisible, setIsVisible}) => {
                                                     >
                                                     </Select>
                                                 </Form.Item>
-                                                <Form.Item>
+                                                {/* <Form.Item>
                                                     <Button onClick={() => handleGenerateAnswers(field.key)} type="dashed">Сгенерировать ответы</Button>
-                                                </Form.Item>
+                                                </Form.Item> */}
                                             <EditTask tasks={curTest.tasks} form={form} field={field}></EditTask>
                                             </>
                                         )}

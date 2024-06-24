@@ -984,9 +984,13 @@ class TestingService:
     def recurcivePathTests(self,unknownTerm):
         
         if unknownTerm.has_next_term:
-            return [self.removeOntoPath(((unknownTerm.relates_to_term)[0].has_term_test)[0])]+self.recurcivePathTests(unknownTerm.has_next_term)
+            if(((unknownTerm.relates_to_term)[0].has_term_test)):
+                return [self.removeOntoPath(((unknownTerm.relates_to_term)[0].has_term_test)[0])]+self.recurcivePathTests(unknownTerm.has_next_term)
+            else:
+                return self.recurcivePathTests(unknownTerm.has_next_term)
         else:
-            return [self.removeOntoPath(((unknownTerm.relates_to_term)[0].has_term_test)[0])]
+            if(((unknownTerm.relates_to_term)[0].has_term_test)):
+                return [self.removeOntoPath(((unknownTerm.relates_to_term)[0].has_term_test)[0])]
 
     def getPathTerms(self,userObj,attemptObj):
         with self.onto:
